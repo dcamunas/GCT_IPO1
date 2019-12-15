@@ -72,36 +72,36 @@ public class VentanaLogin {
 
 		btnAyuda = new JButton("");
 		btnAyuda.setIcon(new ImageIcon(VentanaLogin.class.getResource("/presentacion/imagenes/iconos/info-32.png")));
-		btnAyuda.setContentAreaFilled(false);
 		btnAyuda.setBorderPainted(false);
+		btnAyuda.setContentAreaFilled(false);
 		btnAyuda.setBounds(383, 11, 41, 35);
 		panel.add(btnAyuda);
 
 		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(119, 61, 46, 14);
+		lblUsuario.setBounds(168, 32, 61, 14);
 		panel.add(lblUsuario);
 
 		tfUsuario = new JTextField();
 		tfUsuario.addActionListener(new TfUsuarioActionListener());
-		tfUsuario.setBounds(175, 58, 86, 20);
+		tfUsuario.setBounds(168, 56, 120, 20);
 		panel.add(tfUsuario);
 		tfUsuario.setColumns(10);
 
 		lblContrasenia = new JLabel("Contraseña:");
 		lblContrasenia.setEnabled(false);
-		lblContrasenia.setBounds(105, 103, 60, 14);
+		lblContrasenia.setBounds(168, 101, 80, 14);
 		panel.add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
 		pwdContrasenia.addActionListener(new PwdContraseniaActionListener());
 		pwdContrasenia.setEnabled(false);
-		pwdContrasenia.setBounds(175, 100, 86, 20);
+		pwdContrasenia.setBounds(168, 126, 120, 20);
 		panel.add(pwdContrasenia);
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new BtnEntrarActionListener());
 		btnEntrar.setEnabled(false);
-		btnEntrar.setBounds(175, 157, 89, 23);
+		btnEntrar.setBounds(183, 177, 89, 23);
 		panel.add(btnEntrar);
 
 		lblAviso = new JLabel("");
