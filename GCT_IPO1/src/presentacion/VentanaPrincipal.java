@@ -53,7 +53,6 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnAyuda;
 	private JTabbedPane tbdPestanias;
 	private JPanel pnCircuitos;
-	private JLabel lblUsuario;
 	private JPanel pnGuias;
 	private JPanel pnGrupos;
 	private JPanel pnDisenioRuta;
@@ -173,6 +172,8 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnEliminarRestriccionGrupo;
 	private JScrollPane spnRestriccionesGrupo;
 	private JList listRestriccionesGrupo;
+	private JButton btnUsuarioApp;
+	private JButton btnCambiarFotoGuia;
 	/**
 	 * Launch the application.
 	 */
@@ -210,16 +211,23 @@ public class VentanaPrincipal extends JFrame {
 		
 		btnCerrarSesion = new JButton("Cerrar Sesion");
 		btnCerrarSesion.addActionListener(new BtnNewButtonActionListener());
-		
-		lblUsuario = new JLabel("Ultm vez: 18:00");
-		pnHerramientas.add(lblUsuario);
+
 		
 		btnAyuda = new JButton("");
 		btnAyuda.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-32.png")));
 		btnAyuda.setBorderPainted(false);
 		btnAyuda.setContentAreaFilled(false);
 		pnHerramientas.add(btnAyuda);
+		
+		btnUsuarioApp = new JButton("User");
+		btnUsuarioApp.addActionListener(new BtnUsuarioAppActionListener());
+		btnUsuarioApp.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnUsuarioApp.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/userApp.png")));
+		btnUsuarioApp.setBorderPainted(false);
+		btnUsuarioApp.setContentAreaFilled(false);
+		pnHerramientas.add(btnUsuarioApp);
 		pnHerramientas.add(btnCerrarSesion);
+
 		
 		pnContenido = new JPanel();
 		contentPane.add(pnContenido, BorderLayout.CENTER);
@@ -498,6 +506,9 @@ public class VentanaPrincipal extends JFrame {
 		lblImagenGuia = new JLabel("");
 		lblImagenGuia.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
 		pnImagenGuia.add(lblImagenGuia);
+		
+		btnCambiarFotoGuia = new JButton("Seleccionar");
+		pnImagenGuia.add(btnCambiarFotoGuia);
 		
 		spnRutasGuia = new JScrollPane();
 		spnRutasGuia.setPreferredSize(new Dimension(10, 200));
@@ -875,7 +886,7 @@ public class VentanaPrincipal extends JFrame {
 		listRestriccionesGrupo.setEnabled(false);
 		spnRestriccionesGrupo.setViewportView(listRestriccionesGrupo);
 		
-		pnDisenioRuta = new JPanel();
+		pnDisenioRuta = new MiJPanel();
 		tbdPestanias.addTab("Diseño Ruta", null, pnDisenioRuta, null);
 	}
 
@@ -883,6 +894,12 @@ public class VentanaPrincipal extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// Se cierra la aplicacion
 			System.exit(0);
+		}
+	}
+	private class BtnUsuarioAppActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			VentanaPerfil ventana_perfil = new VentanaPerfil();
+			ventana_perfil.setVisible(true);
 		}
 	}
 }
