@@ -43,6 +43,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerNumberModel;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -282,6 +283,7 @@ public class VentanaPrincipal extends JFrame {
 		spnListaCircuitos.setViewportView(listCircuitosContratados);
 		
 		pnCircuitoLugares = new JPanel();
+		pnCircuitoLugares.setPreferredSize(new Dimension(360, 10));
 		pnCircuitos.add(pnCircuitoLugares, BorderLayout.EAST);
 		pnCircuitoLugares.setLayout(new BorderLayout(0, 0));
 		
@@ -299,23 +301,22 @@ public class VentanaPrincipal extends JFrame {
 		chckbxContratado.setVerticalAlignment(SwingConstants.BOTTOM);
 		GroupLayout gl_pnContratacionLugares = new GroupLayout(pnContratacionLugares);
 		gl_pnContratacionLugares.setHorizontalGroup(
-			gl_pnContratacionLugares.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnContratacionLugares.createSequentialGroup()
-					.addGap(34)
-					.addComponent(btnContratar)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxContratado, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(23, Short.MAX_VALUE))
-		);
-		gl_pnContratacionLugares.setVerticalGroup(
 			gl_pnContratacionLugares.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_pnContratacionLugares.createSequentialGroup()
-					.addGroup(gl_pnContratacionLugares.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnContratar, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_pnContratacionLugares.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxContratado)))
+					.addContainerGap(136, Short.MAX_VALUE)
+					.addComponent(btnContratar, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chckbxContratado, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+		);
+		gl_pnContratacionLugares.setVerticalGroup(
+			gl_pnContratacionLugares.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnContratacionLugares.createSequentialGroup()
+					.addComponent(btnContratar)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_pnContratacionLugares.createSequentialGroup()
+					.addContainerGap(13, Short.MAX_VALUE)
+					.addComponent(chckbxContratado))
 		);
 		pnContratacionLugares.setLayout(gl_pnContratacionLugares);
 		
@@ -381,7 +382,9 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoGeneral.add(lblPersonasRealizado, gbc_lblPersonasRealizado);
 		
 		spinnerPersonasCircuitos = new JSpinner();
+		spinnerPersonasCircuitos.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		GridBagConstraints gbc_spinnerPersonasCircuitos = new GridBagConstraints();
+		gbc_spinnerPersonasCircuitos.anchor = GridBagConstraints.WEST;
 		gbc_spinnerPersonasCircuitos.insets = new Insets(0, 0, 5, 5);
 		gbc_spinnerPersonasCircuitos.gridx = 1;
 		gbc_spinnerPersonasCircuitos.gridy = 1;
@@ -397,6 +400,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		rdbtnSi_Circuitos = new JRadioButton("Si");
 		GridBagConstraints gbc_rdbtnSi_Circuitos = new GridBagConstraints();
+		gbc_rdbtnSi_Circuitos.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnSi_Circuitos.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnSi_Circuitos.gridx = 1;
 		gbc_rdbtnSi_Circuitos.gridy = 2;
@@ -404,6 +408,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		rdbtnNo_Circuitos = new JRadioButton("No");
 		GridBagConstraints gbc_rdbtnNo_Circuitos = new GridBagConstraints();
+		gbc_rdbtnNo_Circuitos.anchor = GridBagConstraints.WEST;
 		gbc_rdbtnNo_Circuitos.insets = new Insets(0, 0, 5, 0);
 		gbc_rdbtnNo_Circuitos.gridx = 2;
 		gbc_rdbtnNo_Circuitos.gridy = 2;
@@ -886,7 +891,7 @@ public class VentanaPrincipal extends JFrame {
 		listRestriccionesGrupo.setEnabled(false);
 		spnRestriccionesGrupo.setViewportView(listRestriccionesGrupo);
 		
-		pnDisenioRuta = new MiJPanel();
+		pnDisenioRuta = new JPanel();
 		tbdPestanias.addTab("Diseño Ruta", null, pnDisenioRuta, null);
 	}
 
@@ -899,7 +904,7 @@ public class VentanaPrincipal extends JFrame {
 	private class BtnUsuarioAppActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			VentanaPerfil ventana_perfil = new VentanaPerfil();
-			ventana_perfil.setVisible(true);
+			ventana_perfil.getFrmPerfil().setVisible(true);
 		}
 	}
 }
