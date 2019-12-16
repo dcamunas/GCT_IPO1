@@ -28,6 +28,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
+import javax.swing.JTextPane;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -93,6 +96,65 @@ public class VentanaPrincipal extends JFrame {
 	private JRadioButton rdbtnSi;
 	private JRadioButton rdbtnNo;
 	private JPanel pnListaIncidencia;
+	private JPanel pnSugerencias;
+	private JLabel lblOpinionesYSugerencias;
+	private JPanel pnListaSugerencias;
+	private JPanel pnPtosInteres;
+	private JLabel lblPuntosDeInteres;
+	private JPanel pnListaPtosInteres;
+	private JLabel lblNombre;
+	private JTextField txtNombre;
+	private JLabel lblDireccinDeCorreo;
+	private JTextField txtCorreo;
+	private JPanel pnListaGuias;
+	private JLabel lblGuiasContratados;
+	private JPanel pnIdiomasGuia;
+	private JLabel lblIdiomas;
+	private JPanel pnBotonesIdioma;
+	private JButton btnAgregar;
+	private JButton btnBorrar;
+	private JScrollPane spnListaIdiomas;
+	private JList listIdiomas;
+	private JPanel pnInfoGuia;
+	private JPanel pnEspacio1;
+	private JPanel pnInfoCentral;
+	private JPanel pnImagenGuia;
+	private JLabel lblImagenGuia;
+	private JButton btnSeleccionarGuia;
+	private JPanel pnHisRutasGuia;
+	private JLabel lblHistorialDeRutas;
+	private JScrollPane spnRutasGuia;
+	private JList listRutasGuia;
+	private JPanel pnListaGrupos;
+	private JLabel lblGruposTuristicos;
+	private JPanel pnListaIntegrantes;
+	private JLabel lblIntegrantes;
+	private JPanel pnBotonesIntegrantes;
+	private JButton btnAgregar_1;
+	private JButton btnBorrar_1;
+	private JScrollPane spnListaIntegrantes;
+	private JList listIntegrantes;
+	private JPanel pnInfoGrupo;
+	private JPanel pnEspacio2;
+	private JPanel pnInfoGrupCentral;
+	private JPanel pnInfoGrupo1;
+	private JLabel lblNombreGrupo;
+	private JTextField txtNombreGrupo;
+	private JLabel lblPaisOrigen;
+	private JTextField txtPais;
+	private JLabel lblLugarDeAlojamiento;
+	private JTextField txtAlojamiento;
+	private JLabel lblTipologia;
+	private JComboBox comboTipGrupo;
+	private JLabel lblGua;
+	private JComboBox comboGuiaGrupo;
+	private JPanel pnInteresesGrupo;
+	private JLabel lblIntereses;
+	private JPanel pnRestricciones;
+	private JPanel pnTituloRestric;
+	private JLabel lblRestricciones;
+	private JRadioButton rdbtnSi_1;
+	private JRadioButton rdbtnNo_1;
 
 	/**
 	 * Launch the application.
@@ -159,12 +221,37 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.setLayout(new GridLayout(6, 1, 0, 0));
 		
 		lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblUsuario);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.setEnabled(false);
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setText("Usuario");
 		pnContenidoUsuario.add(txtUsuario);
 		txtUsuario.setColumns(10);
+		
+		lblNombre = new JLabel("Nombre:");
+		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		pnContenidoUsuario.add(lblNombre);
+		
+		txtNombre = new JTextField();
+		txtNombre.setEnabled(false);
+		txtNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNombre.setText("Nombre");
+		pnContenidoUsuario.add(txtNombre);
+		txtNombre.setColumns(10);
+		
+		lblDireccinDeCorreo = new JLabel("Dirección de correo:");
+		lblDireccinDeCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+		pnContenidoUsuario.add(lblDireccinDeCorreo);
+		
+		txtCorreo = new JTextField();
+		txtCorreo.setEnabled(false);
+		txtCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+		txtCorreo.setText("Correo");
+		pnContenidoUsuario.add(txtCorreo);
+		txtCorreo.setColumns(10);
 		
 		pnHerramientas = new JPanel();
 		pnHerramientas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -177,6 +264,7 @@ public class VentanaPrincipal extends JFrame {
 		pnHerramientas.add(btnAyuda);
 		btnAyuda.setBorderPainted(false);
 		btnAyuda.setContentAreaFilled(false);
+		
 		
 		btnCerrarSesion = new JButton("Cerrar Sesion");
 		pnHerramientas.add(btnCerrarSesion);
@@ -359,14 +447,271 @@ public class VentanaPrincipal extends JFrame {
 		rdbtnNo = new JRadioButton("No");
 		pntituloIncidencia.add(rdbtnNo);
 		
-		pnListaIncidencia = new MiListaJPanel();
+		pnListaIncidencia = new MiListaJPanel_2();
 		pnIncidencias.add(pnListaIncidencia, BorderLayout.SOUTH);
 		
+		pnSugerencias = new JPanel();
+		pnInciden_Puntos_Opiniones.add(pnSugerencias, BorderLayout.SOUTH);
+		pnSugerencias.setLayout(new BorderLayout(0, 0));
+		
+		lblOpinionesYSugerencias = new JLabel("Opiniones y sugerencias:");
+		pnSugerencias.add(lblOpinionesYSugerencias, BorderLayout.NORTH);
+		
+		pnListaSugerencias = new MiListaJPanel_2();
+		pnSugerencias.add(pnListaSugerencias, BorderLayout.SOUTH);
+		
+		pnPtosInteres = new JPanel();
+		pnInciden_Puntos_Opiniones.add(pnPtosInteres, BorderLayout.CENTER);
+		pnPtosInteres.setLayout(new BorderLayout(0, 0));
+		
+		lblPuntosDeInteres = new JLabel("Puntos de interes:");
+		pnPtosInteres.add(lblPuntosDeInteres, BorderLayout.NORTH);
+		
+		pnListaPtosInteres = new MiListaJPanel_2();
+		pnPtosInteres.add(pnListaPtosInteres, BorderLayout.CENTER);
+		
 		pnGuias = new JPanel();
+		pnGuias.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		tbPestañas.addTab("Guías", null, pnGuias, null);
+		pnGuias.setLayout(new BorderLayout(0, 0));
+		
+		pnListaGuias = new MiListaJPanel_1();
+		pnListaGuias.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnGuias.add(pnListaGuias, BorderLayout.WEST);
+		//pnListaGuias.setLayout(new BorderLayout(0, 0));
+		
+		lblGuiasContratados = new JLabel("Guías Contratados:");
+		pnListaGuias.add(lblGuiasContratados, BorderLayout.NORTH);
+		
+		pnIdiomasGuia = new JPanel();
+		pnIdiomasGuia.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnGuias.add(pnIdiomasGuia, BorderLayout.EAST);
+		pnIdiomasGuia.setLayout(new BorderLayout(0, 0));
+		
+		lblIdiomas = new JLabel("Idiomas:");
+		pnIdiomasGuia.add(lblIdiomas, BorderLayout.NORTH);
+		
+		pnBotonesIdioma = new JPanel();
+		pnIdiomasGuia.add(pnBotonesIdioma, BorderLayout.SOUTH);
+		pnBotonesIdioma.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnAgregar = new JButton("Agregar");
+		btnAgregar.setIcon(null);
+		pnBotonesIdioma.add(btnAgregar);
+		
+		btnBorrar = new JButton("Borrar");
+		btnBorrar.setIcon(null);
+		pnBotonesIdioma.add(btnBorrar);
+		
+		spnListaIdiomas = new JScrollPane();
+		pnIdiomasGuia.add(spnListaIdiomas, BorderLayout.CENTER);
+		
+		listIdiomas = new JList();
+		spnListaIdiomas.setViewportView(listIdiomas);
+		
+		pnInfoGuia = new JPanel();
+		pnGuias.add(pnInfoGuia, BorderLayout.CENTER);
+		pnInfoGuia.setLayout(new BorderLayout(0, 0));
+		
+		pnEspacio1 = new JPanel();
+		pnEspacio1.setPreferredSize(new Dimension(10, 42));
+		pnInfoGuia.add(pnEspacio1, BorderLayout.SOUTH);
+		
+		pnInfoCentral = new JPanel();
+		pnInfoGuia.add(pnInfoCentral, BorderLayout.CENTER);
+		pnInfoCentral.setLayout(new BorderLayout(0, 0));
+		
+		pnImagenGuia = new JPanel();
+		pnInfoCentral.add(pnImagenGuia, BorderLayout.NORTH);
+		
+		lblImagenGuia = new JLabel("");
+		lblImagenGuia.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
+		pnImagenGuia.add(lblImagenGuia);
+		
+		btnSeleccionarGuia = new JButton("Seleccionar");
+		pnImagenGuia.add(btnSeleccionarGuia);
+		
+		pnHisRutasGuia = new JPanel();
+		pnInfoCentral.add(pnHisRutasGuia, BorderLayout.SOUTH);
+		pnHisRutasGuia.setLayout(new BorderLayout(0, 0));
+		
+		lblHistorialDeRutas = new JLabel("Historial de rutas:");
+		pnHisRutasGuia.add(lblHistorialDeRutas, BorderLayout.NORTH);
+		
+		spnRutasGuia = new JScrollPane();
+		spnRutasGuia.setPreferredSize(new Dimension(10, 60));
+		pnHisRutasGuia.add(spnRutasGuia, BorderLayout.CENTER);
+		
+		listRutasGuia = new JList();
+		spnRutasGuia.setViewportView(listRutasGuia);
 		
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
+		pnGrupos.setLayout(new BorderLayout(0, 0));
+		
+		pnListaGrupos = new MiListaJPanel_1();
+		pnListaGrupos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
+		
+		lblGruposTuristicos = new JLabel("Grupos turísticos (4 - 20 personas):");
+		pnListaGrupos.add(lblGruposTuristicos, BorderLayout.NORTH);
+		
+		pnListaIntegrantes = new JPanel();
+		pnListaIntegrantes.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnGrupos.add(pnListaIntegrantes, BorderLayout.EAST);
+		pnListaIntegrantes.setLayout(new BorderLayout(0, 0));
+		
+		lblIntegrantes = new JLabel("Integrantes:");
+		pnListaIntegrantes.add(lblIntegrantes, BorderLayout.NORTH);
+		
+		pnBotonesIntegrantes = new JPanel();
+		pnListaIntegrantes.add(pnBotonesIntegrantes, BorderLayout.SOUTH);
+		
+		btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1.setIcon(null);
+		pnBotonesIntegrantes.add(btnAgregar_1);
+		
+		btnBorrar_1 = new JButton("Borrar");
+		btnBorrar_1.setIcon(null);
+		pnBotonesIntegrantes.add(btnBorrar_1);
+		
+		spnListaIntegrantes = new JScrollPane();
+		pnListaIntegrantes.add(spnListaIntegrantes, BorderLayout.CENTER);
+		
+		listIntegrantes = new JList();
+		spnListaIntegrantes.setViewportView(listIntegrantes);
+		
+		pnInfoGrupo = new JPanel();
+		pnGrupos.add(pnInfoGrupo, BorderLayout.CENTER);
+		pnInfoGrupo.setLayout(new BorderLayout(0, 0));
+		
+		pnEspacio2 = new JPanel();
+		pnEspacio2.setPreferredSize(new Dimension(10, 42));
+		pnInfoGrupo.add(pnEspacio2, BorderLayout.SOUTH);
+		
+		pnInfoGrupCentral = new JPanel();
+		pnInfoGrupo.add(pnInfoGrupCentral, BorderLayout.CENTER);
+		pnInfoGrupCentral.setLayout(new BorderLayout(0, 0));
+		
+		
+		pnInfoGrupo1 = new JPanel();
+		pnInfoGrupCentral.add(pnInfoGrupo1, BorderLayout.NORTH);
+		GridBagLayout gbl_pnInfoGrupo1 = new GridBagLayout();
+		gbl_pnInfoGrupo1.columnWidths = new int[] {125, 101, 101, 0};
+		gbl_pnInfoGrupo1.rowHeights = new int[] {0, 0, 0, 30, 0, 0, 0};
+		gbl_pnInfoGrupo1.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0};
+		gbl_pnInfoGrupo1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		pnInfoGrupo1.setLayout(gbl_pnInfoGrupo1);
+		
+		lblNombreGrupo = new JLabel("Nombre grupo:");
+		GridBagConstraints gbc_lblNombreGrupo = new GridBagConstraints();
+		gbc_lblNombreGrupo.anchor = GridBagConstraints.EAST;
+		gbc_lblNombreGrupo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreGrupo.gridx = 0;
+		gbc_lblNombreGrupo.gridy = 1;
+		pnInfoGrupo1.add(lblNombreGrupo, gbc_lblNombreGrupo);
+		
+		txtNombreGrupo = new JTextField();
+		GridBagConstraints gbc_txtNombreGrupo = new GridBagConstraints();
+		gbc_txtNombreGrupo.gridwidth = 2;
+		gbc_txtNombreGrupo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNombreGrupo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNombreGrupo.gridx = 1;
+		gbc_txtNombreGrupo.gridy = 1;
+		pnInfoGrupo1.add(txtNombreGrupo, gbc_txtNombreGrupo);
+		txtNombreGrupo.setColumns(10);
+		
+		lblPaisOrigen = new JLabel("Pais origen:");
+		GridBagConstraints gbc_lblPaisOrigen = new GridBagConstraints();
+		gbc_lblPaisOrigen.anchor = GridBagConstraints.EAST;
+		gbc_lblPaisOrigen.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPaisOrigen.gridx = 0;
+		gbc_lblPaisOrigen.gridy = 2;
+		pnInfoGrupo1.add(lblPaisOrigen, gbc_lblPaisOrigen);
+		
+		txtPais = new JTextField();
+		txtPais.setText("Pais");
+		GridBagConstraints gbc_txtPais = new GridBagConstraints();
+		gbc_txtPais.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPais.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPais.gridx = 1;
+		gbc_txtPais.gridy = 2;
+		pnInfoGrupo1.add(txtPais, gbc_txtPais);
+		txtPais.setColumns(10);
+		
+		lblLugarDeAlojamiento = new JLabel("Alojamiento:");
+		GridBagConstraints gbc_lblLugarDeAlojamiento = new GridBagConstraints();
+		gbc_lblLugarDeAlojamiento.anchor = GridBagConstraints.EAST;
+		gbc_lblLugarDeAlojamiento.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLugarDeAlojamiento.gridx = 0;
+		gbc_lblLugarDeAlojamiento.gridy = 3;
+		pnInfoGrupo1.add(lblLugarDeAlojamiento, gbc_lblLugarDeAlojamiento);
+		
+		txtAlojamiento = new JTextField();
+		txtAlojamiento.setText("Alojamiento");
+		GridBagConstraints gbc_txtAlojamiento = new GridBagConstraints();
+		gbc_txtAlojamiento.insets = new Insets(0, 0, 5, 5);
+		gbc_txtAlojamiento.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtAlojamiento.gridx = 1;
+		gbc_txtAlojamiento.gridy = 3;
+		pnInfoGrupo1.add(txtAlojamiento, gbc_txtAlojamiento);
+		txtAlojamiento.setColumns(10);
+		
+		lblTipologia = new JLabel("Tipología:");
+		GridBagConstraints gbc_lblTipologia = new GridBagConstraints();
+		gbc_lblTipologia.anchor = GridBagConstraints.EAST;
+		gbc_lblTipologia.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTipologia.gridx = 0;
+		gbc_lblTipologia.gridy = 4;
+		pnInfoGrupo1.add(lblTipologia, gbc_lblTipologia);
+		
+		comboTipGrupo = new JComboBox();
+		comboTipGrupo.setModel(new DefaultComboBoxModel(new String[] {"", "Cultural", "Natural", "Gastronómico", "Reunión"}));
+		GridBagConstraints gbc_comboTipGrupo = new GridBagConstraints();
+		gbc_comboTipGrupo.insets = new Insets(0, 0, 5, 5);
+		gbc_comboTipGrupo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboTipGrupo.gridx = 1;
+		gbc_comboTipGrupo.gridy = 4;
+		pnInfoGrupo1.add(comboTipGrupo, gbc_comboTipGrupo);
+		
+		lblGua = new JLabel("Guía:");
+		GridBagConstraints gbc_lblGua = new GridBagConstraints();
+		gbc_lblGua.anchor = GridBagConstraints.EAST;
+		gbc_lblGua.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGua.gridx = 0;
+		gbc_lblGua.gridy = 5;
+		pnInfoGrupo1.add(lblGua, gbc_lblGua);
+		
+		comboGuiaGrupo = new JComboBox();
+		GridBagConstraints gbc_comboGuiaGrupo = new GridBagConstraints();
+		gbc_comboGuiaGrupo.insets = new Insets(0, 0, 5, 5);
+		gbc_comboGuiaGrupo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboGuiaGrupo.gridx = 1;
+		gbc_comboGuiaGrupo.gridy = 5;
+		pnInfoGrupo1.add(comboGuiaGrupo, gbc_comboGuiaGrupo);
+		
+		pnInteresesGrupo = new MiListaJPanel_2();
+		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
+		
+		lblIntereses = new JLabel("Intereses:");
+		pnInteresesGrupo.add(lblIntereses, BorderLayout.NORTH);
+		
+		pnRestricciones = new MiListaJPanel_2();
+		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
+		
+		pnTituloRestric = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) pnTituloRestric.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		pnRestricciones.add(pnTituloRestric, BorderLayout.NORTH);
+		
+		lblRestricciones = new JLabel("Restricciones: ");
+		pnTituloRestric.add(lblRestricciones);
+		
+		rdbtnSi_1 = new JRadioButton("Sí");
+		pnTituloRestric.add(rdbtnSi_1);
+		
+		rdbtnNo_1 = new JRadioButton("No");
+		pnTituloRestric.add(rdbtnNo_1);
 		
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
