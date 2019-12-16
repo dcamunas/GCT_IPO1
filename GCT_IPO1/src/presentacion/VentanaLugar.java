@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Window;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
@@ -37,6 +39,7 @@ public class VentanaLugar {
 	private JTextField txtfPrecio;
 	private JTextField txtfTipologia;
 	private JTextField txtfDuracion;
+	private JComboBox comboBox;
 
 	/**
 	 * Create the application.
@@ -50,7 +53,7 @@ public class VentanaLugar {
 	 */
 	private void initialize() {
 		frmLugarVisita = new JFrame();
-		frmLugarVisita.setTitle("Lugar de visita");
+		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 450, 300);
 		
 		lblImagen = new JLabel();
@@ -67,9 +70,9 @@ public class VentanaLugar {
 		pnPrincipal.add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[] {101, 101, 101, 30};
-		gbl_panel.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 20};
-		gbl_panel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE, 0.0};
+		gbl_panel.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 20};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 		panel.setLayout(gbl_panel);
 		
 		lblHorario = new JLabel("Horario visita:");
@@ -118,11 +121,29 @@ public class VentanaLugar {
 		gbc_lblTipologia.anchor = GridBagConstraints.EAST;
 		gbc_lblTipologia.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTipologia.gridx = 0;
-		gbc_lblTipologia.gridy = 4;
+		gbc_lblTipologia.gridy = 3;
 		panel.add(lblTipologia, gbc_lblTipologia);
 		
-		txtfTipologia = new JTextField();
+		comboBox = new JComboBox();
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox.gridx = 1;
+		gbc_comboBox.gridy = 3;
+		panel.add(comboBox, gbc_comboBox);
+		
+		lblPrecio = new JLabel("Precio:");
+		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
+		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
+		gbc_lblPrecio.anchor = GridBagConstraints.EAST;
+		gbc_lblPrecio.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPrecio.gridx = 0;
+		gbc_lblPrecio.gridy = 4;
+		panel.add(lblPrecio, gbc_lblPrecio);
+		lblPrecio.setLabelFor(txtfPrecio);
 		lblTipologia.setLabelFor(txtfTipologia);
+		
+		txtfTipologia = new JTextField();
 		GridBagConstraints gbc_txtfTipologia = new GridBagConstraints();
 		gbc_txtfTipologia.insets = new Insets(0, 0, 5, 5);
 		gbc_txtfTipologia.fill = GridBagConstraints.HORIZONTAL;
@@ -131,17 +152,7 @@ public class VentanaLugar {
 		panel.add(txtfTipologia, gbc_txtfTipologia);
 		txtfTipologia.setColumns(10);
 		
-		lblPrecio = new JLabel("Precio:");
-		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
-		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
-		gbc_lblPrecio.anchor = GridBagConstraints.EAST;
-		gbc_lblPrecio.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPrecio.gridx = 0;
-		gbc_lblPrecio.gridy = 5;
-		panel.add(lblPrecio, gbc_lblPrecio);
-		
 		txtfPrecio = new JTextField();
-		lblPrecio.setLabelFor(txtfPrecio);
 		GridBagConstraints gbc_txtfPrecio = new GridBagConstraints();
 		gbc_txtfPrecio.insets = new Insets(0, 0, 5, 5);
 		gbc_txtfPrecio.fill = GridBagConstraints.HORIZONTAL;
@@ -151,5 +162,15 @@ public class VentanaLugar {
 		txtfPrecio.setColumns(10);
 		
 	}
+
+	public JFrame getFrmLugarVisita() {
+		return frmLugarVisita;
+	}
+
+	public void setFrmLugarVisita(JFrame frmLugarVisita) {
+		this.frmLugarVisita = frmLugarVisita;
+	}
+
+
 
 }
