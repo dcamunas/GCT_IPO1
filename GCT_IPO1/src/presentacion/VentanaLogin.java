@@ -78,7 +78,7 @@ public class VentanaLogin {
 		panel.add(btnAyuda);
 
 		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(168, 32, 61, 14);
+		lblUsuario.setBounds(168, 32, 120, 14);
 		panel.add(lblUsuario);
 
 		tfUsuario = new JTextField();
@@ -88,8 +88,8 @@ public class VentanaLogin {
 		tfUsuario.setColumns(10);
 
 		lblContrasenia = new JLabel("Contraseña:");
-		lblContrasenia.setEnabled(false);
-		lblContrasenia.setBounds(168, 101, 80, 14);
+		lblContrasenia.setEnabled(true);
+		lblContrasenia.setBounds(168, 101, 120, 14);
 		panel.add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
@@ -113,42 +113,51 @@ public class VentanaLogin {
 	private class TfUsuarioActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// Se activa los campos de contraseña
-			lblContrasenia.setEnabled(true);
 			pwdContrasenia.setEnabled(true);
 			// Se pasa el foco al campo de la contraseña
 			pwdContrasenia.requestFocus();
+			btnEntrar.setEnabled(true);
+
 		}
 	}
 
 	private class PwdContraseniaActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// Se obtiene la contraseña introducida
-		
+
 			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
 				lblAviso.setBackground(Color.GREEN);
-				lblAviso.setText("Contraseña correcta. Puede entrar");
+				lblAviso.setText("Verificación correcta. Puede entrar.");
 				lblAviso.setVisible(true);
-				btnEntrar.setEnabled(true);
 				pwdContrasenia.setEnabled(false);
-				pwdContrasenia.setEnabled(false);
+				tfUsuario.setEnabled(false);
 			} else {
 				lblAviso.setBackground(Color.RED);
-				lblAviso.setText("Contraseña incorrecta. Vuelva a intentarlo");
+				lblAviso.setText("Contraseña o usuario incorrecto. Vuelva a intentarlo.");
 				lblAviso.setVisible(true);
+				pwdContrasenia.setText(null);
+				pwdContrasenia.setEnabled(false);
 				btnEntrar.setEnabled(false);
+				tfUsuario.setText(null);
+				tfUsuario.requestFocus();
+				
 			}
 
 		}
 
 	}
+
 	private class BtnEntrarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//Se crea una instancia de la ventana principal (JFrame)
-			VentanaPrincipal ventana_principal = new VentanaPrincipal();
-			//Se hace visible la VentanaPrincipal
-			ventana_principal.setVisible(true);
-			//Se elimina la ventana actual (atributo a nivel de clase)
-			frmAccesoManchatours.dispose();
+			lblAviso.setVisible(true);
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+				// Se crea una instancia de la ventana principal (JFrame)
+				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+				// Se hace visible la VentanaPrincipal
+				ventana_principal.setVisible(true);
+				// Se elimina la ventana actual (atributo a nivel de clase)
+				frmAccesoManchatours.dispose();
+			}
 		}
 	}
 }
