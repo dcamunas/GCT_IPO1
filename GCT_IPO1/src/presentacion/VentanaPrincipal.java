@@ -31,6 +31,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ButtonGroup;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -155,6 +156,23 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel lblRestricciones;
 	private JRadioButton rdbtnSi_1;
 	private JRadioButton rdbtnNo_1;
+	private JPanel pnInfoGeneral;
+	private JTextField txtNombreguia;
+	private JLabel lblApellidosGuia;
+	private JTextField txtApellidosGuia;
+	private JLabel lblCorreoGuia;
+	private JTextField txtCorreoguia;
+	private JLabel lblNTelefono;
+	private JTextField txtNumeroGuia;
+	private JLabel lblPrecioHora;
+	private JTextField txtPrecioGuia;
+	private JLabel lblPuntuacion;
+	private JLabel lblDisponibilidadGuia;
+	private JTextField txtPuntuacionGuia;
+	private JRadioButton rdbtnSi_2;
+	private JRadioButton rdbtnNo_2;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -514,7 +532,7 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoGuia.setLayout(new BorderLayout(0, 0));
 		
 		pnEspacio1 = new JPanel();
-		pnEspacio1.setPreferredSize(new Dimension(10, 42));
+		pnEspacio1.setPreferredSize(new Dimension(10, 38));
 		pnInfoGuia.add(pnEspacio1, BorderLayout.SOUTH);
 		
 		pnInfoCentral = new JPanel();
@@ -522,6 +540,7 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoCentral.setLayout(new BorderLayout(0, 0));
 		
 		pnImagenGuia = new JPanel();
+		pnImagenGuia.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		pnInfoCentral.add(pnImagenGuia, BorderLayout.NORTH);
 		
 		lblImagenGuia = new JLabel("");
@@ -532,6 +551,7 @@ public class VentanaPrincipal extends JFrame {
 		pnImagenGuia.add(btnSeleccionarGuia);
 		
 		pnHisRutasGuia = new JPanel();
+		pnHisRutasGuia.setPreferredSize(new Dimension(10, 160));
 		pnInfoCentral.add(pnHisRutasGuia, BorderLayout.SOUTH);
 		pnHisRutasGuia.setLayout(new BorderLayout(0, 0));
 		
@@ -544,6 +564,145 @@ public class VentanaPrincipal extends JFrame {
 		
 		listRutasGuia = new JList();
 		spnRutasGuia.setViewportView(listRutasGuia);
+		
+		pnInfoGeneral = new JPanel();
+		pnInfoCentral.add(pnInfoGeneral, BorderLayout.CENTER);
+		GridBagLayout gbl_pnInfoGeneral = new GridBagLayout();
+		gbl_pnInfoGeneral.columnWidths = new int[] {0, 74, 27, 101};
+		gbl_pnInfoGeneral.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 30, 0, 0};
+		gbl_pnInfoGeneral.columnWeights = new double[]{0.0, 0.0, 1.0};
+		gbl_pnInfoGeneral.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		pnInfoGeneral.setLayout(gbl_pnInfoGeneral);
+		
+		JLabel lblNombreGuia = new JLabel("Nombre:");
+		GridBagConstraints gbc_lblNombreGuia = new GridBagConstraints();
+		gbc_lblNombreGuia.anchor = GridBagConstraints.EAST;
+		gbc_lblNombreGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNombreGuia.gridx = 1;
+		gbc_lblNombreGuia.gridy = 1;
+		pnInfoGeneral.add(lblNombreGuia, gbc_lblNombreGuia);
+		
+		txtNombreguia = new JTextField();
+		GridBagConstraints gbc_txtNombreguia = new GridBagConstraints();
+		gbc_txtNombreguia.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNombreguia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNombreguia.gridx = 2;
+		gbc_txtNombreguia.gridy = 1;
+		pnInfoGeneral.add(txtNombreguia, gbc_txtNombreguia);
+		txtNombreguia.setColumns(10);
+		
+		lblApellidosGuia = new JLabel("Apellidos:");
+		GridBagConstraints gbc_lblApellidosGuia = new GridBagConstraints();
+		gbc_lblApellidosGuia.anchor = GridBagConstraints.EAST;
+		gbc_lblApellidosGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_lblApellidosGuia.gridx = 1;
+		gbc_lblApellidosGuia.gridy = 2;
+		pnInfoGeneral.add(lblApellidosGuia, gbc_lblApellidosGuia);
+		
+		txtApellidosGuia = new JTextField();
+		GridBagConstraints gbc_txtApellidosGuia = new GridBagConstraints();
+		gbc_txtApellidosGuia.gridwidth = 2;
+		gbc_txtApellidosGuia.insets = new Insets(0, 0, 5, 0);
+		gbc_txtApellidosGuia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtApellidosGuia.gridx = 2;
+		gbc_txtApellidosGuia.gridy = 2;
+		pnInfoGeneral.add(txtApellidosGuia, gbc_txtApellidosGuia);
+		txtApellidosGuia.setColumns(10);
+		
+		lblCorreoGuia = new JLabel("Correo:");
+		GridBagConstraints gbc_lblCorreoGuia = new GridBagConstraints();
+		gbc_lblCorreoGuia.anchor = GridBagConstraints.EAST;
+		gbc_lblCorreoGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCorreoGuia.gridx = 1;
+		gbc_lblCorreoGuia.gridy = 3;
+		pnInfoGeneral.add(lblCorreoGuia, gbc_lblCorreoGuia);
+		
+		txtCorreoguia = new JTextField();
+		GridBagConstraints gbc_txtCorreoguia = new GridBagConstraints();
+		gbc_txtCorreoguia.gridwidth = 2;
+		gbc_txtCorreoguia.insets = new Insets(0, 0, 5, 0);
+		gbc_txtCorreoguia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtCorreoguia.gridx = 2;
+		gbc_txtCorreoguia.gridy = 3;
+		pnInfoGeneral.add(txtCorreoguia, gbc_txtCorreoguia);
+		txtCorreoguia.setColumns(10);
+		
+		lblNTelefono = new JLabel("Nº Teléfono:");
+		GridBagConstraints gbc_lblNTelefono = new GridBagConstraints();
+		gbc_lblNTelefono.anchor = GridBagConstraints.EAST;
+		gbc_lblNTelefono.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNTelefono.gridx = 1;
+		gbc_lblNTelefono.gridy = 4;
+		pnInfoGeneral.add(lblNTelefono, gbc_lblNTelefono);
+		
+		txtNumeroGuia = new JTextField();
+		GridBagConstraints gbc_txtNumeroGuia = new GridBagConstraints();
+		gbc_txtNumeroGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNumeroGuia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtNumeroGuia.gridx = 2;
+		gbc_txtNumeroGuia.gridy = 4;
+		pnInfoGeneral.add(txtNumeroGuia, gbc_txtNumeroGuia);
+		txtNumeroGuia.setColumns(10);
+		
+		lblPrecioHora = new JLabel("Precio / Hora:");
+		GridBagConstraints gbc_lblPrecioHora = new GridBagConstraints();
+		gbc_lblPrecioHora.anchor = GridBagConstraints.EAST;
+		gbc_lblPrecioHora.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPrecioHora.gridx = 1;
+		gbc_lblPrecioHora.gridy = 5;
+		pnInfoGeneral.add(lblPrecioHora, gbc_lblPrecioHora);
+		
+		txtPrecioGuia = new JTextField();
+		GridBagConstraints gbc_txtPrecioGuia = new GridBagConstraints();
+		gbc_txtPrecioGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPrecioGuia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPrecioGuia.gridx = 2;
+		gbc_txtPrecioGuia.gridy = 5;
+		pnInfoGeneral.add(txtPrecioGuia, gbc_txtPrecioGuia);
+		txtPrecioGuia.setColumns(10);
+		
+		lblPuntuacion = new JLabel("Puntuación:");
+		GridBagConstraints gbc_lblPuntuacion = new GridBagConstraints();
+		gbc_lblPuntuacion.anchor = GridBagConstraints.EAST;
+		gbc_lblPuntuacion.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPuntuacion.gridx = 1;
+		gbc_lblPuntuacion.gridy = 6;
+		pnInfoGeneral.add(lblPuntuacion, gbc_lblPuntuacion);
+		
+		txtPuntuacionGuia = new JTextField();
+		GridBagConstraints gbc_txtPuntuacionGuia = new GridBagConstraints();
+		gbc_txtPuntuacionGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPuntuacionGuia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPuntuacionGuia.gridx = 2;
+		gbc_txtPuntuacionGuia.gridy = 6;
+		pnInfoGeneral.add(txtPuntuacionGuia, gbc_txtPuntuacionGuia);
+		txtPuntuacionGuia.setColumns(10);
+		
+		lblDisponibilidadGuia = new JLabel("Disponibilidad:");
+		GridBagConstraints gbc_lblDisponibilidadGuia = new GridBagConstraints();
+		gbc_lblDisponibilidadGuia.anchor = GridBagConstraints.EAST;
+		gbc_lblDisponibilidadGuia.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDisponibilidadGuia.gridx = 1;
+		gbc_lblDisponibilidadGuia.gridy = 7;
+		pnInfoGeneral.add(lblDisponibilidadGuia, gbc_lblDisponibilidadGuia);
+		
+		rdbtnSi_2 = new JRadioButton("Sí");
+		buttonGroup.add(rdbtnSi_2);
+		GridBagConstraints gbc_rdbtnSi_2 = new GridBagConstraints();
+		gbc_rdbtnSi_2.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnSi_2.insets = new Insets(0, 0, 5, 5);
+		gbc_rdbtnSi_2.gridx = 2;
+		gbc_rdbtnSi_2.gridy = 7;
+		pnInfoGeneral.add(rdbtnSi_2, gbc_rdbtnSi_2);
+		
+		rdbtnNo_2 = new JRadioButton("No");
+		buttonGroup.add(rdbtnNo_2);
+		GridBagConstraints gbc_rdbtnNo_2 = new GridBagConstraints();
+		gbc_rdbtnNo_2.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnNo_2.insets = new Insets(0, 0, 5, 0);
+		gbc_rdbtnNo_2.gridx = 3;
+		gbc_rdbtnNo_2.gridy = 7;
+		pnInfoGeneral.add(rdbtnNo_2, gbc_rdbtnNo_2);
 		
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
@@ -630,7 +789,6 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoGrupo1.add(lblPaisOrigen, gbc_lblPaisOrigen);
 		
 		txtPais = new JTextField();
-		txtPais.setText("Pais");
 		GridBagConstraints gbc_txtPais = new GridBagConstraints();
 		gbc_txtPais.insets = new Insets(0, 0, 5, 5);
 		gbc_txtPais.fill = GridBagConstraints.HORIZONTAL;
@@ -648,7 +806,6 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoGrupo1.add(lblLugarDeAlojamiento, gbc_lblLugarDeAlojamiento);
 		
 		txtAlojamiento = new JTextField();
-		txtAlojamiento.setText("Alojamiento");
 		GridBagConstraints gbc_txtAlojamiento = new GridBagConstraints();
 		gbc_txtAlojamiento.insets = new Insets(0, 0, 5, 5);
 		gbc_txtAlojamiento.fill = GridBagConstraints.HORIZONTAL;
@@ -708,9 +865,11 @@ public class VentanaPrincipal extends JFrame {
 		pnTituloRestric.add(lblRestricciones);
 		
 		rdbtnSi_1 = new JRadioButton("Sí");
+		buttonGroup_1.add(rdbtnSi_1);
 		pnTituloRestric.add(rdbtnSi_1);
 		
 		rdbtnNo_1 = new JRadioButton("No");
+		buttonGroup_1.add(rdbtnNo_1);
 		pnTituloRestric.add(rdbtnNo_1);
 		
 		pnDiseñoRuta = new JPanel();
