@@ -173,6 +173,7 @@ public class VentanaPrincipal extends JFrame {
 	private JRadioButton rdbtnNo_2;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -382,9 +383,9 @@ public class VentanaPrincipal extends JFrame {
 		pnDatosCircuito = new JPanel();
 		pnInfoCircuito.add(pnDatosCircuito, BorderLayout.NORTH);
 		GridBagLayout gbl_pnDatosCircuito = new GridBagLayout();
-		gbl_pnDatosCircuito.columnWidths = new int[] {101, 101, 101};
+		gbl_pnDatosCircuito.columnWidths = new int[] {101, 101, 101, 0};
 		gbl_pnDatosCircuito.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_pnDatosCircuito.columnWeights = new double[]{0.0, 1.0, 1.0};
+		gbl_pnDatosCircuito.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0};
 		gbl_pnDatosCircuito.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnDatosCircuito.setLayout(gbl_pnDatosCircuito);
 		
@@ -398,7 +399,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.gridwidth = 2;
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
@@ -431,8 +432,8 @@ public class VentanaPrincipal extends JFrame {
 		
 		textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
 		gbc_textField_1.gridx = 1;
 		gbc_textField_1.gridy = 3;
 		pnDatosCircuito.add(textField_1, gbc_textField_1);
@@ -460,9 +461,11 @@ public class VentanaPrincipal extends JFrame {
 		pntituloIncidencia.add(lblIncidencias);
 		
 		rdbtnSi = new JRadioButton("Si");
+		buttonGroup_2.add(rdbtnSi);
 		pntituloIncidencia.add(rdbtnSi);
 		
 		rdbtnNo = new JRadioButton("No");
+		buttonGroup_2.add(rdbtnNo);
 		pntituloIncidencia.add(rdbtnNo);
 		
 		pnListaIncidencia = new MiListaJPanel_2();
@@ -570,7 +573,7 @@ public class VentanaPrincipal extends JFrame {
 		GridBagLayout gbl_pnInfoGeneral = new GridBagLayout();
 		gbl_pnInfoGeneral.columnWidths = new int[] {0, 74, 27, 101};
 		gbl_pnInfoGeneral.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 30, 0, 0};
-		gbl_pnInfoGeneral.columnWeights = new double[]{0.0, 0.0, 1.0};
+		gbl_pnInfoGeneral.columnWeights = new double[]{0.0, 0.0, 0.0};
 		gbl_pnInfoGeneral.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
 		pnInfoGeneral.setLayout(gbl_pnInfoGeneral);
 		
@@ -689,7 +692,7 @@ public class VentanaPrincipal extends JFrame {
 		rdbtnSi_2 = new JRadioButton("Sí");
 		buttonGroup.add(rdbtnSi_2);
 		GridBagConstraints gbc_rdbtnSi_2 = new GridBagConstraints();
-		gbc_rdbtnSi_2.anchor = GridBagConstraints.WEST;
+		gbc_rdbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_rdbtnSi_2.insets = new Insets(0, 0, 5, 5);
 		gbc_rdbtnSi_2.gridx = 2;
 		gbc_rdbtnSi_2.gridy = 7;
@@ -756,9 +759,9 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoGrupo1 = new JPanel();
 		pnInfoGrupCentral.add(pnInfoGrupo1, BorderLayout.NORTH);
 		GridBagLayout gbl_pnInfoGrupo1 = new GridBagLayout();
-		gbl_pnInfoGrupo1.columnWidths = new int[] {125, 101, 101, 0};
+		gbl_pnInfoGrupo1.columnWidths = new int[] {125, 101, 0, 0, 0};
 		gbl_pnInfoGrupo1.rowHeights = new int[] {0, 0, 0, 30, 0, 0, 0};
-		gbl_pnInfoGrupo1.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0};
+		gbl_pnInfoGrupo1.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0};
 		gbl_pnInfoGrupo1.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnInfoGrupo1.setLayout(gbl_pnInfoGrupo1);
 		
