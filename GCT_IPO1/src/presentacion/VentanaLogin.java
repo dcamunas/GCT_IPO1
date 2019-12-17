@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaLogin {
 
@@ -93,6 +95,7 @@ public class VentanaLogin {
 		panel.add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
+		pwdContrasenia.addKeyListener(new PwdContraseniaKeyListener());
 		pwdContrasenia.addActionListener(new PwdContraseniaActionListener());
 		pwdContrasenia.setEnabled(false);
 		pwdContrasenia.setBounds(168, 126, 120, 20);
@@ -158,6 +161,20 @@ public class VentanaLogin {
 				// Se elimina la ventana actual (atributo a nivel de clase)
 				frmAccesoManchatours.dispose();
 			}
+		}
+	}
+	private class PwdContraseniaKeyListener extends KeyAdapter {
+		public void keyPressed(KeyEvent e) {
+			//lblAviso.setVisible(true);
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+				// Se crea una instancia de la ventana principal (JFrame)
+				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+				// Se hace visible la VentanaPrincipal
+				ventana_principal.setVisible(true);
+				// Se elimina la ventana actual (atributo a nivel de clase)
+				frmAccesoManchatours.dispose();
+			}
+			
 		}
 	}
 
