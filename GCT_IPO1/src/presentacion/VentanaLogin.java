@@ -160,4 +160,16 @@ public class VentanaLogin {
 			}
 		}
 	}
+
+	public JFrame getFrmAccesoManchatours() {
+		return frmAccesoManchatours;
+	}
+
+	public void setFrmAccesoManchatours(JFrame frmAccesoManchatours) {
+		this.frmAccesoManchatours = frmAccesoManchatours;
+	}
+	
+	
 }
+
+
