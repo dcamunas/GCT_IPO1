@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;
@@ -30,8 +32,13 @@ import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -47,9 +54,6 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtUsuario;
 	private JPanel pnImagen;
 	private JLabel lblImagen;
-	private JPanel pnBotonesImagen;
-	private JButton btnSelecionarImagen;
-	private JButton btnEliminarImagen;
 	private JPanel pnPrincipal;
 	private JTabbedPane tbPestañas;
 	private JPanel pnCircuitos;
@@ -174,6 +178,7 @@ public class VentanaPrincipal extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
+	private static VentanaPrincipal frame;
 
 	/**
 	 * Launch the application.
@@ -182,7 +187,7 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
+					frame = new VentanaPrincipal();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -219,17 +224,9 @@ public class VentanaPrincipal extends JFrame {
 		pnAreaImagen.add(pnImagen, BorderLayout.NORTH);
 		
 		lblImagen = new JLabel("");
+		lblImagen.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblImagen.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
 		pnImagen.add(lblImagen);
-		
-		pnBotonesImagen = new JPanel();
-		pnAreaImagen.add(pnBotonesImagen, BorderLayout.SOUTH);
-		
-		btnSelecionarImagen = new JButton("Selecionar");
-		pnBotonesImagen.add(btnSelecionarImagen);
-		
-		btnEliminarImagen = new JButton("Eliminar");
-		pnBotonesImagen.add(btnEliminarImagen);
 		
 		lblUltimaConexion = new JLabel("Ultima conexion");
 		lblUltimaConexion.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -244,9 +241,9 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(lblUsuario);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.setPreferredSize(new Dimension(6, 5));
 		txtUsuario.setEnabled(false);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtUsuario.setText("Usuario");
 		pnContenidoUsuario.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
@@ -257,7 +254,6 @@ public class VentanaPrincipal extends JFrame {
 		txtNombre = new JTextField();
 		txtNombre.setEnabled(false);
 		txtNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		txtNombre.setText("Nombre");
 		pnContenidoUsuario.add(txtNombre);
 		txtNombre.setColumns(10);
 		
@@ -268,7 +264,6 @@ public class VentanaPrincipal extends JFrame {
 		txtCorreo = new JTextField();
 		txtCorreo.setEnabled(false);
 		txtCorreo.setHorizontalAlignment(SwingConstants.CENTER);
-		txtCorreo.setText("Correo");
 		pnContenidoUsuario.add(txtCorreo);
 		txtCorreo.setColumns(10);
 		
@@ -286,6 +281,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.addActionListener(new BtnCerrarSesionActionListener());
 		pnHerramientas.add(btnCerrarSesion);
 		
 		pnPrincipal = new JPanel();
@@ -547,10 +543,12 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoCentral.add(pnImagenGuia, BorderLayout.NORTH);
 		
 		lblImagenGuia = new JLabel("");
+		lblImagenGuia.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblImagenGuia.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
 		pnImagenGuia.add(lblImagenGuia);
 		
 		btnSeleccionarGuia = new JButton("Seleccionar");
+		btnSeleccionarGuia.addActionListener(new BtnSeleccionarGuiaActionListener());
 		pnImagenGuia.add(btnSeleccionarGuia);
 		
 		pnHisRutasGuia = new JPanel();
@@ -566,6 +564,7 @@ public class VentanaPrincipal extends JFrame {
 		pnHisRutasGuia.add(spnRutasGuia, BorderLayout.CENTER);
 		
 		listRutasGuia = new JList();
+		listRutasGuia.setEnabled(false);
 		spnRutasGuia.setViewportView(listRutasGuia);
 		
 		pnInfoGeneral = new JPanel();
@@ -879,4 +878,31 @@ public class VentanaPrincipal extends JFrame {
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
 	}
 
+	private class BtnCerrarSesionActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			VentanaLogin ventana_login = new VentanaLogin();
+			ventana_login.getFrmAccesoManchatours().setVisible(true);
+			frame.dispose();
+			
+		}
+		
+	}
+	private class BtnSeleccionarGuiaActionListener implements ActionListener {
+		private ImageIcon imagen;
+
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser seleccionar = new JFileChooser();
+			int vDevuelto = seleccionar.showOpenDialog(frame);
+			if (vDevuelto == JFileChooser.APPROVE_OPTION){
+				File archivo = seleccionar.getSelectedFile();
+				imagen = new ImageIcon(archivo.getAbsolutePath());
+				lblImagenGuia.setIcon(imagen);	
+			}	
+			
+		}
+	}
+
+	
+	
 }
+
