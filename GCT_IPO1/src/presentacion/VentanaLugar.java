@@ -55,6 +55,7 @@ public class VentanaLugar {
 	 */
 	private void initialize() {
 		frmLugarVisita = new JFrame();
+		frmLugarVisita.setResizable(false);
 		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 450, 300);

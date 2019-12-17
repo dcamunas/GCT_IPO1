@@ -45,6 +45,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.AbstractListModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -382,6 +386,16 @@ public class VentanaPrincipal extends JFrame {
 		pnListaLugares.add(spnLugares, BorderLayout.CENTER);
 
 		listLugares = new JList();
+		listLugares.addMouseListener(new ListLugaresMouseListener());
+		listLugares.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Lugar 1"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		spnLugares.setViewportView(listLugares);
 
 		pnInfoCircuito = new JPanel();
@@ -423,6 +437,7 @@ public class VentanaPrincipal extends JFrame {
 		pnDatosCircuito.add(lblPersonasQueLo, gbc_lblPersonasQueLo);
 
 		spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.anchor = GridBagConstraints.WEST;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
@@ -950,6 +965,13 @@ public class VentanaPrincipal extends JFrame {
 			VentanaPago ventana_pago;
 				ventana_pago = new VentanaPago();
 				ventana_pago.getFrmPasarelaDePago().setVisible(true);
+		}
+	}
+	private class ListLugaresMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			VentanaLugar ventana_lugar = new VentanaLugar();
+			ventana_lugar.getFrmLugarVisita().setVisible(true);
 		}
 	}
 	

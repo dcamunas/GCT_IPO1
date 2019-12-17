@@ -35,11 +35,11 @@ public class VentanaPago {
 	 */
 	private void initialize() {
 			frmPasarelaDePago = new JFrame();
+			frmPasarelaDePago.setResizable(false);
 			frmPasarelaDePago.setIconImage(Toolkit.getDefaultToolkit()
 					.getImage(VentanaPago.class.getResource("/presentacion/imagenes/iconos/credit-card.png")));
 			frmPasarelaDePago.setTitle("Pasarela de pago");
 			frmPasarelaDePago.setBounds(100, 100, 346, 236);
-			frmPasarelaDePago.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JLabel imagen = new JLabel();
 
 			pnPrincipal = new MiJPanel_2V(imagen);
