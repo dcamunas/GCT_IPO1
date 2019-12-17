@@ -20,6 +20,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
@@ -49,6 +50,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.AbstractListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+//import java.awt.event.*;
+
 
 public class VentanaPrincipal extends JFrame {
 
@@ -147,7 +150,6 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnBotonesIntegrantes;
 	private JButton btnAgregar_1;
 	private JButton btnBorrar_1;
-	private JScrollPane spnListaIntegrantes;
 	private JPanel pnInfoGrupo;
 	private JPanel pnEspacio2;
 	private JPanel pnInfoGrupCentral;
@@ -188,7 +190,14 @@ public class VentanaPrincipal extends JFrame {
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
 	private static VentanaPrincipal frame;
-	private JTable tableIntegrantes;
+	private JPanel pnTablaIntegrantes;
+	private JPanel pnFotoIntegrante;
+	private JScrollPane spnInfoImagenes;
+	private JLabel lblFotoSeleccionada;
+	private JTextPane txIntegranteSeleccionado;
+	private JScrollPane spnTablaIntegrantes;
+	private JTable tablaIntegrantes;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -222,7 +231,7 @@ public class VentanaPrincipal extends JFrame {
 
 		pnInfoUsuario = new JPanel();
 		pnInfoUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		pnInfoUsuario.setPreferredSize(new Dimension(150, 10));
+		pnInfoUsuario.setPreferredSize(new Dimension(200, 10));
 		contentPane.add(pnInfoUsuario, BorderLayout.EAST);
 		pnInfoUsuario.setLayout(new BorderLayout(0, 0));
 
@@ -294,6 +303,10 @@ public class VentanaPrincipal extends JFrame {
 
 		btnCerrarSesion = new JButton("Cerrar Sesion");
 		btnCerrarSesion.addActionListener(new BtnCerrarSesionActionListener());
+
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new BtnSalirActionListener());
+		pnHerramientas.add(btnSalir);
 		pnHerramientas.add(btnCerrarSesion);
 
 		pnPrincipal = new JPanel();
@@ -388,10 +401,12 @@ public class VentanaPrincipal extends JFrame {
 		listLugares = new JList();
 		listLugares.addMouseListener(new ListLugaresMouseListener());
 		listLugares.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Lugar 1"};
+			String[] values = new String[] { "Lugar 1" };
+
 			public int getSize() {
 				return values.length;
 			}
+
 			public Object getElementAt(int index) {
 				return values[index];
 			}
@@ -767,19 +782,55 @@ public class VentanaPrincipal extends JFrame {
 		btnBorrar_1.setIcon(null);
 		pnBotonesIntegrantes.add(btnBorrar_1);
 
-		spnListaIntegrantes = new JScrollPane();
-		spnListaIntegrantes.setPreferredSize(new Dimension(380, 2));
-		pnListaIntegrantes.add(spnListaIntegrantes, BorderLayout.CENTER);
+		pnTablaIntegrantes = new JPanel();
+		pnListaIntegrantes.add(pnTablaIntegrantes, BorderLayout.CENTER);
+		pnTablaIntegrantes.setLayout(new BorderLayout(0, 0));
 
-		tableIntegrantes = new JTable();
-		tableIntegrantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		pnFotoIntegrante = new JPanel();
+		pnTablaIntegrantes.add(pnFotoIntegrante, BorderLayout.SOUTH);
+		pnFotoIntegrante.setLayout(new BorderLayout(0, 0));
+
+		spnInfoImagenes = new JScrollPane();
+		pnFotoIntegrante.add(spnInfoImagenes, BorderLayout.CENTER);
+
+		txIntegranteSeleccionado = new JTextPane();
+		spnInfoImagenes.setViewportView(txIntegranteSeleccionado);
+
+		lblFotoSeleccionada = new JLabel("\r\n");
+		lblFotoSeleccionada
+				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
+		pnFotoIntegrante.add(lblFotoSeleccionada, BorderLayout.WEST);
+
+		spnTablaIntegrantes = new JScrollPane();
+		pnTablaIntegrantes.add(spnTablaIntegrantes, BorderLayout.CENTER);
+
+		tablaIntegrantes = new JTable();
+		tablaIntegrantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		spnTablaIntegrantes.setViewportView(tablaIntegrantes);
 		MiModeloJTable modeloTabla = new MiModeloJTable();
-		tableIntegrantes.setModel(modeloTabla);
-		tableIntegrantes.setRowHeight(50);
-		TableColumn columnaFoto = tableIntegrantes.getColumnModel().getColumn(4);
+		tablaIntegrantes.setModel(modeloTabla);
+		tablaIntegrantes.setRowHeight(50);
+		TableColumn columnaFoto = tablaIntegrantes.getColumnModel().getColumn(4);
 		columnaFoto.setCellEditor(new MiColumnaFotoEditor());
-		
-		spnListaIntegrantes.setViewportView(tableIntegrantes);
+
+		ListSelectionModel rowSM = tablaIntegrantes.getSelectionModel();
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+					// int filaSeleccionada = lsm.getMinSelectionIndex() + 1;
+					// taFilaSeleccionada.setText("Fila "+filaSeleccionada+" seleccionada");
+					MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+					int n = tablaIntegrantes.getSelectedRow();
+					if (n != -1) {
+						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
+								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2) + "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
+						txIntegranteSeleccionado.setText(contenido);
+						lblFotoSeleccionada.setIcon((ImageIcon) modeloTabla.getValueAt(n, 4));
+					}
+				}
+			}
+		});
 
 		pnInfoGrupo = new JPanel();
 		pnGrupos.add(pnInfoGrupo, BorderLayout.CENTER);
@@ -835,7 +886,7 @@ public class VentanaPrincipal extends JFrame {
 		gbc_txtPais.gridx = 1;
 		gbc_txtPais.gridy = 2;
 		pnInfoGrupo1.add(txtPais, gbc_txtPais);
-		txtPais.setColumns(10);
+		txtPais.setColumns(10); //
 
 		lblLugarDeAlojamiento = new JLabel("Alojamiento:");
 		GridBagConstraints gbc_lblLugarDeAlojamiento = new GridBagConstraints();
@@ -927,6 +978,12 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	private class BtnSalirActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			frame.dispose();
+		}
+	}
+
 	private class BtnSeleccionarGuiaActionListener implements ActionListener {
 		private ImageIcon imagen;
 
@@ -944,29 +1001,35 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnAgregar_1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MiModeloJTable modeloTabla = (MiModeloJTable) tableIntegrantes.getModel();
-			Object[] nuevaFila = {"", "", "", "", new
-			ImageIcon(getClass().getClassLoader().getResource("presentacion/imagenes/iconos/userApp.png"))};
+			MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+			Object[] nuevaFila = { "", "", "", "", new ImageIcon(
+					getClass().getClassLoader().getResource("presentacion/imagenes/iconos/userApp.png")) };
 			modeloTabla.aniadeFila(nuevaFila);
 			modeloTabla.fireTableDataChanged();
-		
+
 		}
 	}
+
 	private class BtnBorrar_1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MiModeloJTable modeloTabla = (MiModeloJTable) tableIntegrantes.getModel();
-			int n= tableIntegrantes.getSelectedRow();
-			if (n != -1) modeloTabla.eliminaFila(tableIntegrantes.getSelectedRow());
+			MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+			int n = tablaIntegrantes.getSelectedRow();
+			if (n != -1)
+				modeloTabla.eliminaFila(tablaIntegrantes.getSelectedRow());
 			modeloTabla.fireTableDataChanged();
+			txIntegranteSeleccionado.setText("");
+			lblFotoSeleccionada.setIcon(null);
 		}
 	}
+
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			VentanaPago ventana_pago;
-				ventana_pago = new VentanaPago();
-				ventana_pago.getFrmPasarelaDePago().setVisible(true);
+			ventana_pago = new VentanaPago();
+			ventana_pago.getFrmPasarelaDePago().setVisible(true);
 		}
 	}
+
 	private class ListLugaresMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -974,7 +1037,5 @@ public class VentanaPrincipal extends JFrame {
 			ventana_lugar.getFrmLugarVisita().setVisible(true);
 		}
 	}
-	
-	
-	
+
 }
