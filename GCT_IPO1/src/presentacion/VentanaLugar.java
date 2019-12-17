@@ -23,6 +23,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
+import java.awt.Toolkit;
 
 public class VentanaLugar {
 
@@ -53,16 +55,18 @@ public class VentanaLugar {
 	 */
 	private void initialize() {
 		frmLugarVisita = new JFrame();
+		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 450, 300);
 		
 		lblImagen = new JLabel();
-		lblImagen.setIcon(new ImageIcon(MiJPanel.class.getResource("/presentacion/imagenes/lugares/picture.png")));	
+		lblImagen.setIcon(new ImageIcon(MiJPanel_2V.class.getResource("/presentacion/imagenes/lugares/picture.png")));	
 
-		pnPrincipal = new MiJPanel(lblImagen);
+		pnPrincipal = new MiJPanel_2V(lblImagen);
 		frmLugarVisita.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
 		
 		lblNombreLugar = new JLabel("Nombre lugar");
+		lblNombreLugar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNombreLugar.setHorizontalAlignment(SwingConstants.CENTER);
 		pnPrincipal.add(lblNombreLugar, BorderLayout.NORTH);
 		
