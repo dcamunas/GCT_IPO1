@@ -25,11 +25,14 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 public class VentanaLugar {
 
 	private JFrame frmLugarVisita;
-	private JPanel pnPrincipal;
+	private MiJPanel pnPrincipal;
 	private JLabel lblImagen;
 	private JLabel lblNombreLugar;
 	private JPanel panel;
@@ -61,13 +64,15 @@ public class VentanaLugar {
 		frmLugarVisita.setBounds(100, 100, 450, 300);
 		
 		lblImagen = new JLabel();
-		lblImagen.setIcon(new ImageIcon(MiJPanel_2V.class.getResource("/presentacion/imagenes/lugares/picture.png")));	
+		lblImagen.setIcon(new ImageIcon(MiJPanel.class.getResource("/presentacion/imagenes/lugares/picture.png")));	
 
-		pnPrincipal = new MiJPanel_2V(lblImagen);
+		pnPrincipal = new MiJPanel(lblImagen);
+		pnPrincipal.getBtnAceptar().addActionListener(new PnPrincipalBtnAceptarActionListener());
 		frmLugarVisita.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
 		
 		lblNombreLugar = new JLabel("Nombre lugar");
-		lblNombreLugar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombreLugar.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		lblNombreLugar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNombreLugar.setHorizontalAlignment(SwingConstants.CENTER);
 		pnPrincipal.add(lblNombreLugar, BorderLayout.NORTH);
 		
@@ -165,6 +170,8 @@ public class VentanaLugar {
 		gbc_txtfPrecio.gridy = 5;
 		panel.add(txtfPrecio, gbc_txtfPrecio);
 		txtfPrecio.setColumns(10);
+
+		
 		
 	}
 
@@ -178,4 +185,12 @@ public class VentanaLugar {
 
 
 
+	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			
+			// CONTROLAR PAGO DE TODOS LOS LUGARES DE DICHO CIRCUITO
+			
+			getFrmLugarVisita().dispose();
+		}
+	}
 }

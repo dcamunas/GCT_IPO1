@@ -53,7 +53,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 //import java.awt.event.*;
 
-
 public class VentanaPrincipal extends JFrame {
 
 	private JPanel contentPane;
@@ -196,6 +195,8 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnEspacio3;
 	private JPanel pnListaIdioma;
 	private JLabel lblIdiomas;
+	private  boolean lanzadoPago = false;
+	private boolean lanzadoLugar = false;
 
 	/**
 	 * Launch the application.
@@ -299,7 +300,7 @@ public class VentanaPrincipal extends JFrame {
 		btnAyuda.setBorderPainted(false);
 		btnAyuda.setContentAreaFilled(false);
 
-		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion = new JButton("Cerrar Sesión");
 		btnCerrarSesion.addActionListener(new BtnCerrarSesionActionListener());
 
 		btnSalir = new JButton("Salir");
@@ -322,7 +323,6 @@ public class VentanaPrincipal extends JFrame {
 		pnListaCircuitos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
 
-
 		lblCircuitosContratados = new JLabel("Circuitos contratados:");
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
 
@@ -332,7 +332,7 @@ public class VentanaPrincipal extends JFrame {
 		listCircuitos = new JList();
 		spnListaCircuitos.setViewportView(listCircuitos);
 
-		pnLugares = new JPanel();
+		pnLugares = new MiJPanel(new JLabel());
 		pnLugares.setPreferredSize(new Dimension(320, 10));
 		pnLugares.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnCircuitos.add(pnLugares, BorderLayout.EAST);
@@ -528,18 +528,17 @@ public class VentanaPrincipal extends JFrame {
 		pnIdiomasGuia.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGuias.add(pnIdiomasGuia, BorderLayout.EAST);
 		pnIdiomasGuia.setLayout(new BorderLayout(0, 0));
-		
+
 		lblIdiomas = new JLabel("Idiomas:");
 		pnIdiomasGuia.add(lblIdiomas, BorderLayout.NORTH);
-		
+
 		pnEspacio3 = new JPanel();
 		pnEspacio3.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
-		
+
 		pnListaIdioma = new MiListaJPanel_2();
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
-		
 
 		pnInfoGuia = new JPanel();
 		pnGuias.add(pnInfoGuia, BorderLayout.CENTER);
@@ -580,7 +579,6 @@ public class VentanaPrincipal extends JFrame {
 		pnHisRutasGuia.add(spnRutasGuia, BorderLayout.CENTER);
 
 		listRutasGuia = new JList();
-		listRutasGuia.setEnabled(false);
 		spnRutasGuia.setViewportView(listRutasGuia);
 
 		pnInfoGeneral = new JPanel();
@@ -767,7 +765,7 @@ public class VentanaPrincipal extends JFrame {
 		pnFotoIntegrante.add(spnInfoImagenes, BorderLayout.CENTER);
 
 		txIntegranteSeleccionado = new JTextPane();
-		txIntegranteSeleccionado.setEnabled(false);
+		txIntegranteSeleccionado.setEditable(false);
 		spnInfoImagenes.setViewportView(txIntegranteSeleccionado);
 
 		lblFotoSeleccionada = new JLabel("\r\n");
@@ -798,7 +796,8 @@ public class VentanaPrincipal extends JFrame {
 					int n = tablaIntegrantes.getSelectedRow();
 					if (n != -1) {
 						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
-								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2) + "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
+								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2)
+								+ "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
 						txIntegranteSeleccionado.setText(contenido);
 						lblFotoSeleccionada.setIcon((ImageIcon) modeloTabla.getValueAt(n, 4));
 					}
@@ -942,6 +941,14 @@ public class VentanaPrincipal extends JFrame {
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
 	}
 
+	public JButton getBtnContratar() {
+		return btnContratar;
+	}
+
+	public JCheckBox getChckbxContratado() {
+		return chckbxContratado;
+	}
+
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			VentanaLogin ventana_login = new VentanaLogin();
@@ -998,17 +1005,22 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaPago ventana_pago;
-			ventana_pago = new VentanaPago();
-			ventana_pago.getFrmPasarelaDePago().setVisible(true);
+			if (!lanzadoPago) {
+				VentanaPago ventana_pago = new VentanaPago(frame, 1.45);
+				ventana_pago.getFrmPasarelaDePago().setVisible(true);
+				lanzadoPago = true;
+			}
 		}
 	}
 
 	private class ListLugaresMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			VentanaLugar ventana_lugar = new VentanaLugar();
-			ventana_lugar.getFrmLugarVisita().setVisible(true);
+			if (!lanzadoLugar) {
+				VentanaLugar ventana_lugar = new VentanaLugar();
+				ventana_lugar.getFrmLugarVisita().setVisible(true);
+				lanzadoLugar = true;
+			}
 		}
 	}
 

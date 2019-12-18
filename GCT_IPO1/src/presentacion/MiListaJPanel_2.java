@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MiListaJPanel_2 extends JPanel {
 	private JPanel pnBotones;
@@ -32,6 +36,7 @@ public class MiListaJPanel_2 extends JPanel {
 		pnBotones.add(btnAniadir);
 		
 		btnEliminar = new JButton("");
+		btnEliminar.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		btnEliminar.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/remove24.png")));
 		btnEliminar.setBorderPainted(false);
 		btnEliminar.setContentAreaFilled(false);
@@ -86,5 +91,4 @@ public class MiListaJPanel_2 extends JPanel {
 	}
 	
 	
-
 }

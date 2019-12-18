@@ -23,6 +23,7 @@ public class MiJPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	public MiJPanel(JLabel lblImagen) {
 		setLayout(new BorderLayout(0, 0));
 		frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -63,6 +64,20 @@ public class MiJPanel extends JPanel {
 	public void setPnimagen(JPanel pnimagen) {
 		this.pnimagen = pnimagen;
 	}
+
+	
+
+
+
+	public JButton getBtnAceptar() {
+		return btnAceptar;
+	}
+
+
+	public void setBtnAceptar(JButton btnAceptar) {
+		this.btnAceptar = btnAceptar;
+	}
+
 
 
 
