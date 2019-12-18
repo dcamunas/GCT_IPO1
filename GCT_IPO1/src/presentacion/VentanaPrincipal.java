@@ -20,6 +20,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextField;
 import java.awt.Dimension;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTabbedPane;
@@ -232,7 +233,7 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoUsuario = new JPanel();
 		pnInfoUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		pnInfoUsuario.setPreferredSize(new Dimension(200, 10));
-		contentPane.add(pnInfoUsuario, BorderLayout.EAST);
+		contentPane.add(pnInfoUsuario, BorderLayout.WEST);
 		pnInfoUsuario.setLayout(new BorderLayout(0, 0));
 
 		pnAreaImagen = new JPanel();
