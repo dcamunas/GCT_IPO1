@@ -114,26 +114,20 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel lblIncidencias;
 	private JRadioButton rdbtnSi;
 	private JRadioButton rdbtnNo;
-	private JPanel pnListaIncidencia;
+	private MiListaJPanel_2 pnListaIncidencia;
 	private JPanel pnSugerencias;
 	private JLabel lblOpinionesYSugerencias;
-	private JPanel pnListaSugerencias;
+	private MiListaJPanel_2 pnListaSugerencias;
 	private JPanel pnPtosInteres;
 	private JLabel lblPuntosDeInteres;
-	private JPanel pnListaPtosInteres;
+	private MiListaJPanel_2 pnListaPtosInteres;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JLabel lblDireccinDeCorreo;
 	private JTextField txtCorreo;
-	private JPanel pnListaGuias;
+	private MiListaJPanel_1 pnListaGuias;
 	private JLabel lblGuiasContratados;
 	private JPanel pnIdiomasGuia;
-	private JLabel lblIdiomas;
-	private JPanel pnBotonesIdioma;
-	private JButton btnAgregar;
-	private JButton btnBorrar;
-	private JScrollPane spnListaIdiomas;
-	private JList listIdiomas;
 	private JPanel pnInfoGuia;
 	private JPanel pnEspacio1;
 	private JPanel pnInfoCentral;
@@ -199,6 +193,9 @@ public class VentanaPrincipal extends JFrame {
 	private JScrollPane spnTablaIntegrantes;
 	private JTable tablaIntegrantes;
 	private JButton btnSalir;
+	private JPanel pnEspacio3;
+	private JPanel pnListaIdioma;
+	private JLabel lblIdiomas;
 
 	/**
 	 * Launch the application.
@@ -321,26 +318,10 @@ public class VentanaPrincipal extends JFrame {
 		tbPestañas.addTab("Circuitos", null, pnCircuitos, null);
 		pnCircuitos.setLayout(new BorderLayout(0, 0));
 
-		pnListaCircuitos = new JPanel();
+		pnListaCircuitos = new MiListaJPanel_1();
 		pnListaCircuitos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
-		pnListaCircuitos.setLayout(new BorderLayout(0, 0));
 
-		pnBotonesCircuito = new JPanel();
-		pnBotonesCircuito.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		pnListaCircuitos.add(pnBotonesCircuito, BorderLayout.SOUTH);
-
-		btnAniadirCircuito = new JButton("Añadir");
-		pnBotonesCircuito.add(btnAniadirCircuito);
-
-		btnModificarCircuito = new JButton("Modificar");
-		pnBotonesCircuito.add(btnModificarCircuito);
-
-		btnLimpiarCircuito = new JButton("Limpiar");
-		pnBotonesCircuito.add(btnLimpiarCircuito);
-
-		btnEliminarCircuito = new JButton("Eliminar");
-		pnBotonesCircuito.add(btnEliminarCircuito);
 
 		lblCircuitosContratados = new JLabel("Circuitos contratados:");
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
@@ -547,27 +528,18 @@ public class VentanaPrincipal extends JFrame {
 		pnIdiomasGuia.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGuias.add(pnIdiomasGuia, BorderLayout.EAST);
 		pnIdiomasGuia.setLayout(new BorderLayout(0, 0));
-
+		
 		lblIdiomas = new JLabel("Idiomas:");
 		pnIdiomasGuia.add(lblIdiomas, BorderLayout.NORTH);
-
-		pnBotonesIdioma = new JPanel();
-		pnIdiomasGuia.add(pnBotonesIdioma, BorderLayout.SOUTH);
-		pnBotonesIdioma.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		btnAgregar = new JButton("Agregar");
-		btnAgregar.setIcon(null);
-		pnBotonesIdioma.add(btnAgregar);
-
-		btnBorrar = new JButton("Borrar");
-		btnBorrar.setIcon(null);
-		pnBotonesIdioma.add(btnBorrar);
-
-		spnListaIdiomas = new JScrollPane();
-		pnIdiomasGuia.add(spnListaIdiomas, BorderLayout.CENTER);
-
-		listIdiomas = new JList();
-		spnListaIdiomas.setViewportView(listIdiomas);
+		
+		pnEspacio3 = new JPanel();
+		pnEspacio3.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		pnEspacio3.setPreferredSize(new Dimension(10, 36));
+		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
+		
+		pnListaIdioma = new MiListaJPanel_2();
+		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
+		
 
 		pnInfoGuia = new JPanel();
 		pnGuias.add(pnInfoGuia, BorderLayout.CENTER);
@@ -795,6 +767,7 @@ public class VentanaPrincipal extends JFrame {
 		pnFotoIntegrante.add(spnInfoImagenes, BorderLayout.CENTER);
 
 		txIntegranteSeleccionado = new JTextPane();
+		txIntegranteSeleccionado.setEnabled(false);
 		spnInfoImagenes.setViewportView(txIntegranteSeleccionado);
 
 		lblFotoSeleccionada = new JLabel("\r\n");
