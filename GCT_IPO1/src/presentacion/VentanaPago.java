@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -16,10 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
+
+import dominio.Lugar;
+
 import javax.swing.SwingConstants;
 
 public class VentanaPago {
@@ -41,14 +46,14 @@ public class VentanaPago {
 	 * Create the application.
 	 */
 	
-	public VentanaPago(VentanaPrincipal principal_v, Double precio_total) {
-		initialize(principal_v, precio_total);
+	public VentanaPago(String nombreCircuito, Double precio_total, List<Lugar> lugares) {
+		initialize(nombreCircuito, precio_total, lugares);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(VentanaPrincipal principal_v, Double precio_total) {
+	private void initialize(String nombreCircuito, Double precio_total, List<Lugar> lugares) {
 			this.principal_v = principal_v;
 			frmPasarelaDePago = new JFrame();
 			frmPasarelaDePago.setResizable(false);
@@ -78,13 +83,14 @@ public class VentanaPago {
 			textField.setBounds(375, 113, 50, 20);
 			pnContenido.add(textField);
 			textField.setColumns(10);
+			textField.setText(Double.toString(precio_total));
 
 			rdbtnGratis = new JRadioButton("Gratís");
 			rdbtnGratis.setEnabled(false);
 			rdbtnGratis.setBounds(350, 140, 75, 23);
 			pnContenido.add(rdbtnGratis);
 			
-			lblNombreCircuito = new JLabel("NombreCircuito");
+			lblNombreCircuito = new JLabel(nombreCircuito);
 			lblNombreCircuito.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNombreCircuito.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 			lblNombreCircuito.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -114,6 +120,8 @@ public class VentanaPago {
 
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			String mensaje = ("Pago de '" + lblNombreCircuito.getText() + "' realizado correctamente.");
+			JOptionPane.showMessageDialog(null, mensaje , "", JOptionPane.INFORMATION_MESSAGE);
 			principal_v.getBtnContratar().setEnabled(false);
 			principal_v.getChckbxContratado().setSelected(true);
 			getFrmPasarelaDePago().dispose();

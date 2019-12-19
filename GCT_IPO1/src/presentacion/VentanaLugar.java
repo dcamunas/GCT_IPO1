@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
@@ -41,10 +42,9 @@ public class VentanaLugar {
 	private JLabel lblDuracion;
 	private JLabel lblTipologia;
 	private JLabel lblPrecio;
-	private JTextField txtfPrecio;
-	private JTextField txtfTipologia;
+	private JTextField txtPrecio;
 	private JTextField txtfDuracion;
-	private JComboBox comboBox;
+	private JComboBox comboTipologia;
 
 	/**
 	 * Create the application.
@@ -134,13 +134,13 @@ public class VentanaLugar {
 		gbc_lblTipologia.gridy = 3;
 		panel.add(lblTipologia, gbc_lblTipologia);
 		
-		comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 3;
-		panel.add(comboBox, gbc_comboBox);
+		comboTipologia = new JComboBox();
+		GridBagConstraints gbc_comboTipologia = new GridBagConstraints();
+		gbc_comboTipologia.insets = new Insets(0, 0, 5, 5);
+		gbc_comboTipologia.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboTipologia.gridx = 1;
+		gbc_comboTipologia.gridy = 3;
+		panel.add(comboTipologia, gbc_comboTipologia);
 		
 		lblPrecio = new JLabel("Precio:");
 		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
@@ -150,26 +150,15 @@ public class VentanaLugar {
 		gbc_lblPrecio.gridx = 0;
 		gbc_lblPrecio.gridy = 4;
 		panel.add(lblPrecio, gbc_lblPrecio);
-		lblPrecio.setLabelFor(txtfPrecio);
-		lblTipologia.setLabelFor(txtfTipologia);
 		
-		txtfTipologia = new JTextField();
-		GridBagConstraints gbc_txtfTipologia = new GridBagConstraints();
-		gbc_txtfTipologia.insets = new Insets(0, 0, 5, 5);
-		gbc_txtfTipologia.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtfTipologia.gridx = 1;
-		gbc_txtfTipologia.gridy = 4;
-		panel.add(txtfTipologia, gbc_txtfTipologia);
-		txtfTipologia.setColumns(10);
-		
-		txtfPrecio = new JTextField();
-		GridBagConstraints gbc_txtfPrecio = new GridBagConstraints();
-		gbc_txtfPrecio.insets = new Insets(0, 0, 5, 5);
-		gbc_txtfPrecio.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtfPrecio.gridx = 1;
-		gbc_txtfPrecio.gridy = 5;
-		panel.add(txtfPrecio, gbc_txtfPrecio);
-		txtfPrecio.setColumns(10);
+		txtPrecio = new JTextField();
+		GridBagConstraints gbc_txtPrecio = new GridBagConstraints();
+		gbc_txtPrecio.insets = new Insets(0, 0, 5, 5);
+		gbc_txtPrecio.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtPrecio.gridx = 1;
+		gbc_txtPrecio.gridy = 4;
+		panel.add(txtPrecio, gbc_txtPrecio);
+		txtPrecio.setColumns(10);
 
 		
 		
@@ -200,7 +189,8 @@ public class VentanaLugar {
 		public void actionPerformed(ActionEvent e) {
 			
 			// CONTROLAR PAGO DE TODOS LOS LUGARES DE DICHO CIRCUITO
-			
+			String mensaje = ("Pago del circuito '" + lblNombreLugar.getText() + "' realizado correctamente.");
+			JOptionPane.showMessageDialog(null, mensaje , "", JOptionPane.INFORMATION_MESSAGE);
 			getFrmLugarVisita().dispose();
 		}
 	}

@@ -7,7 +7,7 @@ public class Circuito {
 	private int id = -1;					//Usado en la bd
 	private String nombre_circuito;
 	private int personas_realizado;
-	private String precio;			// Castear a entero
+	private int precio;					   // Castear a entero
 	private boolean incidencia;
 	private ArrayList<String> incidencias_lista;
 	private ArrayList<String> puntos_interes;
@@ -18,9 +18,10 @@ public class Circuito {
 	
 	
 	
-	public Circuito(String nombre_circuito, int personas_realizado, String precio, boolean incidencia,
+	public Circuito(String nombre_circuito, int personas_realizado, int precio, boolean incidencia,
 			ArrayList<String> incidencias_lista, ArrayList<String> puntos_interes, ArrayList<String> sugerencias,
 			ArrayList<Lugar> lugares, boolean contratado) {
+		
 		this.id++;
 		this.nombre_circuito = nombre_circuito;
 		this.personas_realizado = personas_realizado;
@@ -47,7 +48,7 @@ public class Circuito {
 	public void setPersonas_realizado(int personas_realizado) {
 		this.personas_realizado = personas_realizado;
 	}
-	public String getPrecio() {
+	public int getPrecio() {
 		return precio;
 	}
 
@@ -87,10 +88,5 @@ public class Circuito {
 	public void setContratado(boolean contratado) {
 		this.contratado = contratado;
 	}
-	
-	
-	
-	
-
 
 }

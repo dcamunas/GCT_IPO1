@@ -2,11 +2,14 @@ package dominio;
 
 public class Usuario {
 	
+	private int id = -1;
 	private String usuario;
 	private String nombre;
 	private String correo;
 	
 	public Usuario(String usuario, String nombre, String correo) {
+		
+		this.id++;
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.correo = correo;

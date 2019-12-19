@@ -97,7 +97,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnInfoCircuito;
 	private JPanel pnDatosCircuito;
 	private JLabel lblNombreCircuito;
-	private JTextField textField;
+	private JTextField txtfNombreCircuito;
 	private JLabel lblPersonasQueLo;
 	private JSpinner spinner;
 	private JLabel lblPrecio;
@@ -423,15 +423,15 @@ public class VentanaPrincipal extends JFrame {
 		gbc_lblNombreCircuito.gridy = 1;
 		pnDatosCircuito.add(lblNombreCircuito, gbc_lblNombreCircuito);
 
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridwidth = 2;
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 1;
-		pnDatosCircuito.add(textField, gbc_textField);
-		textField.setColumns(10);
+		txtfNombreCircuito = new JTextField();
+		GridBagConstraints gbc_txtfNombreCircuito = new GridBagConstraints();
+		gbc_txtfNombreCircuito.insets = new Insets(0, 0, 5, 5);
+		gbc_txtfNombreCircuito.gridwidth = 2;
+		gbc_txtfNombreCircuito.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtfNombreCircuito.gridx = 1;
+		gbc_txtfNombreCircuito.gridy = 1;
+		pnDatosCircuito.add(txtfNombreCircuito, gbc_txtfNombreCircuito);
+		txtfNombreCircuito.setColumns(10);
 
 		lblPersonasQueLo = new JLabel("Personas que lo han realizado:");
 		GridBagConstraints gbc_lblPersonasQueLo = new GridBagConstraints();
@@ -1012,11 +1012,11 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (!lanzadoPago) {
-				VentanaPago ventana_pago = new VentanaPago(frame, 1.45);
+			//if (!lanzadoPago) {
+				VentanaPago ventana_pago = new VentanaPago(txtfNombreCircuito.getText(), 1.00, null);
 				ventana_pago.getFrmPasarelaDePago().setVisible(true);
-				lanzadoPago = true;
-			}
+				//lanzadoPago = true;
+			//}
 		}
 	}
 
