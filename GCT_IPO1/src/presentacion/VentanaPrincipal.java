@@ -99,7 +99,7 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField textField;
 	private JLabel lblPersonasQueLo;
 	private JSpinner spinner;
-	private JLabel lblCoste;
+	private JLabel lblPrecio;
 	private JTextField textField_1;
 	private JPanel pnEspacio;
 	private JPanel pnBotonesIncidencias;
@@ -442,13 +442,13 @@ public class VentanaPrincipal extends JFrame {
 		gbc_spinner.gridy = 2;
 		pnDatosCircuito.add(spinner, gbc_spinner);
 
-		lblCoste = new JLabel("Coste:");
-		GridBagConstraints gbc_lblCoste = new GridBagConstraints();
-		gbc_lblCoste.anchor = GridBagConstraints.EAST;
-		gbc_lblCoste.insets = new Insets(0, 0, 0, 5);
-		gbc_lblCoste.gridx = 0;
-		gbc_lblCoste.gridy = 3;
-		pnDatosCircuito.add(lblCoste, gbc_lblCoste);
+		lblPrecio = new JLabel("Precio:");
+		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
+		gbc_lblPrecio.anchor = GridBagConstraints.EAST;
+		gbc_lblPrecio.insets = new Insets(0, 0, 0, 5);
+		gbc_lblPrecio.gridx = 0;
+		gbc_lblPrecio.gridy = 3;
+		pnDatosCircuito.add(lblPrecio, gbc_lblPrecio);
 
 		textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
