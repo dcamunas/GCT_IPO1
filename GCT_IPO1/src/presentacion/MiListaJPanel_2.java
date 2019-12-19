@@ -30,14 +30,14 @@ public class MiListaJPanel_2 extends JPanel {
 		pnBotones.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		btnAniadir = new JButton("");
-		btnAniadir.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/plus24.png")));
+		btnAniadir.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/plus-24.png")));
 		btnAniadir.setBorderPainted(false);
 		btnAniadir.setContentAreaFilled(false);
 		pnBotones.add(btnAniadir);
 		
 		btnEliminar = new JButton("");
 		btnEliminar.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		btnEliminar.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/remove24.png")));
+		btnEliminar.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/remove-24.png")));
 		btnEliminar.setBorderPainted(false);
 		btnEliminar.setContentAreaFilled(false);
 		pnBotones.add(btnEliminar);
