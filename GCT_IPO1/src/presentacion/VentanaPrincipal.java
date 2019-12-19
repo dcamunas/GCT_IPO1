@@ -51,6 +51,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.AbstractListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 //import java.awt.event.*;
 
 public class VentanaPrincipal extends JFrame {
@@ -195,8 +196,9 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnEspacio3;
 	private JPanel pnListaIdioma;
 	private JLabel lblIdiomas;
-	private  boolean lanzadoPago = false;
-	private boolean lanzadoLugar = false;
+	private boolean lanzadoPago = false;
+	private boolean lanzadoLugarInfo = false;
+	private boolean lanzadoCreaLugar = false;
 
 	/**
 	 * Launch the application.
@@ -249,6 +251,7 @@ public class VentanaPrincipal extends JFrame {
 		pnImagen.add(lblImagen);
 
 		lblUltimaConexion = new JLabel("Ultima conexion");
+		lblUltimaConexion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblUltimaConexion.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnInfoUsuario.add(lblUltimaConexion, BorderLayout.SOUTH);
 
@@ -256,7 +259,8 @@ public class VentanaPrincipal extends JFrame {
 		pnInfoUsuario.add(pnContenidoUsuario, BorderLayout.CENTER);
 		pnContenidoUsuario.setLayout(new GridLayout(6, 1, 0, 0));
 
-		lblUsuario = new JLabel("Usuario:");
+		lblUsuario = new JLabel("Usuario");
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblUsuario);
 
@@ -267,7 +271,8 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(txtUsuario);
 		txtUsuario.setColumns(10);
 
-		lblNombre = new JLabel("Nombre:");
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblNombre);
 
@@ -277,7 +282,8 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(txtNombre);
 		txtNombre.setColumns(10);
 
-		lblDireccinDeCorreo = new JLabel("Dirección de correo:");
+		lblDireccinDeCorreo = new JLabel("Dirección de correo");
+		lblDireccinDeCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblDireccinDeCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblDireccinDeCorreo);
 
@@ -357,15 +363,16 @@ public class VentanaPrincipal extends JFrame {
 		pnBotonesLugares.setLayout(new GridLayout(0, 1, 0, 0));
 
 		btnAgregarlugar = new JButton("");
-		btnAgregarlugar
-				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus24.png")));
+		btnAgregarlugar.addActionListener(new BtnAgregarlugarActionListener());
+		btnAgregarlugar.setIcon(
+				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png")));
 		btnAgregarlugar.setBorderPainted(false);
 		btnAgregarlugar.setContentAreaFilled(false);
 		pnBotonesLugares.add(btnAgregarlugar);
 
 		btnEliminarlugar = new JButton("");
 		btnEliminarlugar.setIcon(
-				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/remove24.png")));
+				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/remove-24.png")));
 		btnEliminarlugar.setBorderPainted(false);
 		btnEliminarlugar.setContentAreaFilled(false);
 		pnBotonesLugares.add(btnEliminarlugar);
@@ -1016,11 +1023,21 @@ public class VentanaPrincipal extends JFrame {
 	private class ListLugaresMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (!lanzadoLugar) {
+			if (!lanzadoLugarInfo) {
 				VentanaLugar ventana_lugar = new VentanaLugar();
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
-				lanzadoLugar = true;
+				lanzadoLugarInfo = true;
 			}
+		}
+	}
+
+	private class BtnAgregarlugarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			VentanaLugar ventana_lugar;
+				 ventana_lugar = new VentanaLugar();
+				ventana_lugar.getFrmLugarVisita().setVisible(true);
+				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
+				lanzadoCreaLugar = true;
 		}
 	}
 
