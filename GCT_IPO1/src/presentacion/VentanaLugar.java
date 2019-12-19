@@ -182,11 +182,22 @@ public class VentanaLugar {
 	public void setFrmLugarVisita(JFrame frmLugarVisita) {
 		this.frmLugarVisita = frmLugarVisita;
 	}
+	
+
+	public MiJPanel getPnPrincipal() {
+		return pnPrincipal;
+	}
+
+	public void setPnPrincipal(MiJPanel pnPrincipal) {
+		this.pnPrincipal = pnPrincipal;
+	}
+
+
 
 
 
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent e) {
 			
 			// CONTROLAR PAGO DE TODOS LOS LUGARES DE DICHO CIRCUITO
 			
