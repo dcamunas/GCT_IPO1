@@ -12,6 +12,11 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import javax.swing.JTextField;
+
+import com.sun.scenario.effect.impl.prism.sw.PSWDrawable;
+
+import dominio.Usuario;
+
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +37,7 @@ public class VentanaLogin {
 	private JPasswordField pwdContrasenia;
 	private JButton btnEntrar;
 	private final String pass = "david";
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -103,7 +109,6 @@ public class VentanaLogin {
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new BtnEntrarActionListener());
-		btnEntrar.setEnabled(false);
 		btnEntrar.setBounds(183, 177, 89, 23);
 		panel.add(btnEntrar);
 
@@ -134,6 +139,7 @@ public class VentanaLogin {
 				lblAviso.setVisible(true);
 				pwdContrasenia.setEnabled(false);
 				tfUsuario.setEnabled(false);
+				// Creacion del usuario a pasar a ventana principal
 			} else {
 				lblAviso.setBackground(Color.RED);
 				lblAviso.setText("Contraseña o usuario incorrecto. Vuelva a intentarlo.");
@@ -143,38 +149,49 @@ public class VentanaLogin {
 				btnEntrar.setEnabled(false);
 				tfUsuario.setText(null);
 				tfUsuario.requestFocus();
-				
-			}
 
+			}
 		}
 
+	}
+
+	private String obtener_contrasenia(char[] pass) {
+		String contrasenia = null;
+		;
+		for (int i = 0; i < pass.length; i++)
+			contrasenia += pass[i];
+		return contrasenia;
 	}
 
 	private class BtnEntrarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			lblAviso.setVisible(true);
-			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
-				// Se crea una instancia de la ventana principal (JFrame)
-				VentanaPrincipal ventana_principal = new VentanaPrincipal();
-				// Se hace visible la VentanaPrincipal
-				ventana_principal.setVisible(true);
-				// Se elimina la ventana actual (atributo a nivel de clase)
-				frmAccesoManchatours.dispose();
-			}
+			// if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+			// Se crea una instancia de la ventana principal (JFrame)
+			user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
+
+			VentanaPrincipal ventana_principal = new VentanaPrincipal(user);
+			// Se hace visible la VentanaPrincipal
+			ventana_principal.setVisible(true);
+			// Se elimina la ventana actual (atributo a nivel de clase)
+			frmAccesoManchatours.dispose();
+			// }
 		}
 	}
+
 	private class PwdContraseniaKeyListener extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
-			//lblAviso.setVisible(true);
+			// lblAviso.setVisible(true);
 			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
 				// Se crea una instancia de la ventana principal (JFrame)
-				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+
+				VentanaPrincipal ventana_principal = new VentanaPrincipal(user);
 				// Se hace visible la VentanaPrincipal
 				ventana_principal.setVisible(true);
 				// Se elimina la ventana actual (atributo a nivel de clase)
 				frmAccesoManchatours.dispose();
 			}
-			
+
 		}
 	}
 
@@ -185,8 +202,5 @@ public class VentanaLogin {
 	public void setFrmAccesoManchatours(JFrame frmAccesoManchatours) {
 		this.frmAccesoManchatours = frmAccesoManchatours;
 	}
-	
-	
+
 }
-
-

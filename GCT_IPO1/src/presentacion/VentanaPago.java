@@ -8,6 +8,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.GridLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -15,6 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -40,21 +44,23 @@ public class VentanaPago {
 	private JList listaLugares;
 	private JScrollPane scrollPane_1;
 	private JList list;
-	private VentanaPrincipal principal_v;
-
+	private JCheckBox contratado;
+	private JButton contratar;
 	/**
 	 * Create the application.
 	 */
 	
-	public VentanaPago(String nombreCircuito, Double precio_total, List<Lugar> lugares) {
-		initialize(nombreCircuito, precio_total, lugares);
+	public VentanaPago(JButton contratar, JCheckBox contratado, String nombreCircuito, double precio_total, List<Lugar> lugares) {
+		initialize(contratar, contratado, nombreCircuito, precio_total , lugares);
 	}
+
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String nombreCircuito, Double precio_total, List<Lugar> lugares) {
-			this.principal_v = principal_v;
+	private void initialize(JButton contratar, JCheckBox contratado, String nombreCircuito, double precio_total, List<Lugar> lugares) {
+		this.contratar = contratar;
+		this.contratado = contratado;
 			frmPasarelaDePago = new JFrame();
 			frmPasarelaDePago.setResizable(false);
 			frmPasarelaDePago.setIconImage(Toolkit.getDefaultToolkit()
@@ -63,6 +69,7 @@ public class VentanaPago {
 			frmPasarelaDePago.setBounds(100, 100, 448, 290);
 			
 			pnPrincipal = new MiJPanel(new JLabel());
+			pnPrincipal.getBtnAceptar().setText("Pagar");
 			pnPrincipal.getBtnAceptar().setFont(new Font("Tahoma", Font.PLAIN, 12));
 			pnPrincipal.getBtnAceptar().addActionListener(new PnPrincipalBtnAceptarActionListener());
 			frmPasarelaDePago.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
@@ -105,10 +112,10 @@ public class VentanaPago {
 			list.setEnabled(false);
 			scrollPane_1.setViewportView(list);
 			
-			//Edicion boton aceptar
-			pnPrincipal.getBtnAceptar().setText("Pagar");
 		
 	}
+	
+
 
 	public JFrame getFrmPasarelaDePago() {
 		return frmPasarelaDePago;
@@ -121,10 +128,10 @@ public class VentanaPago {
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String mensaje = ("Pago de '" + lblNombreCircuito.getText() + "' realizado correctamente.");
-			JOptionPane.showMessageDialog(null, mensaje , "", JOptionPane.INFORMATION_MESSAGE);
-			principal_v.getBtnContratar().setEnabled(false);
-			principal_v.getChckbxContratado().setSelected(true);
+			contratar.setEnabled(false);
+			contratado.setSelected(true);
 			getFrmPasarelaDePago().dispose();
+			
 		}
 	}
 }

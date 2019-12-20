@@ -46,12 +46,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+import dominio.Usuario;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.AbstractListModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
+import javax.swing.BoxLayout;
 //import java.awt.event.*;
 
 public class VentanaPrincipal extends JFrame {
@@ -74,15 +78,6 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnGuias;
 	private JPanel pnGrupos;
 	private JPanel pnDiseñoRuta;
-	private JPanel pnListaCircuitos;
-	private JPanel pnBotonesCircuito;
-	private JButton btnAniadirCircuito;
-	private JButton btnModificarCircuito;
-	private JButton btnLimpiarCircuito;
-	private JButton btnEliminarCircuito;
-	private JLabel lblCircuitosContratados;
-	private JScrollPane spnListaCircuitos;
-	private JList listCircuitos;
 	private JPanel pnLugares;
 	private JPanel pnContratacion;
 	private JButton btnContratar;
@@ -99,15 +94,10 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel lblNombreCircuito;
 	private JTextField txtfNombreCircuito;
 	private JLabel lblPersonasQueLo;
-	private JSpinner spinner;
+	private JSpinner spinnerPersonasCircuito;
 	private JLabel lblPrecio;
-	private JTextField textField_1;
+	private JTextField txtfPrecioCircuito;
 	private JPanel pnEspacio;
-	private JPanel pnBotonesIncidencias;
-	private JButton btnAadirIncidencia;
-	private JButton btnEliminarIncidencia;
-	private JScrollPane spnIncidencias;
-	private JList listIncidencias;
 	private JPanel pnInciden_Puntos_Opiniones;
 	private JPanel pnIncidencias;
 	private JPanel pntituloIncidencia;
@@ -138,8 +128,6 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel lblHistorialDeRutas;
 	private JScrollPane spnRutasGuia;
 	private JList listRutasGuia;
-	private JPanel pnListaGrupos;
-	private JLabel lblGruposTuristicos;
 	private JPanel pnListaIntegrantes;
 	private JLabel lblIntegrantes;
 	private JPanel pnBotonesIntegrantes;
@@ -199,27 +187,28 @@ public class VentanaPrincipal extends JFrame {
 	private boolean lanzadoPago = false;
 	private boolean lanzadoLugarInfo = false;
 	private boolean lanzadoCreaLugar = false;
+	private JPanel pnListaCircuitos;
+	private JLabel lblCircuitosContratados;
+	private JPanel pnBotonesCircuitosList;
+	private JButton btnAniadirCircuito;
+	private JButton btnLimpiarCircuito;
+	private JScrollPane spnListaCircuito;
+	private JList listCircuitos;
+	private JPanel pnListaGrupos;
+	private JLabel lblGruposTusiticos;
+	private JPanel pnBotonesGrupos;
+	private JButton btnAniadirGrupo;
+	private JButton btnLimpiarGrupo;
+	private JScrollPane spnListaGrupos;
+	private JList listGrupos;
+	private Usuario user;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new VentanaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(Usuario user) {
+		this.user = user;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
 		setTitle("Manchatours");
@@ -265,8 +254,8 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(lblUsuario);
 
 		txtUsuario = new JTextField();
+		txtUsuario.setEditable(false);
 		txtUsuario.setPreferredSize(new Dimension(6, 5));
-		txtUsuario.setEnabled(false);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -277,7 +266,7 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(lblNombre);
 
 		txtNombre = new JTextField();
-		txtNombre.setEnabled(false);
+		txtNombre.setEditable(false);
 		txtNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(txtNombre);
 		txtNombre.setColumns(10);
@@ -288,7 +277,7 @@ public class VentanaPrincipal extends JFrame {
 		pnContenidoUsuario.add(lblDireccinDeCorreo);
 
 		txtCorreo = new JTextField();
-		txtCorreo.setEnabled(false);
+		txtCorreo.setEditable(false);
 		txtCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(txtCorreo);
 		txtCorreo.setColumns(10);
@@ -325,18 +314,30 @@ public class VentanaPrincipal extends JFrame {
 		tbPestañas.addTab("Circuitos", null, pnCircuitos, null);
 		pnCircuitos.setLayout(new BorderLayout(0, 0));
 
-		pnListaCircuitos = new MiListaJPanel_1();
+		pnListaCircuitos = new JPanel();
 		pnListaCircuitos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
+		pnListaCircuitos.setLayout(new BorderLayout(0, 0));
 
 		lblCircuitosContratados = new JLabel("Circuitos contratados:");
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
 
-		spnListaCircuitos = new JScrollPane();
-		pnListaCircuitos.add(spnListaCircuitos, BorderLayout.CENTER);
+		pnBotonesCircuitosList = new JPanel();
+		pnBotonesCircuitosList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnListaCircuitos.add(pnBotonesCircuitosList, BorderLayout.SOUTH);
+
+		btnAniadirCircuito = new JButton("Añadir");
+		pnBotonesCircuitosList.add(btnAniadirCircuito);
+
+		btnLimpiarCircuito = new JButton("Limpiar");
+		btnLimpiarCircuito.addActionListener(new BtnLimpiarCircuitoActionListener());
+		pnBotonesCircuitosList.add(btnLimpiarCircuito);
+
+		spnListaCircuito = new JScrollPane();
+		pnListaCircuitos.add(spnListaCircuito, BorderLayout.CENTER);
 
 		listCircuitos = new JList();
-		spnListaCircuitos.setViewportView(listCircuitos);
+		spnListaCircuito.setViewportView(listCircuitos);
 
 		pnLugares = new MiJPanel(new JLabel());
 		pnLugares.setPreferredSize(new Dimension(320, 10));
@@ -440,14 +441,14 @@ public class VentanaPrincipal extends JFrame {
 		gbc_lblPersonasQueLo.gridy = 2;
 		pnDatosCircuito.add(lblPersonasQueLo, gbc_lblPersonasQueLo);
 
-		spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.anchor = GridBagConstraints.WEST;
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 1;
-		gbc_spinner.gridy = 2;
-		pnDatosCircuito.add(spinner, gbc_spinner);
+		spinnerPersonasCircuito = new JSpinner();
+		spinnerPersonasCircuito.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		GridBagConstraints gbc_spinnerPersonasCircuito = new GridBagConstraints();
+		gbc_spinnerPersonasCircuito.anchor = GridBagConstraints.WEST;
+		gbc_spinnerPersonasCircuito.insets = new Insets(0, 0, 5, 5);
+		gbc_spinnerPersonasCircuito.gridx = 1;
+		gbc_spinnerPersonasCircuito.gridy = 2;
+		pnDatosCircuito.add(spinnerPersonasCircuito, gbc_spinnerPersonasCircuito);
 
 		lblPrecio = new JLabel("Precio:");
 		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
@@ -457,14 +458,14 @@ public class VentanaPrincipal extends JFrame {
 		gbc_lblPrecio.gridy = 3;
 		pnDatosCircuito.add(lblPrecio, gbc_lblPrecio);
 
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
-		pnDatosCircuito.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		txtfPrecioCircuito = new JTextField();
+		GridBagConstraints gbc_txtfPrecioCircuito = new GridBagConstraints();
+		gbc_txtfPrecioCircuito.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtfPrecioCircuito.insets = new Insets(0, 0, 0, 5);
+		gbc_txtfPrecioCircuito.gridx = 1;
+		gbc_txtfPrecioCircuito.gridy = 3;
+		pnDatosCircuito.add(txtfPrecioCircuito, gbc_txtfPrecioCircuito);
+		txtfPrecioCircuito.setColumns(10);
 
 		pnEspacio = new JPanel();
 		pnEspacio.setPreferredSize(new Dimension(10, 42));
@@ -524,6 +525,7 @@ public class VentanaPrincipal extends JFrame {
 		pnGuias.setLayout(new BorderLayout(0, 0));
 
 		pnListaGuias = new MiListaJPanel_1();
+		pnListaGuias.getBtnLimpiar().addActionListener(new PnListaGuiasBtnLimpiarActionListener());
 		pnListaGuias.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGuias.add(pnListaGuias, BorderLayout.WEST);
 		// pnListaGuias.setLayout(new BorderLayout(0, 0));
@@ -646,7 +648,6 @@ public class VentanaPrincipal extends JFrame {
 		gbc_txtCorreoguia.insets = new Insets(0, 0, 5, 0);
 		gbc_txtCorreoguia.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtCorreoguia.gridx = 2;
-		gbc_txtCorreoguia.gridy = 3;
 		pnInfoGeneral.add(txtCorreoguia, gbc_txtCorreoguia);
 		txtCorreoguia.setColumns(10);
 
@@ -730,13 +731,30 @@ public class VentanaPrincipal extends JFrame {
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
 		pnGrupos.setLayout(new BorderLayout(0, 0));
-
-		pnListaGrupos = new MiListaJPanel_1();
-		pnListaGrupos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		
+		pnListaGrupos = new JPanel();
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
-
-		lblGruposTuristicos = new JLabel("Grupos turísticos (4 - 20 personas):");
-		pnListaGrupos.add(lblGruposTuristicos, BorderLayout.NORTH);
+		pnListaGrupos.setLayout(new BorderLayout(0, 0));
+		
+		lblGruposTusiticos = new JLabel("Grupos tuísticos (4 - 20 personas):");
+		pnListaGrupos.add(lblGruposTusiticos, BorderLayout.NORTH);
+		
+		pnBotonesGrupos = new JPanel();
+		pnBotonesGrupos.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnListaGrupos.add(pnBotonesGrupos, BorderLayout.SOUTH);
+		
+		btnAniadirGrupo = new JButton("Añadir");
+		pnBotonesGrupos.add(btnAniadirGrupo);
+		
+		btnLimpiarGrupo = new JButton("Limpiar");
+		btnLimpiarGrupo.addActionListener(new BtnLimpiarGruposActionListener());
+		pnBotonesGrupos.add(btnLimpiarGrupo);
+		
+		spnListaGrupos = new JScrollPane();
+		pnListaGrupos.add(spnListaGrupos, BorderLayout.CENTER);
+		
+		listGrupos = new JList();
+		spnListaGrupos.setViewportView(listGrupos);
 
 		pnListaIntegrantes = new JPanel();
 		pnListaIntegrantes.setPreferredSize(new Dimension(550, 10));
@@ -786,31 +804,9 @@ public class VentanaPrincipal extends JFrame {
 		tablaIntegrantes = new JTable();
 		tablaIntegrantes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		spnTablaIntegrantes.setViewportView(tablaIntegrantes);
-		MiModeloJTable modeloTabla = new MiModeloJTable();
-		tablaIntegrantes.setModel(modeloTabla);
-		tablaIntegrantes.setRowHeight(50);
-		TableColumn columnaFoto = tablaIntegrantes.getColumnModel().getColumn(4);
-		columnaFoto.setCellEditor(new MiColumnaFotoEditor());
 
-		ListSelectionModel rowSM = tablaIntegrantes.getSelectionModel();
-		rowSM.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-				if (!lsm.isSelectionEmpty()) {
-					// int filaSeleccionada = lsm.getMinSelectionIndex() + 1;
-					// taFilaSeleccionada.setText("Fila "+filaSeleccionada+" seleccionada");
-					MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
-					int n = tablaIntegrantes.getSelectedRow();
-					if (n != -1) {
-						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
-								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2)
-								+ "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
-						txIntegranteSeleccionado.setText(contenido);
-						lblFotoSeleccionada.setIcon((ImageIcon) modeloTabla.getValueAt(n, 4));
-					}
-				}
-			}
-		});
+		// Se lleva a cabo la creacion del modelo de tabla
+		crear_miModeloTabla();
 
 		pnInfoGrupo = new JPanel();
 		pnGrupos.add(pnInfoGrupo, BorderLayout.CENTER);
@@ -895,7 +891,7 @@ public class VentanaPrincipal extends JFrame {
 
 		comboTipGrupo = new JComboBox();
 		comboTipGrupo.setModel(
-				new DefaultComboBoxModel(new String[] { "", "Cultural", "Natural", "Gastronómico", "Reunión" }));
+				new DefaultComboBoxModel(new String[] {"", "Cultural", "Natural", "Gastronómico", "Reunión"}));
 		GridBagConstraints gbc_comboTipGrupo = new GridBagConstraints();
 		gbc_comboTipGrupo.insets = new Insets(0, 0, 5, 5);
 		gbc_comboTipGrupo.fill = GridBagConstraints.HORIZONTAL;
@@ -946,15 +942,96 @@ public class VentanaPrincipal extends JFrame {
 
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
+		mostrar_usuario();
+
 	}
 
-	public JButton getBtnContratar() {
-		return btnContratar;
+	///////////////////////////////////////// Métodos basicos /////////////////////////////////////////////////////
+
+	private void crear_miModeloTabla() {
+		MiModeloJTable modeloTabla = new MiModeloJTable();
+		tablaIntegrantes.setModel(modeloTabla);
+		tablaIntegrantes.setRowHeight(50);
+		TableColumn columnaFoto = tablaIntegrantes.getColumnModel().getColumn(4);
+		columnaFoto.setCellEditor(new MiColumnaFotoEditor());
+
+		ListSelectionModel rowSM = tablaIntegrantes.getSelectionModel();
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+					// int filaSeleccionada = lsm.getMinSelectionIndex() + 1;
+					// taFilaSeleccionada.setText("Fila "+filaSeleccionada+" seleccionada");
+					MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+					int n = tablaIntegrantes.getSelectedRow();
+					if (n != -1) {
+						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
+								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2)
+								+ "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
+						txIntegranteSeleccionado.setText(contenido);
+						lblFotoSeleccionada.setIcon((ImageIcon) modeloTabla.getValueAt(n, 4));
+					}
+				}
+			}
+		});
 	}
 
-	public JCheckBox getChckbxContratado() {
-		return chckbxContratado;
+	// MEtodos Limpieza
+	private void limpiar_circuitos(){
+		txtfNombreCircuito.setText("");
+		spinnerPersonasCircuito.setValue(0);
+		txtfPrecioCircuito.setText("");
+		rdbtnSi.setSelected(false);
+		rdbtnNo.setSelected(false);
+		btnContratar.setEnabled(true);
+		chckbxContratado.setSelected(false);
+		//buttonGroup_2.setSelected(JRadioButton, false);
+		
+		//TRATAMIENTO DE LISTAS
 	}
+	
+	private void limpiar_guias() {
+		txtNombreguia.setText("");
+		txtApellidosGuia.setText("");
+		txtCorreoguia.setText("");
+		txtPrecioGuia.setText("");
+		txtPuntuacionGuia.setText("");
+		txtNumeroGuia.setText("");
+		rdbtnNo_2.setSelected(false);
+		rdbtnSi_2.setSelected(false);
+		
+		//TRATAMIENTO DE LISTAS
+	}
+	
+	private void limpiar_grupos() {
+		txtNombreGrupo.setText("");
+		txtPais.setText("");
+		txtAlojamiento.setText("");
+		comboTipGrupo.setSelectedIndex(-1);
+		comboGuiaGrupo.setSelectedIndex(-1);
+		rdbtnNo_1.setSelected(false);
+		rdbtnSi_1.setSelected(false);
+	}
+	
+	private void mostrar_usuario() {
+		txtUsuario.setText(user.getNombre() + " || " + user.getId());
+		txtNombre.setText(user.getNombre());
+		txtCorreo.setText(user.getCorreo());
+		lblUltimaConexion.setText(user.getUltima_conexion());
+		
+	}
+
+	//////////////////////////////////////////////// Getter's y Setter's////////////////////////////////////////////////////
+
+	public static VentanaPrincipal getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(VentanaPrincipal frame) {
+		VentanaPrincipal.frame = frame;
+	}
+
+	////////////////////////////////////////// Metodos ActionListener (Acciones Botones) //////////////////////////////////////
 
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
@@ -1012,16 +1089,16 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//if (!lanzadoPago) {
-				VentanaPago ventana_pago = new VentanaPago(txtfNombreCircuito.getText(), 1.00, null);
-				ventana_pago.getFrmPasarelaDePago().setVisible(true);
-				//lanzadoPago = true;
-			//}
+			// if (!lanzadoPago) {
+			VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
+					0.00, null);
+			ventana_pago.getFrmPasarelaDePago().setVisible(true);
+			// lanzadoPago = true;
+			// }
 		}
 	}
 
 	private class ListLugaresMouseListener extends MouseAdapter {
-		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (!lanzadoLugarInfo) {
 				VentanaLugar ventana_lugar = new VentanaLugar();
@@ -1034,11 +1111,30 @@ public class VentanaPrincipal extends JFrame {
 	private class BtnAgregarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			VentanaLugar ventana_lugar;
-				 ventana_lugar = new VentanaLugar();
-				ventana_lugar.getFrmLugarVisita().setVisible(true);
-				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
-				lanzadoCreaLugar = true;
+			ventana_lugar = new VentanaLugar();
+			ventana_lugar.getFrmLugarVisita().setVisible(true);
+			ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
+			lanzadoCreaLugar = true;
 		}
 	}
 
+	private class BtnLimpiarCircuitoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			limpiar_circuitos();
+		}
+	}
+	
+	private class PnListaGuiasBtnLimpiarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			limpiar_guias();
+		}
+	}
+	
+	private class BtnLimpiarGruposActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			limpiar_grupos();
+		}
+	}
+
+	
 }

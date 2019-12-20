@@ -187,10 +187,7 @@ public class VentanaLugar {
 
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-			// CONTROLAR PAGO DE TODOS LOS LUGARES DE DICHO CIRCUITO
-			String mensaje = ("Pago del circuito '" + lblNombreLugar.getText() + "' realizado correctamente.");
-			JOptionPane.showMessageDialog(null, mensaje , "", JOptionPane.INFORMATION_MESSAGE);
+
 			getFrmLugarVisita().dispose();
 		}
 	}

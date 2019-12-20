@@ -36,6 +36,7 @@ public class MiListaJPanel_2 extends JPanel {
 		pnBotones.add(btnAniadir);
 		
 		btnEliminar = new JButton("");
+		btnEliminar.setEnabled(false);
 		btnEliminar.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		btnEliminar.setIcon(new ImageIcon(MiListaJPanel_2.class.getResource("/presentacion/imagenes/iconos/remove-24.png")));
 		btnEliminar.setBorderPainted(false);
