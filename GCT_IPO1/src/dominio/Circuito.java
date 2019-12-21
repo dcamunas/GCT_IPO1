@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Circuito {
 	
-	private int id = -1;					//Usado en la bd
+	private static int id = -1;					//Usado en la bd
 	private String nombre_circuito;
 	private int personas_realizado;
 	private int precio;					   // Castear a entero

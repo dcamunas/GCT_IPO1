@@ -4,16 +4,16 @@ import javax.swing.JLabel;
 
 public class Lugar {
 	
-	private int id;
+	private static int id;
 	private String nombre;
-	private Date horario_visita;	// Mirar que date si el de sql o el de java.util || poner string menos problema si da error
+	private String horario_visita;	// Mirar que date si el de sql o el de java.util || poner string menos problema si da error
 	private int duracion_visita;
 	private String tipologia;
 	private double precio;
 	private JLabel imagen_lugar;
 	
 	
-	public Lugar(String nombre, Date horario_visita, int duracion_visita, String tipologia, double precio,
+	public Lugar(String nombre, String horario_visita, int duracion_visita, String tipologia, double precio,
 			JLabel imagen_lugar) {
 		
 		this.id++;
@@ -46,12 +46,12 @@ public class Lugar {
 	}
 
 
-	public Date getHorario_visita() {
+	public String getHorario_visita() {
 		return horario_visita;
 	}
 
 
-	public void setHorario_visita(Date horario_visita) {
+	public void setHorario_visita(String horario_visita) {
 		this.horario_visita = horario_visita;
 	}
 

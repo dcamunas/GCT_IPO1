@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GrupoTuristas {
 	
-	private int id = -1;
+	private static int id = -1;
 	private String nombre;
 	private String pais;
 	private String alojamiento;

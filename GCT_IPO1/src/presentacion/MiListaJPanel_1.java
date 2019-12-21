@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MiListaJPanel_1 extends JPanel {
 	private JPanel pnBotones;
@@ -13,6 +15,8 @@ public class MiListaJPanel_1 extends JPanel {
 	private JButton btnLimpiar;
 	private JScrollPane scrollPane;
 	private JList list;
+	private JButton btnModificar;
+	private JButton btnEliminar;
 
 	/**
 	 * Create the panel.
@@ -25,10 +29,20 @@ public class MiListaJPanel_1 extends JPanel {
 		add(pnBotones, BorderLayout.SOUTH);
 		
 		btnAniadir = new JButton("Añadir");
+		btnAniadir.addActionListener(new BtnAniadirActionListener());
 		pnBotones.add(btnAniadir);
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
+		pnBotones.add(btnModificar);
 		
 		btnLimpiar = new JButton("Limpiar");
 		pnBotones.add(btnLimpiar);
+		
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new BtnEliminarActionListener());
+		btnEliminar.setEnabled(false);
+		pnBotones.add(btnEliminar);
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
@@ -80,4 +94,9 @@ public class MiListaJPanel_1 extends JPanel {
 	
 	
 
+	private class BtnEliminarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			//HACER LISTA REMOVE
+		}
+	}
 }

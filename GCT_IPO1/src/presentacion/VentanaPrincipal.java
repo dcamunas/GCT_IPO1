@@ -47,6 +47,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import dominio.Circuito;
+import dominio.GrupoTuristas;
+import dominio.Lugar;
 import dominio.Usuario;
 
 import javax.swing.ListSelectionModel;
@@ -88,7 +91,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnListaLugares;
 	private JLabel lblLugaresDeVisita;
 	private JScrollPane spnLugares;
-	private JList listLugares;
+	private JList<Lugar> listLugares;
 	private JPanel pnInfoCircuito;
 	private JPanel pnDatosCircuito;
 	private JLabel lblNombreCircuito;
@@ -193,15 +196,20 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnAniadirCircuito;
 	private JButton btnLimpiarCircuito;
 	private JScrollPane spnListaCircuito;
-	private JList listCircuitos;
+	private JList<Circuito> listCircuitos;
 	private JPanel pnListaGrupos;
 	private JLabel lblGruposTusiticos;
 	private JPanel pnBotonesGrupos;
 	private JButton btnAniadirGrupo;
 	private JButton btnLimpiarGrupo;
 	private JScrollPane spnListaGrupos;
-	private JList listGrupos;
+	private JList<GrupoTuristas> listGrupos;
 	private Usuario user;
+	private JButton btnModificar;
+	private JButton btnEliminarCircuito;
+	private JButton btnModificarGrupo;
+	private JButton btnEliminarGrupo;
+	
 
 	
 	/**
@@ -331,12 +339,29 @@ public class VentanaPrincipal extends JFrame {
 
 		btnLimpiarCircuito = new JButton("Limpiar");
 		btnLimpiarCircuito.addActionListener(new BtnLimpiarCircuitoActionListener());
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
+		pnBotonesCircuitosList.add(btnModificar);
 		pnBotonesCircuitosList.add(btnLimpiarCircuito);
+		
+		btnEliminarCircuito = new JButton("Eliminar");
+		btnEliminarCircuito.setEnabled(false);
+		pnBotonesCircuitosList.add(btnEliminarCircuito);
 
 		spnListaCircuito = new JScrollPane();
 		pnListaCircuitos.add(spnListaCircuito, BorderLayout.CENTER);
 
-		listCircuitos = new JList();
+		listCircuitos = new JList<Circuito>();
+		listCircuitos.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Circuito 1"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		spnListaCircuito.setViewportView(listCircuitos);
 
 		pnLugares = new MiJPanel(new JLabel());
@@ -388,7 +413,7 @@ public class VentanaPrincipal extends JFrame {
 		spnLugares = new JScrollPane();
 		pnListaLugares.add(spnLugares, BorderLayout.CENTER);
 
-		listLugares = new JList();
+		listLugares = new JList<Lugar>();
 		listLugares.addMouseListener(new ListLugaresMouseListener());
 		listLugares.setModel(new AbstractListModel() {
 			String[] values = new String[] { "Lugar 1" };
@@ -733,6 +758,7 @@ public class VentanaPrincipal extends JFrame {
 		pnGrupos.setLayout(new BorderLayout(0, 0));
 		
 		pnListaGrupos = new JPanel();
+		pnListaGrupos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
 		pnListaGrupos.setLayout(new BorderLayout(0, 0));
 		
@@ -748,12 +774,20 @@ public class VentanaPrincipal extends JFrame {
 		
 		btnLimpiarGrupo = new JButton("Limpiar");
 		btnLimpiarGrupo.addActionListener(new BtnLimpiarGruposActionListener());
+		
+		btnModificarGrupo = new JButton("Modificar");
+		btnModificarGrupo.setEnabled(false);
+		pnBotonesGrupos.add(btnModificarGrupo);
 		pnBotonesGrupos.add(btnLimpiarGrupo);
+		
+		btnEliminarGrupo = new JButton("Eliminar");
+		btnEliminarGrupo.setEnabled(false);
+		pnBotonesGrupos.add(btnEliminarGrupo);
 		
 		spnListaGrupos = new JScrollPane();
 		pnListaGrupos.add(spnListaGrupos, BorderLayout.CENTER);
 		
-		listGrupos = new JList();
+		listGrupos = new JList<GrupoTuristas>();
 		spnListaGrupos.setViewportView(listGrupos);
 
 		pnListaIntegrantes = new JPanel();
@@ -976,7 +1010,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 	}
 
-	// MEtodos Limpieza
+	// Metodos Limpieza
 	private void limpiar_circuitos(){
 		txtfNombreCircuito.setText("");
 		spinnerPersonasCircuito.setValue(0);
@@ -1014,10 +1048,12 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void mostrar_usuario() {
-		txtUsuario.setText(user.getNombre() + " || " + user.getId());
+
+		txtUsuario.setText(user.getUsuario());
 		txtNombre.setText(user.getNombre());
 		txtCorreo.setText(user.getCorreo());
 		lblUltimaConexion.setText(user.getUltima_conexion());
+		//lblImagen.setIcon((new ImageIcon(VentanaPrincipal.class.getResource(user.getImagen()))));
 		
 	}
 
@@ -1135,6 +1171,8 @@ public class VentanaPrincipal extends JFrame {
 			limpiar_grupos();
 		}
 	}
+	
+
 
 	
 }

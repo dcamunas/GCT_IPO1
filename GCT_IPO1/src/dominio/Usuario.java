@@ -2,7 +2,7 @@ package dominio;
 
 public class Usuario {
 	
-	private int id = -1;
+	private static int id = -1;
 	private String usuario;
 	private String nombre;
 	private String correo;
@@ -19,7 +19,7 @@ public class Usuario {
 		this.nombre = "David";
 		this.correo = "david@alu.com";
 		this.ultima_conexion = "Ayer a las 18:00";
-		this.imagen ="presentacion/imagenes/perfiles/Mou.png";
+		this.imagen = "Mou.png";
 	}
 	
 	
@@ -75,7 +75,7 @@ public class Usuario {
 
 
 	public String getImagen() {
-		return imagen;
+		return "presentacion/imagenes/perfiles/" + imagen;
 	}
 
 

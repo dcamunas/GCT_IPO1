@@ -3,7 +3,7 @@ package dominio;
 import java.util.ArrayList;
 
 public class Guia {
-	private int id = -1;
+	private static int id = -1;
 	private String nombre;
 	private String apellidos;
 	private String correo;

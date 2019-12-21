@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 
 public class Turista {
 	
-	private int id = -1;
+	private static int id = -1;
 	private String nombre;
 	private String apellidos;
 	private int edad;
