@@ -41,6 +41,7 @@ import javax.swing.DefaultCellEditor;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
@@ -209,8 +210,18 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnEliminarCircuito;
 	private JButton btnModificarGrupo;
 	private JButton btnEliminarGrupo;
+	private MiModeloJTable modeloTabla;
 	
-
+	// ArrayList listas
+	private ArrayList<Circuito> lista_circuitos;
+	private ArrayList<GrupoTuristas> lista_grupos;
+	private ArrayList<Lugar> lista_lugares;
+	private ArrayList<String> lista_restricciones;
+	private ArrayList<String> lista_intereses;
+	private ArrayList<String> lista_idiomas;
+	private ArrayList<String> lista_incidencias;
+	private ArrayList<String> lista_ptosInteres;
+	private ArrayList<String> lista_sugerencias;
 	
 	/**
 	 * Create the frame.
@@ -977,13 +988,16 @@ public class VentanaPrincipal extends JFrame {
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
 		mostrar_usuario();
+		String[] k = {"Alto", "Bajo"};
+		VentanaLista vl = new VentanaLista(k);
+		vl.setVisible(true);
 
 	}
 
 	///////////////////////////////////////// Métodos basicos /////////////////////////////////////////////////////
 
 	private void crear_miModeloTabla() {
-		MiModeloJTable modeloTabla = new MiModeloJTable();
+		modeloTabla = new MiModeloJTable();
 		tablaIntegrantes.setModel(modeloTabla);
 		tablaIntegrantes.setRowHeight(50);
 		TableColumn columnaFoto = tablaIntegrantes.getColumnModel().getColumn(4);
@@ -994,9 +1008,7 @@ public class VentanaPrincipal extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 				if (!lsm.isSelectionEmpty()) {
-					// int filaSeleccionada = lsm.getMinSelectionIndex() + 1;
-					// taFilaSeleccionada.setText("Fila "+filaSeleccionada+" seleccionada");
-					MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+					modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
 					int n = tablaIntegrantes.getSelectedRow();
 					if (n != -1) {
 						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
@@ -1045,6 +1057,8 @@ public class VentanaPrincipal extends JFrame {
 		comboGuiaGrupo.setSelectedIndex(-1);
 		rdbtnNo_1.setSelected(false);
 		rdbtnSi_1.setSelected(false);
+		
+		// controlar tabla
 	}
 	
 	private void mostrar_usuario() {
@@ -1102,7 +1116,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnAgregar_1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+			modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
 			Object[] nuevaFila = { "", "", "", "", new ImageIcon(
 					getClass().getClassLoader().getResource("presentacion/imagenes/iconos/userApp.png")) };
 			modeloTabla.aniadeFila(nuevaFila);
@@ -1113,7 +1127,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnBorrar_1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MiModeloJTable modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
+			modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
 			int n = tablaIntegrantes.getSelectedRow();
 			if (n != -1)
 				modeloTabla.eliminaFila(tablaIntegrantes.getSelectedRow());

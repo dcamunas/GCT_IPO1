@@ -46,6 +46,7 @@ public class VentanaPago {
 	private JList list;
 	private JCheckBox contratado;
 	private JButton contratar;
+	private ArrayList<Lugar> lista_lugares;
 	/**
 	 * Create the application.
 	 */

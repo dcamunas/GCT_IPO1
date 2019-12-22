@@ -29,7 +29,6 @@ public class MiListaJPanel_1 extends JPanel {
 		add(pnBotones, BorderLayout.SOUTH);
 		
 		btnAniadir = new JButton("Añadir");
-		btnAniadir.addActionListener(new BtnAniadirActionListener());
 		pnBotones.add(btnAniadir);
 		
 		btnModificar = new JButton("Modificar");
@@ -40,8 +39,6 @@ public class MiListaJPanel_1 extends JPanel {
 		pnBotones.add(btnLimpiar);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new BtnEliminarActionListener());
-		btnEliminar.setEnabled(false);
 		pnBotones.add(btnEliminar);
 		
 		scrollPane = new JScrollPane();
@@ -90,13 +87,5 @@ public class MiListaJPanel_1 extends JPanel {
 
 	public void setListGuias(JList listGuias) {
 		this.list = listGuias;
-	}
-	
-	
-
-	private class BtnEliminarActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			//HACER LISTA REMOVE
-		}
 	}
 }

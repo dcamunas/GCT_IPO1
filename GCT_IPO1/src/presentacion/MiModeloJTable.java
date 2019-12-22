@@ -47,5 +47,9 @@ public class MiModeloJTable extends AbstractTableModel {
 	public void aniadeFila(Object[] row) {
 		datos.add(row);
 	}
+	
+	public void limpiar() {
+		datos.removeAllElements();
+	}
 
 }
