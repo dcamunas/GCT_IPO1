@@ -22,7 +22,9 @@ public class VentanaLista extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaLista(String[] v) {
+	public VentanaLista(String[] valores, JList<String> lista) {
+		
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 444);
@@ -37,7 +39,7 @@ public class VentanaLista extends JFrame {
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setModel(new AbstractListModel() {
-			String[] values = v;
+			String[] values = valores;
 			public int getSize() {
 				return values.length;
 			}
@@ -47,6 +49,4 @@ public class VentanaLista extends JFrame {
 		});
 		scrollPane.setViewportView(list);
 	}
-	
-
 }
