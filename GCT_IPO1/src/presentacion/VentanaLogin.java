@@ -42,7 +42,7 @@ public class VentanaLogin {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -170,9 +170,9 @@ public class VentanaLogin {
 			// Se crea una instancia de la ventana principal (JFrame)
 			user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
 
-			VentanaPrincipal ventana_principal = new VentanaPrincipal(user);
+			VentanaPrincipal ventana_principal = new VentanaPrincipal();
 			// Se hace visible la VentanaPrincipal
-			ventana_principal.setVisible(true);
+			ventana_principal.getFrame().setVisible(true);
 			// Se elimina la ventana actual (atributo a nivel de clase)
 			frmAccesoManchatours.dispose();
 			// }
@@ -185,9 +185,9 @@ public class VentanaLogin {
 			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
 				// Se crea una instancia de la ventana principal (JFrame)
 
-				VentanaPrincipal ventana_principal = new VentanaPrincipal(user);
+				VentanaPrincipal ventana_principal = new VentanaPrincipal();
 				// Se hace visible la VentanaPrincipal
-				ventana_principal.setVisible(true);
+				ventana_principal.getFrame().setVisible(true);
 				// Se elimina la ventana actual (atributo a nivel de clase)
 				frmAccesoManchatours.dispose();
 			}

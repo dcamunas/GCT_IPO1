@@ -129,6 +129,7 @@ public class VentanaPago {
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String mensaje = ("Pago de '" + lblNombreCircuito.getText() + "' realizado correctamente.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
 			contratar.setEnabled(false);
 			contratado.setSelected(true);
 			getFrmPasarelaDePago().dispose();

@@ -26,6 +26,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -54,6 +55,7 @@ import dominio.Circuito;
 import dominio.GrupoTuristas;
 import dominio.Lugar;
 import dominio.Usuario;
+import javafx.scene.control.RadioButton;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
@@ -64,9 +66,9 @@ import java.awt.Font;
 import javax.swing.BoxLayout;
 //import java.awt.event.*;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal {
 
-	private JPanel contentPane;
+	private JFrame frmManchatours;
 	private JPanel pnInfoUsuario;
 	private JPanel pnAreaImagen;
 	private JPanel pnHerramientas;
@@ -114,9 +116,9 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel pnSugerencias;
 	private JLabel lblOpinionesYSugerencias;
 	private MiListaJPanel_2 pnListaSugerencias;
-	private JPanel pnPtosInteres;
+	private JPanel pnptosInteres;
 	private JLabel lblPuntosDeInteres;
-	private MiListaJPanel_2 pnListaPtosInteres;
+	private MiListaJPanel_2 pnListaptosInteres;
 	private JLabel lblNombre;
 	private JTextField txtNombre;
 	private JLabel lblDireccinDeCorreo;
@@ -155,7 +157,7 @@ public class VentanaPrincipal extends JFrame {
 	private JComboBox comboGuiaGrupo;
 	private JPanel pnInteresesGrupo;
 	private JLabel lblIntereses;
-	private JPanel pnRestricciones;
+	private MiListaJPanel_2 pnRestricciones;
 	private JPanel pnTituloRestric;
 	private JLabel lblRestricciones;
 	private JRadioButton rdbtnSi_1;
@@ -178,7 +180,6 @@ public class VentanaPrincipal extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
-	private VentanaPrincipal frame;
 	private JPanel pnTablaIntegrantes;
 	private JPanel pnFotoIntegrante;
 	private JScrollPane spnInfoImagenes;
@@ -213,37 +214,68 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnModificarGrupo;
 	private JButton btnEliminarGrupo;
 	private MiModeloJTable modeloTabla;
+	private ImageIcon icono_info = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
+	private ImageIcon icono_aniadir = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
+
 	
+	// Indices listas
+	private int indice_Lincidencia;
+
 	// ArrayList listas
 	private ArrayList<Circuito> lista_circuitos;
 	private ArrayList<GrupoTuristas> lista_grupos;
 	private ArrayList<Lugar> lista_lugares;
-	private ArrayList<String> lista_restricciones;
-	private ArrayList<String> lista_intereses;
 	private ArrayList<String> lista_idiomas;
 	private ArrayList<String> lista_incidencias;
+	private ArrayList<String> lista_restricciones;
 	private ArrayList<String> lista_ptosInteres;
 	private ArrayList<String> lista_sugerencias;
-	
+
+	// Inicializar listas circuitos
+	String[] restricciones_globales = new String[] { "Prohibido a menores de 18 años", "Prohibido animales", "Prohibido fumar",
+			"Prohibido el uso de télefonos móviles" };
+	String[] ptosInteres_globales = new String[] { "Restaurantes alredor catedral", "Asador Maripili",
+			"Teatro municipal", "Coliseum", "Parque turístico", "Área de acampada", "Piscina municipal" };
+	String[] sugerencias_globales = new String[] { "Ruta muy entretenida", "Guía muy simpático", "Visitar el museo municipal",
+			"La catedral es impresionante" };
+
 	/**
-	 * Create the frame.
+	 * Launch the application.
 	 */
-	public VentanaPrincipal(Usuario user) {
-		this.user = user;
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
-		setTitle("Manchatours");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 750);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaPrincipal window = new VentanaPrincipal();
+					window.frmManchatours.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public VentanaPrincipal() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmManchatours = new JFrame();
+		frmManchatours.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
+		frmManchatours.setTitle("Manchatours");
+		frmManchatours.setBounds(100, 100, 1156, 700);
+		frmManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		pnInfoUsuario = new JPanel();
 		pnInfoUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		pnInfoUsuario.setPreferredSize(new Dimension(200, 10));
-		contentPane.add(pnInfoUsuario, BorderLayout.WEST);
+		frmManchatours.getContentPane().add(pnInfoUsuario, BorderLayout.WEST);
 		pnInfoUsuario.setLayout(new BorderLayout(0, 0));
 
 		pnAreaImagen = new JPanel();
@@ -307,7 +339,7 @@ public class VentanaPrincipal extends JFrame {
 		pnHerramientas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnHerramientas = (FlowLayout) pnHerramientas.getLayout();
 		fl_pnHerramientas.setAlignment(FlowLayout.RIGHT);
-		contentPane.add(pnHerramientas, BorderLayout.NORTH);
+		frmManchatours.getContentPane().add(pnHerramientas, BorderLayout.NORTH);
 
 		btnAyuda = new JButton("");
 		btnAyuda.setIcon(
@@ -325,7 +357,7 @@ public class VentanaPrincipal extends JFrame {
 		pnHerramientas.add(btnCerrarSesion);
 
 		pnPrincipal = new JPanel();
-		contentPane.add(pnPrincipal, BorderLayout.CENTER);
+		frmManchatours.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
 		pnPrincipal.setLayout(new BorderLayout(0, 0));
 
 		tbPestañas = new JTabbedPane(JTabbedPane.TOP);
@@ -352,12 +384,12 @@ public class VentanaPrincipal extends JFrame {
 
 		btnLimpiarCircuito = new JButton("Limpiar");
 		btnLimpiarCircuito.addActionListener(new BtnLimpiarCircuitoActionListener());
-		
+
 		btnModificar = new JButton("Modificar");
 		btnModificar.setEnabled(false);
 		pnBotonesCircuitosList.add(btnModificar);
 		pnBotonesCircuitosList.add(btnLimpiarCircuito);
-		
+
 		btnEliminarCircuito = new JButton("Eliminar");
 		btnEliminarCircuito.setEnabled(false);
 		pnBotonesCircuitosList.add(btnEliminarCircuito);
@@ -367,10 +399,12 @@ public class VentanaPrincipal extends JFrame {
 
 		listCircuitos = new JList<Circuito>();
 		listCircuitos.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Circuito 1"};
+			String[] values = new String[] { "Circuito 1" };
+
 			public int getSize() {
 				return values.length;
 			}
+
 			public Object getElementAt(int index) {
 				return values[index];
 			}
@@ -410,6 +444,7 @@ public class VentanaPrincipal extends JFrame {
 		pnBotonesLugares.add(btnAgregarlugar);
 
 		btnEliminarlugar = new JButton("");
+		btnEliminarlugar.setEnabled(false);
 		btnEliminarlugar.setIcon(
 				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/remove-24.png")));
 		btnEliminarlugar.setBorderPainted(false);
@@ -534,9 +569,9 @@ public class VentanaPrincipal extends JFrame {
 		buttonGroup_2.add(rdbtnNo);
 		pntituloIncidencia.add(rdbtnNo);
 
-		pnListaIncidencia = new MiListaJPanel_2();
+		pnListaIncidencia = new MiListaJPanel_2(new String[]{}, false);
 		pnIncidencias.add(pnListaIncidencia, BorderLayout.SOUTH);
-
+	
 		pnSugerencias = new JPanel();
 		pnInciden_Puntos_Opiniones.add(pnSugerencias, BorderLayout.SOUTH);
 		pnSugerencias.setLayout(new BorderLayout(0, 0));
@@ -544,18 +579,18 @@ public class VentanaPrincipal extends JFrame {
 		lblOpinionesYSugerencias = new JLabel("Opiniones y sugerencias:");
 		pnSugerencias.add(lblOpinionesYSugerencias, BorderLayout.NORTH);
 
-		pnListaSugerencias = new MiListaJPanel_2();
+		pnListaSugerencias = new MiListaJPanel_2(sugerencias_globales, true);
 		pnSugerencias.add(pnListaSugerencias, BorderLayout.SOUTH);
 
-		pnPtosInteres = new JPanel();
-		pnInciden_Puntos_Opiniones.add(pnPtosInteres, BorderLayout.CENTER);
-		pnPtosInteres.setLayout(new BorderLayout(0, 0));
+		pnptosInteres = new JPanel();
+		pnInciden_Puntos_Opiniones.add(pnptosInteres, BorderLayout.CENTER);
+		pnptosInteres.setLayout(new BorderLayout(0, 0));
 
 		lblPuntosDeInteres = new JLabel("Puntos de interes:");
-		pnPtosInteres.add(lblPuntosDeInteres, BorderLayout.NORTH);
+		pnptosInteres.add(lblPuntosDeInteres, BorderLayout.NORTH);
 
-		pnListaPtosInteres = new MiListaJPanel_2();
-		pnPtosInteres.add(pnListaPtosInteres, BorderLayout.CENTER);
+		pnListaptosInteres = new MiListaJPanel_2(ptosInteres_globales, true);
+		pnptosInteres.add(pnListaptosInteres, BorderLayout.CENTER);
 
 		pnGuias = new JPanel();
 		pnGuias.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -584,7 +619,7 @@ public class VentanaPrincipal extends JFrame {
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
 
-		pnListaIdioma = new MiListaJPanel_2();
+		pnListaIdioma = new MiListaJPanel_2(new String[]{}, true);
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
 
 		pnInfoGuia = new JPanel();
@@ -769,37 +804,37 @@ public class VentanaPrincipal extends JFrame {
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
 		pnGrupos.setLayout(new BorderLayout(0, 0));
-		
+
 		pnListaGrupos = new JPanel();
 		pnListaGrupos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
 		pnListaGrupos.setLayout(new BorderLayout(0, 0));
-		
+
 		lblGruposTusiticos = new JLabel("Grupos tuísticos (4 - 20 personas):");
 		pnListaGrupos.add(lblGruposTusiticos, BorderLayout.NORTH);
-		
+
 		pnBotonesGrupos = new JPanel();
 		pnBotonesGrupos.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnListaGrupos.add(pnBotonesGrupos, BorderLayout.SOUTH);
-		
+
 		btnAniadirGrupo = new JButton("Añadir");
 		pnBotonesGrupos.add(btnAniadirGrupo);
-		
+
 		btnLimpiarGrupo = new JButton("Limpiar");
 		btnLimpiarGrupo.addActionListener(new BtnLimpiarGruposActionListener());
-		
+
 		btnModificarGrupo = new JButton("Modificar");
 		btnModificarGrupo.setEnabled(false);
 		pnBotonesGrupos.add(btnModificarGrupo);
 		pnBotonesGrupos.add(btnLimpiarGrupo);
-		
+
 		btnEliminarGrupo = new JButton("Eliminar");
 		btnEliminarGrupo.setEnabled(false);
 		pnBotonesGrupos.add(btnEliminarGrupo);
-		
+
 		spnListaGrupos = new JScrollPane();
 		pnListaGrupos.add(spnListaGrupos, BorderLayout.CENTER);
-		
+
 		listGrupos = new JList<GrupoTuristas>();
 		spnListaGrupos.setViewportView(listGrupos);
 
@@ -938,7 +973,7 @@ public class VentanaPrincipal extends JFrame {
 
 		comboTipGrupo = new JComboBox();
 		comboTipGrupo.setModel(
-				new DefaultComboBoxModel(new String[] {"", "Cultural", "Natural", "Gastronómico", "Reunión"}));
+				new DefaultComboBoxModel(new String[] { "", "Cultural", "Natural", "Gastronómico", "Reunión" }));
 		GridBagConstraints gbc_comboTipGrupo = new GridBagConstraints();
 		gbc_comboTipGrupo.insets = new Insets(0, 0, 5, 5);
 		gbc_comboTipGrupo.fill = GridBagConstraints.HORIZONTAL;
@@ -962,13 +997,13 @@ public class VentanaPrincipal extends JFrame {
 		gbc_comboGuiaGrupo.gridy = 5;
 		pnInfoGrupo1.add(comboGuiaGrupo, gbc_comboGuiaGrupo);
 
-		pnInteresesGrupo = new MiListaJPanel_2();
+		pnInteresesGrupo = new MiListaJPanel_2(new String[]{}, true);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
 
 		lblIntereses = new JLabel("Intereses:");
 		pnInteresesGrupo.add(lblIntereses, BorderLayout.NORTH);
 
-		pnRestricciones = new MiListaJPanel_2();
+		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true);
 		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
 
 		pnTituloRestric = new JPanel();
@@ -989,14 +1024,14 @@ public class VentanaPrincipal extends JFrame {
 
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
-		mostrar_usuario();
-		String[] k = {"Alto", "Bajo"};
-		VentanaLista vl = new VentanaLista(k);
-		vl.setVisible(true);
+
+		// mostrar_usuario();
+
 
 	}
 
-	///////////////////////////////////////// Métodos basicos /////////////////////////////////////////////////////
+	///////////////////////////////////////// Métodos basicos
+	///////////////////////////////////////// /////////////////////////////////////////////////////
 
 	private void crear_miModeloTabla() {
 		modeloTabla = new MiModeloJTable();
@@ -1025,7 +1060,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	// Metodos Limpieza
-	private void limpiar_circuitos(){
+	private void limpiar_circuitos() {
 		txtfNombreCircuito.setText("");
 		spinnerPersonasCircuito.setValue(0);
 		txtfPrecioCircuito.setText("");
@@ -1034,10 +1069,10 @@ public class VentanaPrincipal extends JFrame {
 		btnContratar.setEnabled(true);
 		chckbxContratado.setSelected(false);
 		buttonGroup_2.setSelected(rdbtnNo.getModel(), false);
-		
-		//TRATAMIENTO DE LISTAS
+
+		// TRATAMIENTO DE LISTAS
 	}
-	
+
 	private void limpiar_guias() {
 		txtNombreguia.setText("");
 		txtApellidosGuia.setText("");
@@ -1047,10 +1082,10 @@ public class VentanaPrincipal extends JFrame {
 		txtNumeroGuia.setText("");
 		rdbtnNo_2.setSelected(false);
 		rdbtnSi_2.setSelected(false);
-		
-		//TRATAMIENTO DE LISTAS
+
+		// TRATAMIENTO DE LISTAS
 	}
-	
+
 	private void limpiar_grupos() {
 		txtNombreGrupo.setText("");
 		txtPais.setText("");
@@ -1059,33 +1094,54 @@ public class VentanaPrincipal extends JFrame {
 		comboGuiaGrupo.setSelectedIndex(-1);
 		rdbtnNo_1.setSelected(false);
 		rdbtnSi_1.setSelected(false);
-		
+
 		// TRATAMIENTO DE LISTA
 	}
-	
+
 	private void mostrar_usuario() {
 
 		txtUsuario.setText(user.getUsuario());
 		txtNombre.setText(user.getNombre());
 		txtCorreo.setText(user.getCorreo());
 		lblUltimaConexion.setText(user.getUltima_conexion());
-		//lblImagen.setIcon((new ImageIcon(VentanaPrincipal.class.getResource(user.getImagen()))));
-		
+		// lblImagen.setIcon((new
+		// ImageIcon(VentanaPrincipal.class.getResource(user.getImagen()))));
+
 	}
 
-	//////////////////////////////////////////////// Getter's y Setter's////////////////////////////////////////////////////
+	private void aniadirCircuito() {
+		Circuito circuito = null;
+		if (!camposCircuito()) {
+			JOptionPane.showMessageDialog(null, "Existencia de ampos vacíos, revise los datos introducidos.", "",
+					JOptionPane.ERROR_MESSAGE);
+		}
 
-	public VentanaPrincipal getFrame() {
-		return frame;
+		else {
+			circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
+					Double.parseDouble(txtfPrecioCircuito.getText()), lista_incidencias, lista_ptosInteres,
+					lista_sugerencias, lista_lugares, chckbxContratado.isSelected());
+
+		}
+
 	}
 
+	private boolean camposCircuito() {
+		return (txtfNombreCircuito != null || txtfPrecioCircuito != null || !lista_lugares.isEmpty()
+				|| !(lista_ptosInteres.isEmpty()) || (!rdbtnNo.isSelected() && !rdbtnSi.isSelected()));
+	}
+	
 
-	////////////////////////////////////////// Metodos ActionListener (Acciones Botones) //////////////////////////////////////
+
+//////////////////////////////////////////Metodos ActionListener (Acciones Botones) //////////////////////////////////////
+
+	public JFrame getFrame() {
+		return frmManchatours;
+	}
 
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			VentanaLogin ventana_login = new VentanaLogin();
-			frame.dispose();
+			frmManchatours.dispose();
 			ventana_login.getFrmAccesoManchatours().setVisible(true);
 
 		}
@@ -1094,7 +1150,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnSalirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			getFrame().dispose();
+			frmManchatours.dispose();
 		}
 	}
 
@@ -1103,7 +1159,7 @@ public class VentanaPrincipal extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser seleccionar = new JFileChooser();
-			int vDevuelto = seleccionar.showOpenDialog(frame);
+			int vDevuelto = seleccionar.showOpenDialog(frmManchatours);
 			if (vDevuelto == JFileChooser.APPROVE_OPTION) {
 				File archivo = seleccionar.getSelectedFile();
 				imagen = new ImageIcon(archivo.getAbsolutePath());
@@ -1138,12 +1194,12 @@ public class VentanaPrincipal extends JFrame {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// if (!lanzadoPago) {
+// if (!lanzadoPago) {
 			VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
 					0.00, null);
 			ventana_pago.getFrmPasarelaDePago().setVisible(true);
-			// lanzadoPago = true;
-			// }
+// lanzadoPago = true;
+// }
 		}
 	}
 
@@ -1172,20 +1228,18 @@ public class VentanaPrincipal extends JFrame {
 			limpiar_circuitos();
 		}
 	}
-	
+
 	private class PnListaGuiasBtnLimpiarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			limpiar_guias();
 		}
 	}
-	
+
 	private class BtnLimpiarGruposActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			limpiar_grupos();
 		}
 	}
-	
 
 
-	
 }
