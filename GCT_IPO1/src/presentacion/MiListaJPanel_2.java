@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -18,6 +19,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ListSelectionModel;
 
 public class MiListaJPanel_2 extends JPanel {
@@ -28,16 +32,17 @@ public class MiListaJPanel_2 extends JPanel {
 	private JList<String> list;
 	private DefaultListModel<String> modelo_lista;
 	private boolean mostrar_lista; 
-	private int indice;
 	private ImageIcon icono_info = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
 	private ImageIcon icono_aniadir = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
 	private String[] valores;
+	private ArrayList<String> lista;
 
 
 	/**
 	 * Create the panel.
 	 */
 	public MiListaJPanel_2(String[] valores, boolean mostrar_lista) {
+		this.lista = new ArrayList<String>();
 		this.mostrar_lista = mostrar_lista;
 		this.valores = valores;
 		setLayout(new BorderLayout(0, 0));
@@ -80,7 +85,6 @@ public class MiListaJPanel_2 extends JPanel {
 				if (!lsm.isSelectionEmpty()) {
 					btnAniadir.setIcon(icono_info);
 					btnEliminar.setEnabled(true);
-					indice = lsm.getMinSelectionIndex()+1;
 				}
 			}
 		});
@@ -112,11 +116,21 @@ public class MiListaJPanel_2 extends JPanel {
 	public DefaultListModel<String> getModeloLista() {
 		return modelo_lista;
 	}
+	
+
+	public ArrayList<String> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<String> lista) {
+		this.lista = lista;
+	}
+	
 
 	private class BtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(mostrar_lista) {
-				VentanaLista vl = new VentanaLista(valores, modelo_lista);
+				VentanaLista vl = new VentanaLista(lista, valores, modelo_lista);
 				vl.getFrame().setVisible(true);
 			}
 			else {
@@ -124,10 +138,10 @@ public class MiListaJPanel_2 extends JPanel {
 				
 				// True == Text activado (introducir incidencia)  |  False == Text desactivado (ver informacion)
 				if(btnAniadir.getIcon() == icono_info) {
-					vi = new VentanaIncidencia(modelo_lista, list, false);
+					vi = new VentanaIncidencia(lista, modelo_lista, list, false);
 				}
 				else {
-					vi = new VentanaIncidencia(modelo_lista, list, true);
+					vi = new VentanaIncidencia(lista, modelo_lista, list, true);
 				}
 				vi.getFrame().setVisible(true);
 				btnAniadir.setIcon(icono_aniadir);
@@ -139,6 +153,7 @@ public class MiListaJPanel_2 extends JPanel {
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modelo_lista.remove(list.getSelectedIndex());
+			lista.remove(list.getSelectedIndex());
 		}
 	}
 }

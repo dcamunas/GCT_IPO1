@@ -2,11 +2,22 @@ package presentacion;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import oracle.jrockit.jfr.JFR;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MiListaJPanel_1 extends JPanel {
@@ -14,14 +25,19 @@ public class MiListaJPanel_1 extends JPanel {
 	private JButton btnAniadir;
 	private JButton btnLimpiar;
 	private JScrollPane scrollPane;
-	private JList list;
+	private JList<String> list;
 	private JButton btnModificar;
 	private JButton btnEliminar;
+	private DefaultListModel<String> modelo_lista;
+	private ArrayList lista;
+	private VentanaPrincipal vp;
 
 	/**
 	 * Create the panel.
 	 */
-	public MiListaJPanel_1() {
+	public MiListaJPanel_1(ArrayList lista, VentanaPrincipal vp) {
+		this.vp = vp;
+		this.lista = lista;
 		setLayout(new BorderLayout(0, 0));
 		
 		pnBotones = new JPanel();
@@ -32,19 +48,30 @@ public class MiListaJPanel_1 extends JPanel {
 		pnBotones.add(btnAniadir);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.setEnabled(false);
 		pnBotones.add(btnModificar);
 		
 		btnLimpiar = new JButton("Limpiar");
 		pnBotones.add(btnLimpiar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new BtnEliminarActionListener());
 		pnBotones.add(btnEliminar);
 		
 		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
 		
 		list = new JList();
+		modelo_lista = new DefaultListModel();
+		list.setModel(modelo_lista);
+		ListSelectionModel pos = list.getSelectionModel();
+		pos.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+					vp.mostrar_circuito(list.getSelectedIndex());
+				}
+			}
+		});
 		scrollPane.setViewportView(list);
 
 	}
@@ -81,11 +108,30 @@ public class MiListaJPanel_1 extends JPanel {
 		this.scrollPane = scrollPane;
 	}
 
-	public JList getListGuias() {
+	public JList<String> getList() {
 		return list;
 	}
 
-	public void setListGuias(JList listGuias) {
+	public void setList(JList<String> listGuias) {
 		this.list = listGuias;
 	}
+
+	public DefaultListModel<String> getModelo_lista() {
+		return modelo_lista;
+	}
+	
+	
+	public void setLista(ArrayList lista) {
+		this.lista = lista;
+	}
+
+
+	private class BtnEliminarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			modelo_lista.remove(list.getSelectedIndex());
+
+		}
+	}
+
+	
 }

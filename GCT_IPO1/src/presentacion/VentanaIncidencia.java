@@ -13,6 +13,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class VentanaIncidencia {
@@ -23,13 +25,15 @@ public class VentanaIncidencia {
 	private JLabel lblIncidencia;
 	private JTextPane textPane;
 	private DefaultListModel<String> modelo_lista;
-	private JList<String> lista;
+	private JList<String> list;
+	private List<String> lista;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaIncidencia(DefaultListModel<String> modelo_lista, JList<String> lista, boolean modo) {
+	public VentanaIncidencia(List<String> lista, DefaultListModel<String> modelo_lista, JList<String> list, boolean modo) {
 		this.modelo_lista = modelo_lista;
+		this.list = list;
 		this.lista = lista;
 		initialize(modelo_lista, modo);
 	}
@@ -63,7 +67,7 @@ public class VentanaIncidencia {
 		panel.getBtnAceptar().setText("Añadir");
 		if (!modo) {
 			textPane.setEnabled(false);
-			textPane.setText((String) lista.getSelectedValue());
+			textPane.setText((String) list.getSelectedValue());
 			panel.getBtnAceptar().setText("Aceptar");
 		}
 	}
@@ -88,6 +92,7 @@ public class VentanaIncidencia {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					modelo_lista.addElement((String) textPane.getText());
+					lista.add((String)textPane.getText());
 					JOptionPane.showMessageDialog(null, "Incidencia añadida.", "", JOptionPane.INFORMATION_MESSAGE);
 					getFrame().dispose();
 					

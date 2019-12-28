@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class VentanaLista {
@@ -24,24 +26,25 @@ public class VentanaLista {
 	private JPanel panel_1;
 	private JScrollPane scrollPane;
 	private JList list;
+	private List<String> lista;
 	private DefaultListModel<String> modelo_lista;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaLista(String[] valores, DefaultListModel<String> modelo_lista) {
+	public VentanaLista(List<String> lista, String[] valores, DefaultListModel<String> modelo_lista) {
 		this.modelo_lista = modelo_lista;
-		initialize(valores, modelo_lista);
+		this.lista = lista;
+		initialize(lista, valores, modelo_lista);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String[] valores, DefaultListModel<String> modelo_lista) {
+	private void initialize(List<String> lista, String[] valores, DefaultListModel<String> modelo_lista) {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 300, 434);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
@@ -93,6 +96,7 @@ public class VentanaLista {
 			}
 			else {
 				modelo_lista.addElement((String) list.getSelectedValue());
+				lista.add((String) list.getSelectedValue());
 				String mensaje = ("Se ha seleccionado: '" + list.getSelectedValue() + "' ");
 				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
 				getFrame().dispose();

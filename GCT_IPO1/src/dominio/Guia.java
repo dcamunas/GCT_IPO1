@@ -14,7 +14,7 @@ public class Guia {
 	private ArrayList<Circuito> historial_ruta;
 	private ArrayList<String> idiomas;
 	public Guia(String nombre, String apellidos, String correo, int telefono, double precio_hora, double puntuacion,
-			boolean disponibilidad, ArrayList<Circuito> historial_ruta, ArrayList<String> idiomas) {
+			boolean disponibilidad) {
 		
 		this.id++;
 		this.nombre = nombre;
@@ -24,8 +24,8 @@ public class Guia {
 		this.precio_hora = precio_hora;
 		this.puntuacion = puntuacion;
 		this.disponibilidad = disponibilidad;
-		this.historial_ruta = historial_ruta;
-		this.idiomas = idiomas;
+		this.historial_ruta = new ArrayList<Circuito>();
+		this.idiomas = new ArrayList<String>();
 	}
 	public String getNombre() {
 		return nombre;

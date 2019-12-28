@@ -37,12 +37,14 @@ import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
 
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import javax.swing.JTable;
@@ -53,6 +55,7 @@ import com.sun.xml.internal.ws.policy.sourcemodel.attach.ExternalAttachmentsUnma
 
 import dominio.Circuito;
 import dominio.GrupoTuristas;
+import dominio.Guia;
 import dominio.Lugar;
 import dominio.Usuario;
 import javafx.scene.control.RadioButton;
@@ -68,6 +71,7 @@ import javax.swing.BoxLayout;
 
 public class VentanaPrincipal {
 
+	private VentanaPrincipal vp = this;
 	private JFrame frmManchatours;
 	private JPanel pnInfoUsuario;
 	private JPanel pnAreaImagen;
@@ -194,50 +198,38 @@ public class VentanaPrincipal {
 	private boolean lanzadoPago = false;
 	private boolean lanzadoLugarInfo = false;
 	private boolean lanzadoCreaLugar = false;
-	private JPanel pnListaCircuitos;
+	private MiListaJPanel_1 pnListaCircuitos;
 	private JLabel lblCircuitosContratados;
-	private JPanel pnBotonesCircuitosList;
-	private JButton btnAniadirCircuito;
-	private JButton btnLimpiarCircuito;
-	private JScrollPane spnListaCircuito;
-	private JList<Circuito> listCircuitos;
-	private JPanel pnListaGrupos;
+	private MiListaJPanel_1 pnListaGrupos;
 	private JLabel lblGruposTusiticos;
-	private JPanel pnBotonesGrupos;
-	private JButton btnAniadirGrupo;
-	private JButton btnLimpiarGrupo;
-	private JScrollPane spnListaGrupos;
-	private JList<GrupoTuristas> listGrupos;
 	private Usuario user;
-	private JButton btnModificar;
-	private JButton btnEliminarCircuito;
-	private JButton btnModificarGrupo;
-	private JButton btnEliminarGrupo;
+	private Circuito circuito;
 	private MiModeloJTable modeloTabla;
-	private ImageIcon icono_info = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
-	private ImageIcon icono_aniadir = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
+	private ImageIcon icono_info = new ImageIcon(
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
+	private ImageIcon icono_aniadir = new ImageIcon(
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
 
-	
 	// Indices listas
 	private int indice_Lincidencia;
 
 	// ArrayList listas
-	private ArrayList<Circuito> lista_circuitos;
+	private ArrayList<Circuito> lista_circuitos = new ArrayList<Circuito>();
 	private ArrayList<GrupoTuristas> lista_grupos;
-	private ArrayList<Lugar> lista_lugares;
-	private ArrayList<String> lista_idiomas;
-	private ArrayList<String> lista_incidencias;
-	private ArrayList<String> lista_restricciones;
+	private ArrayList<Guia> lista_guias;
+	
 	private ArrayList<String> lista_ptosInteres;
-	private ArrayList<String> lista_sugerencias;
+	
 
 	// Inicializar listas circuitos
-	String[] restricciones_globales = new String[] { "Prohibido a menores de 18 años", "Prohibido animales", "Prohibido fumar",
-			"Prohibido el uso de télefonos móviles" };
+	String[] restricciones_globales = new String[] { "Prohibido a menores de 18 años", "Prohibido animales",
+			"Prohibido fumar", "Prohibido el uso de télefonos móviles" };
 	String[] ptosInteres_globales = new String[] { "Restaurantes alredor catedral", "Asador Maripili",
 			"Teatro municipal", "Coliseum", "Parque turístico", "Área de acampada", "Piscina municipal" };
-	String[] sugerencias_globales = new String[] { "Ruta muy entretenida", "Guía muy simpático", "Visitar el museo municipal",
-			"La catedral es impresionante" };
+	String[] sugerencias_globales = new String[] { "Ruta muy entretenida", "Guía muy simpático",
+			"Visitar el museo municipal", "La catedral es impresionante" };
+
+	;
 
 	/**
 	 * Launch the application.
@@ -259,6 +251,10 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
+		lista_ptosInteres = new ArrayList<>();
+
+
+		// INICIALIZAR LISTAS
 		initialize();
 	}
 
@@ -267,7 +263,8 @@ public class VentanaPrincipal {
 	 */
 	private void initialize() {
 		frmManchatours = new JFrame();
-		frmManchatours.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
+		frmManchatours.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
 		frmManchatours.setTitle("Manchatours");
 		frmManchatours.setBounds(100, 100, 1156, 700);
 		frmManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -367,49 +364,12 @@ public class VentanaPrincipal {
 		tbPestañas.addTab("Circuitos", null, pnCircuitos, null);
 		pnCircuitos.setLayout(new BorderLayout(0, 0));
 
-		pnListaCircuitos = new JPanel();
-		pnListaCircuitos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnListaCircuitos = new MiListaJPanel_1(lista_circuitos, vp);
+		pnListaCircuitos.getBtnAniadir().addActionListener(new PnListaCircuitosBtnAniadirActionListener());
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
-		pnListaCircuitos.setLayout(new BorderLayout(0, 0));
 
 		lblCircuitosContratados = new JLabel("Circuitos contratados:");
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
-
-		pnBotonesCircuitosList = new JPanel();
-		pnBotonesCircuitosList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		pnListaCircuitos.add(pnBotonesCircuitosList, BorderLayout.SOUTH);
-
-		btnAniadirCircuito = new JButton("Añadir");
-		pnBotonesCircuitosList.add(btnAniadirCircuito);
-
-		btnLimpiarCircuito = new JButton("Limpiar");
-		btnLimpiarCircuito.addActionListener(new BtnLimpiarCircuitoActionListener());
-
-		btnModificar = new JButton("Modificar");
-		btnModificar.setEnabled(false);
-		pnBotonesCircuitosList.add(btnModificar);
-		pnBotonesCircuitosList.add(btnLimpiarCircuito);
-
-		btnEliminarCircuito = new JButton("Eliminar");
-		btnEliminarCircuito.setEnabled(false);
-		pnBotonesCircuitosList.add(btnEliminarCircuito);
-
-		spnListaCircuito = new JScrollPane();
-		pnListaCircuitos.add(spnListaCircuito, BorderLayout.CENTER);
-
-		listCircuitos = new JList<Circuito>();
-		listCircuitos.setModel(new AbstractListModel() {
-			String[] values = new String[] { "Circuito 1" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		spnListaCircuito.setViewportView(listCircuitos);
 
 		pnLugares = new MiJPanel(new JLabel());
 		pnLugares.setPreferredSize(new Dimension(320, 10));
@@ -463,17 +423,7 @@ public class VentanaPrincipal {
 
 		listLugares = new JList<Lugar>();
 		listLugares.addMouseListener(new ListLugaresMouseListener());
-		listLugares.setModel(new AbstractListModel() {
-			String[] values = new String[] { "Lugar 1" };
 
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
 		spnLugares.setViewportView(listLugares);
 
 		pnInfoCircuito = new JPanel();
@@ -569,9 +519,9 @@ public class VentanaPrincipal {
 		buttonGroup_2.add(rdbtnNo);
 		pntituloIncidencia.add(rdbtnNo);
 
-		pnListaIncidencia = new MiListaJPanel_2(new String[]{}, false);
+		pnListaIncidencia = new MiListaJPanel_2(new String[] {}, false);
 		pnIncidencias.add(pnListaIncidencia, BorderLayout.SOUTH);
-	
+
 		pnSugerencias = new JPanel();
 		pnInciden_Puntos_Opiniones.add(pnSugerencias, BorderLayout.SOUTH);
 		pnSugerencias.setLayout(new BorderLayout(0, 0));
@@ -597,7 +547,7 @@ public class VentanaPrincipal {
 		tbPestañas.addTab("Guías", null, pnGuias, null);
 		pnGuias.setLayout(new BorderLayout(0, 0));
 
-		pnListaGuias = new MiListaJPanel_1();
+		pnListaGuias = new MiListaJPanel_1(lista_guias, vp);
 		pnListaGuias.getBtnLimpiar().addActionListener(new PnListaGuiasBtnLimpiarActionListener());
 		pnListaGuias.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGuias.add(pnListaGuias, BorderLayout.WEST);
@@ -619,7 +569,7 @@ public class VentanaPrincipal {
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
 
-		pnListaIdioma = new MiListaJPanel_2(new String[]{}, true);
+		pnListaIdioma = new MiListaJPanel_2(new String[] {}, true);
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
 
 		pnInfoGuia = new JPanel();
@@ -805,38 +755,12 @@ public class VentanaPrincipal {
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
 		pnGrupos.setLayout(new BorderLayout(0, 0));
 
-		pnListaGrupos = new JPanel();
-		pnListaGrupos.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnListaGrupos = new MiListaJPanel_1(lista_grupos, vp);
+		pnListaGrupos.getBtnAniadir().addActionListener(new PnListaGruposBtnAniadirActionListener());
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
-		pnListaGrupos.setLayout(new BorderLayout(0, 0));
 
 		lblGruposTusiticos = new JLabel("Grupos tuísticos (4 - 20 personas):");
 		pnListaGrupos.add(lblGruposTusiticos, BorderLayout.NORTH);
-
-		pnBotonesGrupos = new JPanel();
-		pnBotonesGrupos.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		pnListaGrupos.add(pnBotonesGrupos, BorderLayout.SOUTH);
-
-		btnAniadirGrupo = new JButton("Añadir");
-		pnBotonesGrupos.add(btnAniadirGrupo);
-
-		btnLimpiarGrupo = new JButton("Limpiar");
-		btnLimpiarGrupo.addActionListener(new BtnLimpiarGruposActionListener());
-
-		btnModificarGrupo = new JButton("Modificar");
-		btnModificarGrupo.setEnabled(false);
-		pnBotonesGrupos.add(btnModificarGrupo);
-		pnBotonesGrupos.add(btnLimpiarGrupo);
-
-		btnEliminarGrupo = new JButton("Eliminar");
-		btnEliminarGrupo.setEnabled(false);
-		pnBotonesGrupos.add(btnEliminarGrupo);
-
-		spnListaGrupos = new JScrollPane();
-		pnListaGrupos.add(spnListaGrupos, BorderLayout.CENTER);
-
-		listGrupos = new JList<GrupoTuristas>();
-		spnListaGrupos.setViewportView(listGrupos);
 
 		pnListaIntegrantes = new JPanel();
 		pnListaIntegrantes.setPreferredSize(new Dimension(550, 10));
@@ -997,7 +921,7 @@ public class VentanaPrincipal {
 		gbc_comboGuiaGrupo.gridy = 5;
 		pnInfoGrupo1.add(comboGuiaGrupo, gbc_comboGuiaGrupo);
 
-		pnInteresesGrupo = new MiListaJPanel_2(new String[]{}, true);
+		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, true);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
 
 		lblIntereses = new JLabel("Intereses:");
@@ -1027,11 +951,10 @@ public class VentanaPrincipal {
 
 		// mostrar_usuario();
 
-
 	}
 
 	///////////////////////////////////////// Métodos basicos
-	///////////////////////////////////////// /////////////////////////////////////////////////////
+	///////////////////////////////////////// /////////////////////////////////////////
 
 	private void crear_miModeloTabla() {
 		modeloTabla = new MiModeloJTable();
@@ -1059,20 +982,6 @@ public class VentanaPrincipal {
 		});
 	}
 
-	// Metodos Limpieza
-	private void limpiar_circuitos() {
-		txtfNombreCircuito.setText("");
-		spinnerPersonasCircuito.setValue(0);
-		txtfPrecioCircuito.setText("");
-		rdbtnSi.setSelected(false);
-		rdbtnNo.setSelected(false);
-		btnContratar.setEnabled(true);
-		chckbxContratado.setSelected(false);
-		buttonGroup_2.setSelected(rdbtnNo.getModel(), false);
-
-		// TRATAMIENTO DE LISTAS
-	}
-
 	private void limpiar_guias() {
 		txtNombreguia.setText("");
 		txtApellidosGuia.setText("");
@@ -1083,19 +992,26 @@ public class VentanaPrincipal {
 		rdbtnNo_2.setSelected(false);
 		rdbtnSi_2.setSelected(false);
 
-		// TRATAMIENTO DE LISTAS
-	}
-
-	private void limpiar_grupos() {
-		txtNombreGrupo.setText("");
-		txtPais.setText("");
-		txtAlojamiento.setText("");
-		comboTipGrupo.setSelectedIndex(-1);
-		comboGuiaGrupo.setSelectedIndex(-1);
-		rdbtnNo_1.setSelected(false);
-		rdbtnSi_1.setSelected(false);
-
 		// TRATAMIENTO DE LISTA
+	}
+	
+	private void limpiar_circuito() {
+		txtfNombreCircuito.setText(null);
+		spinnerPersonasCircuito.setValue(0);
+		rdbtnNo_2.setSelected(false);
+		rdbtnSi_2.setSelected(false);
+		txtfPrecioCircuito.setText(null);
+		//pnListaIncidencia.getModeloLista().clear();
+		pnListaptosInteres.getModeloLista().removeAllElements();
+		pnListaSugerencias.getModeloLista().removeAllElements();
+		pnListaptosInteres.getList().removeAll();
+		pnListaIncidencia.setLista(null);
+		pnListaptosInteres.setLista(null);
+		//pnListaSugerencias.setLista(null);
+
+		// Lista lugares
+		
+		
 	}
 
 	private void mostrar_usuario() {
@@ -1109,28 +1025,55 @@ public class VentanaPrincipal {
 
 	}
 
+	public void mostrar_circuito(int indice) {
+		Circuito c = lista_circuitos.get(indice);
+		//int id = Integer.parseInt(Character.toString(circuito.charAt(circuito.length() - 1)));
+		txtfNombreCircuito.setText(Integer.toString(c.getPuntos_interes().size()));
+		spinnerPersonasCircuito.setValue(c.getPersonas_realizado());
+		
+		if (c.isIncidencia()) {
+			rdbtnSi_2.setSelected(true);
+			pnListaIncidencia.setEnabled(true);
+			
+
+		} else {
+			rdbtnNo_2.setSelected(true);
+			pnListaIncidencia.setEnabled(false);
+			pnListaIncidencia.getModeloLista().clear();
+		}
+	}
+
+	private void mostrarJList_2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
+		for(int i = 0; i < lista_origen.size(); i++) {
+			modlista_destino.addElement(lista_origen.get(i));
+		}
+	}
 	private void aniadirCircuito() {
-		Circuito circuito = null;
-		if (!camposCircuito()) {
-			JOptionPane.showMessageDialog(null, "Existencia de ampos vacíos, revise los datos introducidos.", "",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		/*
+		 * if (!camposCircuito()) { JOptionPane.showMessageDialog(null,
+		 * "Existencia de campos vacíos, revise los datos introducidos.", "",
+		 * JOptionPane.ERROR_MESSAGE); }
+		 * 
+		 * else {
+		 */
+		circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
+				Double.parseDouble(txtfPrecioCircuito.getText()), null, pnListaptosInteres.getLista(),
+				null, null, chckbxContratado.isSelected(), true);
+		limpiar_circuito();
+		
+		pnListaCircuitos.getModelo_lista().addElement("Circuito " + circuito.getId());
+		lista_circuitos.add(circuito);
+		
 
-		else {
-			circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
-					Double.parseDouble(txtfPrecioCircuito.getText()), lista_incidencias, lista_ptosInteres,
-					lista_sugerencias, lista_lugares, chckbxContratado.isSelected());
-
-		}
+		// }
 
 	}
+
 
 	private boolean camposCircuito() {
-		return (txtfNombreCircuito != null || txtfPrecioCircuito != null || !lista_lugares.isEmpty()
-				|| !(lista_ptosInteres.isEmpty()) || (!rdbtnNo.isSelected() && !rdbtnSi.isSelected()));
+		return !(txtfNombreCircuito.getText() == null || txtfPrecioCircuito.getText() == null 
+				|| pnListaptosInteres.getLista().isEmpty() || (!rdbtnNo.isSelected() && !rdbtnSi.isSelected()));
 	}
-	
-
 
 //////////////////////////////////////////Metodos ActionListener (Acciones Botones) //////////////////////////////////////
 
@@ -1223,23 +1166,26 @@ public class VentanaPrincipal {
 		}
 	}
 
-	private class BtnLimpiarCircuitoActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			limpiar_circuitos();
-		}
-	}
-
 	private class PnListaGuiasBtnLimpiarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			limpiar_guias();
 		}
 	}
 
-	private class BtnLimpiarGruposActionListener implements ActionListener {
+	private class PnListaGruposBtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			limpiar_grupos();
+
 		}
 	}
+
+	private class PnListaCircuitosBtnAniadirActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// Añadir circuito a lista
+			aniadirCircuito();
+			limpiar_circuito();
+		}
+	}
+
 
 
 }

@@ -13,20 +13,22 @@ public class Circuito {
 	private ArrayList<String> sugerencias;
 	private ArrayList<Lugar> lugares;
 	private boolean contratado;
+	private boolean incidencia;
 
 	public Circuito(String nombre_circuito, int personas_realizado, double precio, ArrayList<String> incidencias_lista,
 			ArrayList<String> puntos_interes, ArrayList<String> sugerencias, ArrayList<Lugar> lugares,
-			boolean contratado) {
+			boolean contratado, boolean incidencia) {
 
 		this.id++;
 		this.nombre_circuito = nombre_circuito;
 		this.personas_realizado = personas_realizado;
 		this.precio = precio;
-		this.incidencias_lista = incidencias_lista;
+		//this.incidencias_lista = new ArrayList<String>(incidencias_lista);
 		this.puntos_interes = puntos_interes;
-		this.sugerencias = sugerencias;
-		this.lugares = lugares;
+		//this.sugerencias = new ArrayList<String>(sugerencias);;
+		//this.lugares = new ArrayList<Lugar>(lugares);;
 		this.contratado = contratado;
+		this.incidencia = incidencia;
 	}
 
 	public int getId() {
@@ -81,12 +83,22 @@ public class Circuito {
 		this.lugares = lugares;
 	}
 
-	public boolean getContratado() {
+	public boolean isContratado() {
 		return contratado;
 	}
 
 	public void setContratado(boolean contratado) {
 		this.contratado = contratado;
 	}
+
+	public boolean isIncidencia() {
+		return incidencia;
+	}
+
+	public void setIncidencia(boolean incidencia) {
+		this.incidencia = incidencia;
+	}
+	
+	
 
 }
