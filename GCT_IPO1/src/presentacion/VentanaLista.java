@@ -82,24 +82,30 @@ public class VentanaLista {
 
 	private boolean comprobarElementos() {
 		boolean esta = false;
-		for (int i = modelo_lista.size()-1; i >= 0 && !esta; i--) {
-			esta = modelo_lista.getElementAt(i).equals((String)list.getSelectedValue());
+		for (int i = modelo_lista.size() - 1; i >= 0 && !esta; i--) {
+			esta = modelo_lista.getElementAt(i).equals((String) list.getSelectedValue());
 		}
 		return esta;
 	}
 
 	private class BtnAadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(comprobarElementos()) {
-				String mensaje = ("'" + list.getSelectedValue() + "' ya ha sido seleccionado.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				modelo_lista.addElement((String) list.getSelectedValue());
-				lista.add((String) list.getSelectedValue());
-				String mensaje = ("Se ha seleccionado: '" + list.getSelectedValue() + "' ");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
-				getFrame().dispose();
+			if (list.isSelectionEmpty()) {
+				JOptionPane.showMessageDialog(null, "Error, debe de seleccionar un elemento de la lista.", "",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				if (comprobarElementos()) {
+					String mensaje = ("'" + list.getSelectedValue() + "' ya ha sido seleccionado.");
+					JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.WARNING_MESSAGE);
+				} else {
+					modelo_lista.addElement((String) list.getSelectedValue());
+					// Realizar copia de listas al añadir circuito
+
+					// lista.add((String) list.getSelectedValue());
+					String mensaje = ("Se ha seleccionado: '" + list.getSelectedValue() + "' ");
+					JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
+					getFrame().dispose();
+				}
 			}
 		}
 	}

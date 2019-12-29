@@ -83,7 +83,7 @@ public class MiListaJPanel_2 extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 				if (!lsm.isSelectionEmpty()) {
-					btnAniadir.setIcon(icono_info);
+					//list.clearSelection();
 					btnEliminar.setEnabled(true);
 				}
 			}
@@ -153,7 +153,7 @@ public class MiListaJPanel_2 extends JPanel {
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modelo_lista.remove(list.getSelectedIndex());
-			lista.remove(list.getSelectedIndex());
+			//lista.remove(list.getSelectedIndex());
 		}
 	}
 }

@@ -39,27 +39,28 @@ public class MiListaJPanel_1 extends JPanel {
 		this.vp = vp;
 		this.lista = lista;
 		setLayout(new BorderLayout(0, 0));
-		
+
 		pnBotones = new JPanel();
 		pnBotones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		add(pnBotones, BorderLayout.SOUTH);
-		
+
 		btnAniadir = new JButton("Añadir");
 		pnBotones.add(btnAniadir);
-		
+
 		btnModificar = new JButton("Modificar");
 		pnBotones.add(btnModificar);
-		
+
 		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new BtnLimpiarActionListener());
 		pnBotones.add(btnLimpiar);
-		
+
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(new BtnEliminarActionListener());
 		pnBotones.add(btnEliminar);
-		
+
 		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
-		
+
 		list = new JList();
 		modelo_lista = new DefaultListModel();
 		list.setModel(modelo_lista);
@@ -68,7 +69,23 @@ public class MiListaJPanel_1 extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
 				if (!lsm.isSelectionEmpty()) {
-					vp.mostrar_circuito(list.getSelectedIndex());
+					String aux = list.getSelectedValue();
+					switch (aux.charAt(1)) {
+					case 'i':
+						vp.limpiar_circuito();
+						vp.mostrar_circuito(list.getSelectedIndex());
+						break;
+					case 'u':
+						vp.limpiar_guias();
+						// mostrarguia
+						break;
+						
+					default:
+						// por defecto grupos
+
+						break;
+					}
+
 				}
 			}
 		});
@@ -119,12 +136,10 @@ public class MiListaJPanel_1 extends JPanel {
 	public DefaultListModel<String> getModelo_lista() {
 		return modelo_lista;
 	}
-	
-	
+
 	public void setLista(ArrayList lista) {
 		this.lista = lista;
 	}
-
 
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -132,6 +147,10 @@ public class MiListaJPanel_1 extends JPanel {
 
 		}
 	}
+	private class BtnLimpiarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
 
-	
 }

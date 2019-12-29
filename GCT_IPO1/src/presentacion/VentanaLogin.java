@@ -36,7 +36,7 @@ public class VentanaLogin {
 	private JLabel lblContrasenia;
 	private JPasswordField pwdContrasenia;
 	private JButton btnEntrar;
-	private final String pass = "david";
+	private final String pass = "ipo1";
 	private Usuario user;
 
 	/**
