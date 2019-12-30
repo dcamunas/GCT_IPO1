@@ -54,22 +54,22 @@ public class VentanaLugar {
 	private ArrayList<Lugar> lugares;
 	private JComboBox comboHorario;
 	private DefaultListModel<String> modelo_lugares;
-	private String lugar;
+	private int id_lugar;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaLugar(ArrayList<Lugar> lista, DefaultListModel<String> modelo_lista, String lugar, boolean edicion) {
+	public VentanaLugar(ArrayList<Lugar> lista, DefaultListModel<String> modelo_lista, int id_lugar, boolean edicion) {
 		lugares = lista;
 		modelo_lugares = modelo_lista;
-		this.lugar = lugar;
-		initialize();
+		this.id_lugar = id_lugar;
+		initialize(edicion);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(boolean edicion) {
 		frmLugarVisita = new JFrame();
 		frmLugarVisita.setResizable(false);
 		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
@@ -171,6 +171,11 @@ public class VentanaLugar {
 		gbc_txtPrecio.gridy = 4;
 		panel.add(txtPrecio, gbc_txtPrecio);
 		txtPrecio.setColumns(10);
+		
+		if(!edicion) {
+			mostrar_lugar();
+			activar_edicion(false);
+		}
 
 		
 		
@@ -201,17 +206,16 @@ public class VentanaLugar {
 		this.txtfNombreLugar = txtfNombreLugar;
 	}
 
-	private void desactivar_edicion(boolean condicion) {
-		txtfNombreLugar.setEditable(!condicion);
-		txtfDuracion.setEditable(!condicion);
-		txtPrecio.setEditable(!condicion);
-		comboHorario.setEditable(!condicion);
-		comboTipologia.setEditable(!condicion);
-		lblImagen.setEnabled(!condicion);
+	private void activar_edicion(boolean condicion) {
+		txtfNombreLugar.setEditable(condicion);
+		txtfDuracion.setEditable(condicion);
+		txtPrecio.setEditable(condicion);
+		comboHorario.setEditable(condicion);
+		comboTipologia.setEditable(condicion);
+		lblImagen.setEnabled(condicion);
 	}
 
 	private void mostrar_lugar() {
-		desactivar_edicion(true);
 		Lugar l = seleccionar_lugar();
 		txtfNombreLugar.setText(l.getNombre());
 		lblImagen = l.getImagen_lugar();
@@ -222,11 +226,11 @@ public class VentanaLugar {
 	}
 
 	private Lugar seleccionar_lugar() {
-		int id_lugar = Integer.parseInt(Character.toString(lugar.charAt(lugar.length() - 1)));
 		Lugar aux = null;
 		for(Lugar l : lugares) {
 			if(l.getId() == id_lugar) {
 				aux = l;
+				break;
 			}
 		}
 		return aux;

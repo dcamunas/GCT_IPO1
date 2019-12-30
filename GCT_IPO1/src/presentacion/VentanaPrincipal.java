@@ -81,7 +81,7 @@ public class VentanaPrincipal {
 	private JLabel lblUltimaConexion;
 	private JPanel pnContenidoUsuario;
 	private JLabel lblUsuario;
-	private JTextField txtUsuario;
+	public JTextField txtUsuario;
 	private JPanel pnImagen;
 	private JLabel lblImagen;
 	private JPanel pnPrincipal;
@@ -113,9 +113,6 @@ public class VentanaPrincipal {
 	private JPanel pnInciden_Puntos_Opiniones;
 	private JPanel pnIncidencias;
 	private JPanel pntituloIncidencia;
-	private JLabel lblIncidencias;
-	private JRadioButton rdbtnSi;
-	private JRadioButton rdbtnNo;
 	private MiListaJPanel_2 pnListaIncidencia;
 	private JPanel pnSugerencias;
 	private JLabel lblOpinionesYSugerencias;
@@ -124,7 +121,7 @@ public class VentanaPrincipal {
 	private JLabel lblPuntosDeInteres;
 	private MiListaJPanel_2 pnListaptosInteres;
 	private JLabel lblNombre;
-	private JTextField txtNombre;
+	public JTextField txtNombre;
 	private JLabel lblDireccinDeCorreo;
 	private JTextField txtCorreo;
 	private MiListaJPanel_1 pnListaGuias;
@@ -164,8 +161,8 @@ public class VentanaPrincipal {
 	private MiListaJPanel_2 pnRestricciones;
 	private JPanel pnTituloRestric;
 	private JLabel lblRestricciones;
-	private JRadioButton rdbtnSi_1;
-	private JRadioButton rdbtnNo_1;
+	private JCheckBox checkbtnSi_1;
+	private JCheckBox checkbtnNo_1;
 	private JPanel pnInfoGeneral;
 	private JTextField txtNombreguia;
 	private JLabel lblApellidosGuia;
@@ -179,8 +176,8 @@ public class VentanaPrincipal {
 	private JLabel lblPuntuacion;
 	private JLabel lblDisponibilidadGuia;
 	private JTextField txtPuntuacionGuia;
-	private JRadioButton rdbtnSi_2;
-	private JRadioButton rdbtnNo_2;
+	private JCheckBox checkbtnSi_2;
+	private JCheckBox checkbtnNo_2;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
@@ -207,11 +204,12 @@ public class VentanaPrincipal {
 	private MiModeloJTable modeloTabla;
 	private ImageIcon icono_info = new ImageIcon(
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
+
 	private ImageIcon icono_aniadir = new ImageIcon(
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
 
 	// ArrayList listas
-	private ArrayList<Circuito> lista_circuitos;
+	private List<Circuito> lista_circuitos;
 	private ArrayList<Lugar> lista_lugares;
 	private ArrayList<GrupoTuristas> lista_grupos;
 	private ArrayList<Guia> lista_guias;
@@ -361,6 +359,7 @@ public class VentanaPrincipal {
 		pnCircuitos.setLayout(new BorderLayout(0, 0));
 
 		pnListaCircuitos = new MiListaJPanel_1(lista_circuitos, vp);
+		pnListaCircuitos.getBtnModificar().addActionListener(new PnListaCircuitosBtnModificarActionListener());
 		pnListaCircuitos.getBtnAniadir().addActionListener(new PnListaCircuitosBtnAniadirActionListener());
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
 
@@ -424,9 +423,17 @@ public class VentanaPrincipal {
 		modelo_lugaresLista = new DefaultListModel<String>();
 		listLugares.setModel(modelo_lugaresLista);
 
-		listLugares.addMouseListener(new ListLugaresMouseListener());
-
 		spnLugares.setViewportView(listLugares);
+		ListSelectionModel pos = listLugares.getSelectionModel();
+		pos.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if (!lsm.isSelectionEmpty()) {
+					btnEliminarlugar.setEnabled(true);
+					btnAgregarlugar.setIcon(icono_info);
+				}
+			}
+		});
 
 		pnInfoCircuito = new JPanel();
 		pnCircuitos.add(pnInfoCircuito, BorderLayout.CENTER);
@@ -508,18 +515,6 @@ public class VentanaPrincipal {
 		FlowLayout flowLayout = (FlowLayout) pntituloIncidencia.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnIncidencias.add(pntituloIncidencia, BorderLayout.NORTH);
-
-		lblIncidencias = new JLabel("Incidencias:");
-		lblIncidencias.setHorizontalTextPosition(SwingConstants.CENTER);
-		pntituloIncidencia.add(lblIncidencias);
-
-		rdbtnSi = new JRadioButton("Si");
-		buttonGroup_2.add(rdbtnSi);
-		pntituloIncidencia.add(rdbtnSi);
-
-		rdbtnNo = new JRadioButton("No");
-		buttonGroup_2.add(rdbtnNo);
-		pntituloIncidencia.add(rdbtnNo);
 
 		pnListaIncidencia = new MiListaJPanel_2(new String[] {}, false);
 		pnIncidencias.add(pnListaIncidencia, BorderLayout.SOUTH);
@@ -734,23 +729,23 @@ public class VentanaPrincipal {
 		gbc_lblDisponibilidadGuia.gridy = 7;
 		pnInfoGeneral.add(lblDisponibilidadGuia, gbc_lblDisponibilidadGuia);
 
-		rdbtnSi_2 = new JRadioButton("Sí");
-		buttonGroup.add(rdbtnSi_2);
-		GridBagConstraints gbc_rdbtnSi_2 = new GridBagConstraints();
-		gbc_rdbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_rdbtnSi_2.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnSi_2.gridx = 2;
-		gbc_rdbtnSi_2.gridy = 7;
-		pnInfoGeneral.add(rdbtnSi_2, gbc_rdbtnSi_2);
+		checkbtnSi_2 = new JCheckBox("Sí");
+		buttonGroup.add(checkbtnSi_2);
+		GridBagConstraints gbc_checkbtnSi_2 = new GridBagConstraints();
+		gbc_checkbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_checkbtnSi_2.insets = new Insets(0, 0, 5, 5);
+		gbc_checkbtnSi_2.gridx = 2;
+		gbc_checkbtnSi_2.gridy = 7;
+		pnInfoGeneral.add(checkbtnSi_2, gbc_checkbtnSi_2);
 
-		rdbtnNo_2 = new JRadioButton("No");
-		buttonGroup.add(rdbtnNo_2);
-		GridBagConstraints gbc_rdbtnNo_2 = new GridBagConstraints();
-		gbc_rdbtnNo_2.anchor = GridBagConstraints.WEST;
-		gbc_rdbtnNo_2.insets = new Insets(0, 0, 5, 0);
-		gbc_rdbtnNo_2.gridx = 3;
-		gbc_rdbtnNo_2.gridy = 7;
-		pnInfoGeneral.add(rdbtnNo_2, gbc_rdbtnNo_2);
+		checkbtnNo_2 = new JCheckBox("No");
+		buttonGroup.add(checkbtnNo_2);
+		GridBagConstraints gbc_checkbtnNo_2 = new GridBagConstraints();
+		gbc_checkbtnNo_2.anchor = GridBagConstraints.WEST;
+		gbc_checkbtnNo_2.insets = new Insets(0, 0, 5, 0);
+		gbc_checkbtnNo_2.gridx = 3;
+		gbc_checkbtnNo_2.gridy = 7;
+		pnInfoGeneral.add(checkbtnNo_2, gbc_checkbtnNo_2);
 
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
@@ -938,13 +933,13 @@ public class VentanaPrincipal {
 		lblRestricciones = new JLabel("Restricciones: ");
 		pnTituloRestric.add(lblRestricciones);
 
-		rdbtnSi_1 = new JRadioButton("Sí");
-		buttonGroup_1.add(rdbtnSi_1);
-		pnTituloRestric.add(rdbtnSi_1);
+		checkbtnSi_1 = new JCheckBox("Sí");
+		buttonGroup_1.add(checkbtnSi_1);
+		pnTituloRestric.add(checkbtnSi_1);
 
-		rdbtnNo_1 = new JRadioButton("No");
-		buttonGroup_1.add(rdbtnNo_1);
-		pnTituloRestric.add(rdbtnNo_1);
+		checkbtnNo_1 = new JCheckBox("No");
+		buttonGroup_1.add(checkbtnNo_1);
+		pnTituloRestric.add(checkbtnNo_1);
 
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
@@ -983,14 +978,15 @@ public class VentanaPrincipal {
 	}
 
 	public void limpiar_guias() {
-		txtNombreguia.setText("");
-		txtApellidosGuia.setText("");
-		txtCorreoguia.setText("");
-		txtPrecioGuia.setText("");
-		txtPuntuacionGuia.setText("");
-		txtNumeroGuia.setText("");
-		rdbtnNo_2.setSelected(false);
-		rdbtnSi_2.setSelected(false);
+		txtNombreguia.setText(null);
+		txtApellidosGuia.setText(null);
+		txtCorreoguia.setText(null);
+		txtPrecioGuia.setText(null);
+		txtPuntuacionGuia.setText(null);
+		txtNumeroGuia.setText(null);
+		checkbtnNo_2.setSelected(false);
+		checkbtnSi_2.setSelected(false);
+		spinnerPersonasCircuito.setValue(0);
 
 		// TRATAMIENTO DE LISTA
 	}
@@ -998,15 +994,15 @@ public class VentanaPrincipal {
 	public void limpiar_circuito() {
 		txtfNombreCircuito.setText(null);
 		spinnerPersonasCircuito.setValue(0);
-		rdbtnNo_2.setSelected(false);
-		rdbtnSi_2.setSelected(false);
 		txtfPrecioCircuito.setText(null);
 		pnListaIncidencia.getModeloLista().clear();
 		pnListaptosInteres.getModeloLista().clear();
 		pnListaSugerencias.getModeloLista().clear();
 		modelo_lugaresLista.clear();
 		lista_lugares = null;
-		// limpiar modeloListalugares
+		btnContratar.setEnabled(true);
+		chckbxContratado.setEnabled(false);
+		chckbxContratado.setSelected(false);
 
 		// Lista lugares
 
@@ -1025,62 +1021,93 @@ public class VentanaPrincipal {
 
 	public void mostrar_circuito(int indice) {
 		circuito = lista_circuitos.get(indice);
-		// int id =
-		// Integer.parseInt(Character.toString(circuito.charAt(circuito.length() - 1)));
-		txtfNombreCircuito.setText(Integer.toString(circuito.getPuntos_interes().size()));
+		txtfNombreCircuito.setText(circuito.getNombre_circuito());
 		spinnerPersonasCircuito.setValue(circuito.getPersonas_realizado());
+		txtfPrecioCircuito.setText(Double.toString(circuito.getPrecio()));
 		mostrar_lista2(pnListaptosInteres.getModeloLista(), circuito.getPuntos_interes());
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
-		copiar_lugares();
+		/*
+		 * txtUsuario.setText(Integer.toString(circuito.getPuntos_interes().size()));
+		 * txtNombre.setText(Integer.toString(pnListaptosInteres.getModeloLista().size()
+		 * ));
+		 */
+		// copiar_lugares();
 	}
 
 	private void copiar_lugares() {
-		for (int i = 0; i < lista_lugares.size(); i++) {
-			modelo_lugaresLista.addElement("Lugar " + lista_lugares.get(i).getId());
+		if (!modelo_lugaresLista.isEmpty()) {
+			for (int i = 0; i < lista_lugares.size(); i++) {
+				modelo_lugaresLista.addElement("Lugar " + lista_lugares.get(i).getId());
+			}
 		}
 	}
 
-	private void mostrar_lista2(DefaultListModel<String> modlista_destino, ArrayList<String> lista_origen) {
+	private void mostrar_lista2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
 		for (int i = 0; i < lista_origen.size(); i++) {
-			modlista_destino.addElement(lista_origen.get(i));
+			modlista_destino.add(i, lista_origen.get(i));
 		}
+
 	}
 
-	private ArrayList<String> generar_lista(DefaultListModel<String> modelo_lista) {
-		ArrayList<String> aux = new ArrayList<String>();
+	private List<String> generar_lista(DefaultListModel<String> modelo_lista) {
+		List<String> aux = new ArrayList<String>();
 		for (int i = 0; i < modelo_lista.size(); i++) {
 			aux.add(modelo_lista.get(i));
 		}
+
 		return aux;
+	}
+	
+	public void aniadirCircuito() {
+		if (comprobar_camposCircuito()) {
+			if (comprobarNumero(txtfPrecioCircuito.getText())) {
+				circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
+						Double.parseDouble(txtfPrecioCircuito.getText()),
+						generar_lista(pnListaIncidencia.getModeloLista()),
+						generar_lista(pnListaptosInteres.getModeloLista()),
+						generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares,
+						chckbxContratado.isSelected());
+
+				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
+				pnListaCircuitos.getLista().add(circuito);
+
+				limpiar_circuito();
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+					JOptionPane.ERROR_MESSAGE);
+
+		}
+	}
+
+	private void modificar_circuito() {
+		circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
+		circuito.setNombre_circuito(txtfNombreCircuito.getText());
+		circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
+		circuito.setPrecio(Integer.parseInt(txtfPrecioCircuito.getText()));
+		circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
+		circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
+		circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 
 	}
 
-	private void aniadirCircuito() {
-		/*
-		 * if (!camposCircuito()) { JOptionPane.showMessageDialog(null,
-		 * "Existencia de campos vacíos, revise los datos introducidos.", "",
-		 * JOptionPane.ERROR_MESSAGE); }
-		 * 
-		 * else {
-		 */
-		circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
-				Double.parseDouble(txtfPrecioCircuito.getText()), generar_lista(pnListaIncidencia.getModeloLista()),
-				generar_lista(pnListaptosInteres.getModeloLista()), generar_lista(pnListaSugerencias.getModeloLista()),
-				lista_lugares, chckbxContratado.isSelected());
-		
-		limpiar_circuito();
-
-		pnListaCircuitos.getModelo_lista().addElement("Circuito " + circuito.getId());
-		lista_circuitos.add(circuito);
-
-		// }
-
-	}
-
-	private boolean camposCircuito() {
+	private boolean comprobar_camposCircuito() {
 		return !(txtfNombreCircuito.getText() == null || txtfPrecioCircuito.getText() == null
-				|| pnListaptosInteres.getLista().isEmpty() || (!rdbtnNo.isSelected() && !rdbtnSi.isSelected()));
+				|| txtfPrecioCircuito.getText() == null);
+	}
+
+	public static boolean comprobarNumero(String cadena) {
+
+		try {
+			Double.parseDouble(cadena);
+			return true;
+		} catch (Exception e) {
+			String mensaje = ("El parámetro introducido debe de ser un número.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			return false;
+
+		}
 	}
 
 //////////////////////////////////////////Metodos ActionListener (Acciones Botones) //////////////////////////////////////
@@ -1145,39 +1172,37 @@ public class VentanaPrincipal {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-// if (!lanzadoPago) {
 			VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
-					0.00, null);
+					txtfPrecioCircuito.getText(), null);
 			ventana_pago.getFrmPasarelaDePago().setVisible(true);
-// lanzadoPago = true;
-// }
-		}
-	}
-
-	private class ListLugaresMouseListener extends MouseAdapter {
-		public void mouseClicked(MouseEvent e) {
-			if (!listLugares.isSelectionEmpty()) {
-				if(modelo_lugaresLista.size() > 0 && lista_lugares.size() > 0)
-					btnEliminarlugar.setEnabled(true);
-				String lugar_aux =  modelo_lugaresLista.getElementAt(listLugares.getSelectedIndex());
-				VentanaLugar ventana_lugar = new VentanaLugar(null, null, lugar_aux, false);
-				ventana_lugar.getFrmLugarVisita().setVisible(true);
-				ventana_lugar.getTxtfNombreLugar().setEditable(false);
-			}
 		}
 	}
 
 	private class BtnAgregarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaLugar ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, null, true);
-			ventana_lugar.getFrmLugarVisita().setVisible(true);
-			ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
+			if (btnAgregarlugar.getIcon() != icono_info) {
+
+				VentanaLugar ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, 0, true);
+				ventana_lugar.getFrmLugarVisita().setVisible(true);
+				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
+			} else {
+				String lugar_aux = modelo_lugaresLista.getElementAt(listLugares.getSelectedIndex());
+				int id_lugar = Integer.parseInt(Character.toString(lugar_aux.charAt(lugar_aux.length() - 1)));
+
+				VentanaLugar ventana_lugar = new VentanaLugar(null, null, id_lugar, false);
+				ventana_lugar.getFrmLugarVisita().setVisible(true);
+				ventana_lugar.getTxtfNombreLugar().setEditable(false);
+				btnAgregarlugar.setIcon(icono_aniadir);
+			}
 
 		}
 	}
 
 	private class BtnEliminarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			modelo_lugaresLista.remove(listLugares.getSelectedIndex());
+			lista_lugares.remove(listLugares.getSelectedIndex());
+			btnAgregarlugar.setIcon(icono_aniadir);
 		}
 	}
 
@@ -1185,6 +1210,12 @@ public class VentanaPrincipal {
 		public void actionPerformed(ActionEvent e) {
 			aniadirCircuito();
 			limpiar_circuito();
+		}
+	}
+
+	private class PnListaCircuitosBtnModificarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			modificar_circuito();
 		}
 	}
 

@@ -98,10 +98,9 @@ public class VentanaLista {
 					String mensaje = ("'" + list.getSelectedValue() + "' ya ha sido seleccionado.");
 					JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.WARNING_MESSAGE);
 				} else {
+					//lista.add((String) list.getSelectedValue());
 					modelo_lista.addElement((String) list.getSelectedValue());
-					// Realizar copia de listas al añadir circuito
 
-					// lista.add((String) list.getSelectedValue());
 					String mensaje = ("Se ha seleccionado: '" + list.getSelectedValue() + "' ");
 					JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
 					getFrame().dispose();

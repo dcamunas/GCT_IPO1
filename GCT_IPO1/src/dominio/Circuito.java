@@ -4,18 +4,18 @@ import java.util.*;
 
 public class Circuito {
 
-	private static int id = -1; // Usado en la bd
+	private static int id; 
 	private String nombre_circuito;
 	private int personas_realizado;
 	private double precio;
-	private ArrayList<String> incidencias;
-	private ArrayList<String> puntos_interes;
-	private ArrayList<String> sugerencias;
-	private ArrayList<Lugar> lugares;
+	private List<String> incidencias;
+	private List<String> puntos_interes;
+	private List<String> sugerencias;
+	private List<Lugar> lugares;
 	private boolean contratado;
 
-	public Circuito(String nombre_circuito, int personas_realizado, double precio, ArrayList<String> incidencias,
-			ArrayList<String> puntos_interes, ArrayList<String> sugerencias, ArrayList<Lugar> lugares,
+	public Circuito(String nombre_circuito, int personas_realizado, double precio, List<String> incidencias,
+			List<String> puntos_interes, List<String> sugerencias, List<Lugar> lugares,
 			boolean contratado) {
 
 		this.id++;
@@ -32,6 +32,11 @@ public class Circuito {
 	public int getId() {
 		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 	public String getNombre_circuito() {
 		return nombre_circuito;
@@ -49,35 +54,35 @@ public class Circuito {
 		return precio;
 	}
 
-	public ArrayList<String> getIncidencias() {
+	public List<String> getIncidencias() {
 		return incidencias;
 	}
 
-	public void setIncidencias_lista(ArrayList<String> incidencias_lista) {
+	public void setIncidencias_lista(List<String> incidencias_lista) {
 		this.incidencias = incidencias_lista;
 	}
 
-	public ArrayList<String> getPuntos_interes() {
+	public List<String> getPuntos_interes() {
 		return puntos_interes;
 	}
 
-	public void setPuntos_interes(ArrayList<String> puntos_interes) {
+	public void setPuntos_interes(List<String> puntos_interes) {
 		this.puntos_interes = puntos_interes;
 	}
 
-	public ArrayList<String> getSugerencias() {
+	public List<String> getSugerencias() {
 		return sugerencias;
 	}
 
-	public void setSugerencias(ArrayList<String> sugerencias) {
+	public void setSugerencias(List<String> sugerencias) {
 		this.sugerencias = sugerencias;
 	}
 
-	public ArrayList<Lugar> getLugares() {
+	public List<Lugar> getLugares() {
 		return lugares;
 	}
 
-	public void setLugares(ArrayList<Lugar> lugares) {
+	public void setLugares(List<Lugar> lugares) {
 		this.lugares = lugares;
 	}
 
@@ -87,6 +92,18 @@ public class Circuito {
 
 	public void setContratado(boolean contratado) {
 		this.contratado = contratado;
+	}
+
+	public void setNombre_circuito(String nombre_circuito) {
+		this.nombre_circuito = nombre_circuito;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public void setIncidencias(List<String> incidencias) {
+		this.incidencias = incidencias;
 	}
 
 

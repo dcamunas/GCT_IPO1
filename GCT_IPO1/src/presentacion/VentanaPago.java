@@ -38,7 +38,7 @@ public class VentanaPago {
 	private JPanel pnContenido;
 	private JLabel lblPrecioCircuito;
 	private JTextField textField;
-	private JRadioButton rdbtnGratis;
+	private JCheckBox rdbtnGratis;
 	private JLabel lblNombreCircuito;
 	private JScrollPane scrollPane;
 	private JList listaLugares;
@@ -47,76 +47,81 @@ public class VentanaPago {
 	private JCheckBox contratado;
 	private JButton contratar;
 	private ArrayList<Lugar> lista_lugares;
+
 	/**
 	 * Create the application.
 	 */
-	
-	public VentanaPago(JButton contratar, JCheckBox contratado, String nombreCircuito, double precio_total, List<Lugar> lugares) {
-		initialize(contratar, contratado, nombreCircuito, precio_total , lugares);
-	}
 
+	public VentanaPago(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
+			List<Lugar> lugares) {
+		initialize(contratar, contratado, nombreCircuito, precio_total, lugares);
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(JButton contratar, JCheckBox contratado, String nombreCircuito, double precio_total, List<Lugar> lugares) {
+	private void initialize(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
+			List<Lugar> lugares) {
 		this.contratar = contratar;
 		this.contratado = contratado;
-			frmPasarelaDePago = new JFrame();
-			frmPasarelaDePago.setResizable(false);
-			frmPasarelaDePago.setIconImage(Toolkit.getDefaultToolkit()
-					.getImage(VentanaPago.class.getResource("/presentacion/imagenes/iconos/credit-card.png")));
-			frmPasarelaDePago.setTitle("Pasarela de pago");
-			frmPasarelaDePago.setBounds(100, 100, 448, 290);
-			
-			pnPrincipal = new MiJPanel(new JLabel());
-			pnPrincipal.getBtnAceptar().setText("Pagar");
-			pnPrincipal.getBtnAceptar().setFont(new Font("Tahoma", Font.PLAIN, 12));
-			pnPrincipal.getBtnAceptar().addActionListener(new PnPrincipalBtnAceptarActionListener());
-			frmPasarelaDePago.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
+		frmPasarelaDePago = new JFrame();
+		frmPasarelaDePago.setResizable(false);
+		frmPasarelaDePago.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(VentanaPago.class.getResource("/presentacion/imagenes/iconos/credit-card.png")));
+		frmPasarelaDePago.setTitle("Pasarela de pago");
+		frmPasarelaDePago.setBounds(100, 100, 448, 290);
 
-			pnContenido = new JPanel();
-			pnContenido.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-			pnPrincipal.add(pnContenido, BorderLayout.CENTER);
-			pnContenido.setLayout(null);
+		pnPrincipal = new MiJPanel(new JLabel());
+		pnPrincipal.getBtnAceptar().setText("Pagar");
+		pnPrincipal.getBtnAceptar().setFont(new Font("Tahoma", Font.PLAIN, 12));
+		pnPrincipal.getBtnAceptar().addActionListener(new PnPrincipalBtnAceptarActionListener());
+		frmPasarelaDePago.getContentPane().add(pnPrincipal, BorderLayout.CENTER);
 
-			lblPrecioCircuito = new JLabel("Precio circuito:");
-			lblPrecioCircuito
-					.setIcon(new ImageIcon(VentanaPago.class.getResource("/presentacion/imagenes/iconos/cash.png")));
-			lblPrecioCircuito.setBounds(248, 115, 117, 16);
-			pnContenido.add(lblPrecioCircuito);
+		pnContenido = new JPanel();
+		pnContenido.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		pnPrincipal.add(pnContenido, BorderLayout.CENTER);
+		pnContenido.setLayout(null);
 
-			textField = new JTextField();
-			textField.setEditable(false);
-			textField.setBounds(375, 113, 50, 20);
-			pnContenido.add(textField);
-			textField.setColumns(10);
-			textField.setText(Double.toString(precio_total));
+		lblPrecioCircuito = new JLabel("Precio circuito:");
+		lblPrecioCircuito
+				.setIcon(new ImageIcon(VentanaPago.class.getResource("/presentacion/imagenes/iconos/cash.png")));
+		lblPrecioCircuito.setBounds(248, 115, 117, 16);
+		pnContenido.add(lblPrecioCircuito);
 
-			rdbtnGratis = new JRadioButton("Gratís");
-			rdbtnGratis.setEnabled(false);
-			rdbtnGratis.setBounds(350, 140, 75, 23);
-			pnContenido.add(rdbtnGratis);
-			
-			lblNombreCircuito = new JLabel(nombreCircuito);
-			lblNombreCircuito.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNombreCircuito.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-			lblNombreCircuito.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			lblNombreCircuito.setBounds(152, 11, 160, 16);
-			pnContenido.add(lblNombreCircuito);
-			
-			scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(10, 47, 217, 155);
-			pnContenido.add(scrollPane_1);
-			
-			list = new JList();
-			list.setEnabled(false);
-			scrollPane_1.setViewportView(list);
-			
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBounds(375, 113, 50, 20);
+		pnContenido.add(textField);
+		textField.setColumns(10);
+		textField.setText(precio_total + " €");
+
+		rdbtnGratis = new JCheckBox("Gratís");
+		rdbtnGratis.setEnabled(false);
+		rdbtnGratis.setBounds(350, 140, 75, 23);
+		pnContenido.add(rdbtnGratis);
+
+		lblNombreCircuito = new JLabel(nombreCircuito);
+		lblNombreCircuito.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreCircuito.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		lblNombreCircuito.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNombreCircuito.setBounds(152, 11, 160, 16);
+		pnContenido.add(lblNombreCircuito);
+
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 47, 217, 155);
+		pnContenido.add(scrollPane_1);
+
+		list = new JList();
+		list.setEnabled(false);
+		scrollPane_1.setViewportView(list);
 		
-	}
-	
+		if(es_gratis(precio_total)) {
+			textField.setEditable(false);
+			rdbtnGratis.setEnabled(true);
+			rdbtnGratis.setSelected(true);
+		}
 
+	}
 
 	public JFrame getFrmPasarelaDePago() {
 		return frmPasarelaDePago;
@@ -126,6 +131,15 @@ public class VentanaPago {
 		this.frmPasarelaDePago = frmPasarelaDePago;
 	}
 
+	public boolean es_gratis(String precio_total) {
+		boolean gratis = false;
+		int precio = (int) Double.parseDouble(precio_total);
+		if (precio == 0) {
+			gratis = true;
+		}
+		return gratis;
+	}
+
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			String mensaje = ("Pago de '" + lblNombreCircuito.getText() + "' realizado correctamente.");
@@ -133,7 +147,7 @@ public class VentanaPago {
 			contratar.setEnabled(false);
 			contratado.setSelected(true);
 			getFrmPasarelaDePago().dispose();
-			
+
 		}
 	}
 }

@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MiListaJPanel_1 extends JPanel {
 	private JPanel pnBotones;
@@ -29,13 +31,13 @@ public class MiListaJPanel_1 extends JPanel {
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private DefaultListModel<String> modelo_lista;
-	private ArrayList lista;
+	private List lista;
 	private VentanaPrincipal vp;
 
 	/**
 	 * Create the panel.
 	 */
-	public MiListaJPanel_1(ArrayList lista, VentanaPrincipal vp) {
+	public MiListaJPanel_1(List lista, VentanaPrincipal vp) {
 		this.vp = vp;
 		this.lista = lista;
 		setLayout(new BorderLayout(0, 0));
@@ -62,9 +64,10 @@ public class MiListaJPanel_1 extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 
 		list = new JList();
+		list.addMouseListener(new ListMouseListener());
 		modelo_lista = new DefaultListModel();
 		list.setModel(modelo_lista);
-		ListSelectionModel pos = list.getSelectionModel();
+		/*ListSelectionModel pos = list.getSelectionModel();
 		pos.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
@@ -72,14 +75,13 @@ public class MiListaJPanel_1 extends JPanel {
 					String aux = list.getSelectedValue();
 					switch (aux.charAt(1)) {
 					case 'i':
-						vp.limpiar_circuito();
 						vp.mostrar_circuito(list.getSelectedIndex());
 						break;
 					case 'u':
 						vp.limpiar_guias();
 						// mostrarguia
 						break;
-						
+
 					default:
 						// por defecto grupos
 
@@ -88,7 +90,7 @@ public class MiListaJPanel_1 extends JPanel {
 
 				}
 			}
-		});
+		});*/
 		scrollPane.setViewportView(list);
 
 	}
@@ -133,7 +135,7 @@ public class MiListaJPanel_1 extends JPanel {
 		this.list = listGuias;
 	}
 
-	public DefaultListModel<String> getModelo_lista() {
+	public DefaultListModel<String> getModelolista() {
 		return modelo_lista;
 	}
 
@@ -141,15 +143,58 @@ public class MiListaJPanel_1 extends JPanel {
 		this.lista = lista;
 	}
 
+	public JButton getBtnModificar() {
+		return btnModificar;
+	}
+
+	public JButton getBtnEliminar() {
+		return btnEliminar;
+	}
+
+	public List getLista() {
+		return lista;
+	}
+
+	public void setLista(List lista) {
+		this.lista = lista;
+	}
+
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			// lista.remove(list.getSelectedIndex());
 			modelo_lista.remove(list.getSelectedIndex());
+			vp.limpiar_circuito();
 
 		}
 	}
+
 	private class BtnLimpiarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
+			vp.limpiar_circuito();
+			vp.limpiar_guias();
+
+		}
+	}
+
+	private class ListMouseListener extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (!list.isSelectionEmpty()) {
+				String aux = list.getSelectedValue();
+				switch (aux.charAt(1)) {
+				case 'i':
+					vp.mostrar_circuito(list.getSelectedIndex());
+					break;
+				case 'u':
+					// mostrarguia
+					break;
+
+				default:
+					// por defecto grupos
+
+					break;
+				}
+			}
 		}
 	}
 
