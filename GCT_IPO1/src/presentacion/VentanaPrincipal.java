@@ -155,14 +155,12 @@ public class VentanaPrincipal {
 	private JLabel lblTipologia;
 	private JComboBox comboTipGrupo;
 	private JLabel lblGua;
-	private JComboBox comboGuiaGrupo;
-	private JPanel pnInteresesGrupo;
+	private JTextField txtfGuiaGrupo;
+	private MiListaJPanel_2 pnInteresesGrupo;
 	private JLabel lblIntereses;
 	private MiListaJPanel_2 pnRestricciones;
 	private JPanel pnTituloRestric;
 	private JLabel lblRestricciones;
-	private JCheckBox checkbtnSi_1;
-	private JCheckBox checkbtnNo_1;
 	private JPanel pnInfoGeneral;
 	private JTextField txtNombreguia;
 	private JLabel lblApellidosGuia;
@@ -176,8 +174,8 @@ public class VentanaPrincipal {
 	private JLabel lblPuntuacion;
 	private JLabel lblDisponibilidadGuia;
 	private JTextField txtPuntuacionGuia;
-	private JCheckBox checkbtnSi_2;
-	private JCheckBox checkbtnNo_2;
+	private JRadioButton rbtnSi_2;
+	private JRadioButton rbtnNo_2;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
@@ -190,7 +188,7 @@ public class VentanaPrincipal {
 	private JTable tablaIntegrantes;
 	private JButton btnSalir;
 	private JPanel pnEspacio3;
-	private JPanel pnListaIdioma;
+	private MiListaJPanel_2 pnListaIdioma;
 	private JLabel lblIdiomas;
 	private boolean lanzadoPago = false;
 	private boolean lanzadoLugarInfo = false;
@@ -201,6 +199,8 @@ public class VentanaPrincipal {
 	private JLabel lblGruposTusiticos;
 	private Usuario user;
 	private Circuito circuito;
+	private Guia guia;
+	private GrupoTuristas grupo;
 	private MiModeloJTable modeloTabla;
 	private ImageIcon icono_info = new ImageIcon(
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
@@ -210,9 +210,9 @@ public class VentanaPrincipal {
 
 	// ArrayList listas
 	private List<Circuito> lista_circuitos;
-	private ArrayList<Lugar> lista_lugares;
-	private ArrayList<GrupoTuristas> lista_grupos;
-	private ArrayList<Guia> lista_guias;
+	private List<Lugar> lista_lugares;
+	private List<GrupoTuristas> lista_grupos;
+	private List<Guia> lista_guias;
 
 	// Inicializar listas circuitos
 	String[] restricciones_globales = new String[] { "Prohibido a menores de 18 años", "Prohibido animales",
@@ -221,7 +221,10 @@ public class VentanaPrincipal {
 			"Teatro municipal", "Coliseum", "Parque turístico", "Área de acampada", "Piscina municipal" };
 	String[] sugerencias_globales = new String[] { "Ruta muy entretenida", "Guía muy simpático",
 			"Visitar el museo municipal", "La catedral es impresionante" };
+	String[] idiomas_globales = new String[] { "Español", "Inglés", "Aleman", "Chino", "Francés", "Italiano",
+			"Holandes", "Portugues", "Ruso" };
 	private DefaultListModel<String> modelo_lugaresLista;
+	private JButton btnSeleccionar;
 
 	;
 
@@ -249,6 +252,8 @@ public class VentanaPrincipal {
 		// INICIALIZAR LISTAS
 		lista_circuitos = new ArrayList<Circuito>();
 		lista_lugares = new ArrayList<Lugar>();
+		lista_guias = new ArrayList<Guia>();
+		lista_grupos = new ArrayList<GrupoTuristas>();
 		initialize();
 	}
 
@@ -418,22 +423,12 @@ public class VentanaPrincipal {
 		pnListaLugares.add(spnLugares, BorderLayout.CENTER);
 
 		listLugares = new JList<String>();
+		listLugares.addMouseListener(new ListLugaresMouseListener());
 		listLugares.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// Se crea modelo lista
 		modelo_lugaresLista = new DefaultListModel<String>();
 		listLugares.setModel(modelo_lugaresLista);
-
 		spnLugares.setViewportView(listLugares);
-		ListSelectionModel pos = listLugares.getSelectionModel();
-		pos.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-				if (!lsm.isSelectionEmpty()) {
-					btnEliminarlugar.setEnabled(true);
-					btnAgregarlugar.setIcon(icono_info);
-				}
-			}
-		});
 
 		pnInfoCircuito = new JPanel();
 		pnCircuitos.add(pnInfoCircuito, BorderLayout.CENTER);
@@ -545,6 +540,8 @@ public class VentanaPrincipal {
 		pnGuias.setLayout(new BorderLayout(0, 0));
 
 		pnListaGuias = new MiListaJPanel_1(lista_guias, vp);
+		pnListaGuias.getBtnModificar().addActionListener(new PnListaGuiasBtnModificarActionListener());
+		pnListaGuias.getBtnAniadir().addActionListener(new PnListaGuiasBtnAniadirActionListener());
 		pnListaGuias.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGuias.add(pnListaGuias, BorderLayout.WEST);
 		// pnListaGuias.setLayout(new BorderLayout(0, 0));
@@ -565,7 +562,7 @@ public class VentanaPrincipal {
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
 
-		pnListaIdioma = new MiListaJPanel_2(new String[] {}, true);
+		pnListaIdioma = new MiListaJPanel_2(idiomas_globales, true);
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
 
 		pnInfoGuia = new JPanel();
@@ -729,29 +726,31 @@ public class VentanaPrincipal {
 		gbc_lblDisponibilidadGuia.gridy = 7;
 		pnInfoGeneral.add(lblDisponibilidadGuia, gbc_lblDisponibilidadGuia);
 
-		checkbtnSi_2 = new JCheckBox("Sí");
-		buttonGroup.add(checkbtnSi_2);
-		GridBagConstraints gbc_checkbtnSi_2 = new GridBagConstraints();
-		gbc_checkbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_checkbtnSi_2.insets = new Insets(0, 0, 5, 5);
-		gbc_checkbtnSi_2.gridx = 2;
-		gbc_checkbtnSi_2.gridy = 7;
-		pnInfoGeneral.add(checkbtnSi_2, gbc_checkbtnSi_2);
+		rbtnSi_2 = new JRadioButton("Sí");
+		buttonGroup.add(rbtnSi_2);
+		GridBagConstraints gbc_rbtnSi_2 = new GridBagConstraints();
+		gbc_rbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_rbtnSi_2.insets = new Insets(0, 0, 5, 5);
+		gbc_rbtnSi_2.gridx = 2;
+		gbc_rbtnSi_2.gridy = 7;
+		pnInfoGeneral.add(rbtnSi_2, gbc_rbtnSi_2);
 
-		checkbtnNo_2 = new JCheckBox("No");
-		buttonGroup.add(checkbtnNo_2);
-		GridBagConstraints gbc_checkbtnNo_2 = new GridBagConstraints();
-		gbc_checkbtnNo_2.anchor = GridBagConstraints.WEST;
-		gbc_checkbtnNo_2.insets = new Insets(0, 0, 5, 0);
-		gbc_checkbtnNo_2.gridx = 3;
-		gbc_checkbtnNo_2.gridy = 7;
-		pnInfoGeneral.add(checkbtnNo_2, gbc_checkbtnNo_2);
+		rbtnNo_2 = new JRadioButton("No");
+		buttonGroup.add(rbtnNo_2);
+		GridBagConstraints gbc_rbtnNo_2 = new GridBagConstraints();
+		gbc_rbtnNo_2.anchor = GridBagConstraints.WEST;
+		gbc_rbtnNo_2.insets = new Insets(0, 0, 5, 0);
+		gbc_rbtnNo_2.gridx = 3;
+		gbc_rbtnNo_2.gridy = 7;
+		pnInfoGeneral.add(rbtnNo_2, gbc_rbtnNo_2);
 
 		pnGrupos = new JPanel();
 		tbPestañas.addTab("Grupos", null, pnGrupos, null);
 		pnGrupos.setLayout(new BorderLayout(0, 0));
 
 		pnListaGrupos = new MiListaJPanel_1(lista_grupos, vp);
+		pnListaGrupos.getBtnModificar().addActionListener(new PnListaGruposBtnModificarActionListener());
+		pnListaGrupos.getBtnAniadir().addActionListener(new PnListaGruposBtnAniadirActionListener());
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
 
 		lblGruposTusiticos = new JLabel("Grupos tuísticos (4 - 20 personas):");
@@ -908,13 +907,24 @@ public class VentanaPrincipal {
 		gbc_lblGua.gridy = 5;
 		pnInfoGrupo1.add(lblGua, gbc_lblGua);
 
-		comboGuiaGrupo = new JComboBox();
-		GridBagConstraints gbc_comboGuiaGrupo = new GridBagConstraints();
-		gbc_comboGuiaGrupo.insets = new Insets(0, 0, 5, 5);
-		gbc_comboGuiaGrupo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboGuiaGrupo.gridx = 1;
-		gbc_comboGuiaGrupo.gridy = 5;
-		pnInfoGrupo1.add(comboGuiaGrupo, gbc_comboGuiaGrupo);
+		txtfGuiaGrupo = new JTextField();
+		txtfGuiaGrupo.setEditable(false);
+		GridBagConstraints gbc_txtfGuiaGrupo = new GridBagConstraints();
+		gbc_txtfGuiaGrupo.gridwidth = 3;
+		gbc_txtfGuiaGrupo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtfGuiaGrupo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtfGuiaGrupo.gridx = 1;
+		gbc_txtfGuiaGrupo.gridy = 5;
+		pnInfoGrupo1.add(txtfGuiaGrupo, gbc_txtfGuiaGrupo);
+
+		btnSeleccionar = new JButton("Seleccionar");
+		btnSeleccionar.addActionListener(new BtnSeleccionarActionListener());
+		GridBagConstraints gbc_btnSeleccionar = new GridBagConstraints();
+		gbc_btnSeleccionar.anchor = GridBagConstraints.SOUTH;
+		gbc_btnSeleccionar.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSeleccionar.gridx = 1;
+		gbc_btnSeleccionar.gridy = 6;
+		pnInfoGrupo1.add(btnSeleccionar, gbc_btnSeleccionar);
 
 		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, true);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
@@ -932,14 +942,6 @@ public class VentanaPrincipal {
 
 		lblRestricciones = new JLabel("Restricciones: ");
 		pnTituloRestric.add(lblRestricciones);
-
-		checkbtnSi_1 = new JCheckBox("Sí");
-		buttonGroup_1.add(checkbtnSi_1);
-		pnTituloRestric.add(checkbtnSi_1);
-
-		checkbtnNo_1 = new JCheckBox("No");
-		buttonGroup_1.add(checkbtnNo_1);
-		pnTituloRestric.add(checkbtnNo_1);
 
 		pnDiseñoRuta = new JPanel();
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
@@ -977,18 +979,20 @@ public class VentanaPrincipal {
 		});
 	}
 
-	public void limpiar_guias() {
+	public void limpiar_guia() {
 		txtNombreguia.setText(null);
 		txtApellidosGuia.setText(null);
 		txtCorreoguia.setText(null);
 		txtPrecioGuia.setText(null);
 		txtPuntuacionGuia.setText(null);
 		txtNumeroGuia.setText(null);
-		checkbtnNo_2.setSelected(false);
-		checkbtnSi_2.setSelected(false);
+		rbtnNo_2.setSelected(false);
+		rbtnSi_2.setSelected(false);
 		spinnerPersonasCircuito.setValue(0);
-
-		// TRATAMIENTO DE LISTA
+		pnListaIdioma.getModeloLista().clear();
+		buttonGroup_2.clearSelection();
+		buttonGroup.clearSelection();
+		buttonGroup_1.clearSelection();
 	}
 
 	public void limpiar_circuito() {
@@ -1006,6 +1010,17 @@ public class VentanaPrincipal {
 
 		// Lista lugares
 
+	}
+
+	public void limpiar_grupo() {
+		txtNombreGrupo.setText(null);
+		txtPais.setText(null);
+		txtAlojamiento.setText(null);
+		comboTipGrupo.setSelectedItem(null);
+		txtfGuiaGrupo.setText(null);
+		pnRestricciones.getModeloLista().clear();
+		pnListaptosInteres.getModeloLista().clear();
+		// tabla
 	}
 
 	private void mostrar_usuario() {
@@ -1035,6 +1050,28 @@ public class VentanaPrincipal {
 		// copiar_lugares();
 	}
 
+	public void mostrar_grupo(int indice) {
+		grupo = lista_grupos.get(indice);
+		txtNombreGrupo.setText(grupo.getNombre());
+		txtPais.setText(grupo.getPais());
+		txtAlojamiento.setText(grupo.getAlojamiento());
+		comboTipGrupo.setSelectedItem(grupo.getTipologia());
+		txtfGuiaGrupo.setText(grupo.getGuia());
+		// mostrar tabla
+	}
+
+	public void mostrar_guia(int indice) {
+		guia = lista_guias.get(indice);
+		txtNombreguia.setText(guia.getNombre());
+		txtApellidosGuia.setText(guia.getApellidos());
+		txtCorreoguia.setText(guia.getCorreo());
+		txtNumeroGuia.setText(Integer.toString(guia.getTelefono()));
+		txtPrecioGuia.setText(Double.toString(guia.getPrecio_hora()));
+		txtPuntuacionGuia.setText(Double.toString(guia.getPuntuacion()));
+		mostrar_lista2(pnListaIdioma.getModeloLista(), guia.getIdiomas());
+		// Historial de rutas
+	}
+
 	private void copiar_lugares() {
 		if (!modelo_lugaresLista.isEmpty()) {
 			for (int i = 0; i < lista_lugares.size(); i++) {
@@ -1058,10 +1095,10 @@ public class VentanaPrincipal {
 
 		return aux;
 	}
-	
+
 	public void aniadirCircuito() {
 		if (comprobar_camposCircuito()) {
-			if (comprobarNumero(txtfPrecioCircuito.getText())) {
+			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
 				circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
 						Double.parseDouble(txtfPrecioCircuito.getText()),
 						generar_lista(pnListaIncidencia.getModeloLista()),
@@ -1073,6 +1110,9 @@ public class VentanaPrincipal {
 				pnListaCircuitos.getLista().add(circuito);
 
 				limpiar_circuito();
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
@@ -1081,15 +1121,105 @@ public class VentanaPrincipal {
 		}
 	}
 
+	private void aniadir_guia() {
+		if (comprobar_camposGuia()) {
+			if (comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
+					|| comprobarDecimal(txtPuntuacionGuia.getText())) {
+				guia = new Guia(txtNombreguia.getText(), txtApellidosGuia.getText(), txtCorreoguia.getText(),
+						Integer.parseInt(txtNumeroGuia.getText()), Double.parseDouble(txtPrecioGuia.getText()),
+						Double.parseDouble(txtPuntuacionGuia.getText()), rbtnSi_2.isSelected(),
+						generar_lista(pnListaIdioma.getModeloLista()));
+
+				pnListaGuias.getModelolista().addElement("Guia " + guia.getId());
+				pnListaGuias.getLista().add(guia);
+
+				limpiar_circuito();
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	private void aniadir_grupo() {
+		if (comprobar_campoGrupo()) {
+			grupo = new GrupoTuristas(txtNombreGrupo.getText(), txtPais.getText(), txtAlojamiento.getText(),
+					(String) comboTipGrupo.getSelectedItem(), txtfGuiaGrupo.getText(),
+					generar_lista(pnRestricciones.getModeloLista()), generar_lista(pnInteresesGrupo.getModeloLista()));
+
+			pnListaGrupos.getModelolista().addElement("Grupo " + guia.getId());
+			pnListaGrupos.getLista().add(grupo);
+		} else {
+			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
 	private void modificar_circuito() {
 		circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
 		circuito.setNombre_circuito(txtfNombreCircuito.getText());
 		circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
-		circuito.setPrecio(Integer.parseInt(txtfPrecioCircuito.getText()));
+		if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+			circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
+		} else {
+			String mensaje = ("El parámetro introducido debe de ser un número.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+		}
 		circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
 		circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 		circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 
+	}
+
+	private void modificar_guia() {
+		guia = lista_guias.get(pnListaGuias.getList().getSelectedIndex());
+		guia.setNombre(txtNombreguia.getText());
+		guia.setApellidos(txtApellidosGuia.getText());
+		guia.setCorreo(txtCorreoguia.getText());
+		if (comprobarEntero(txtNumeroGuia.getText())) {
+			guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
+		} else {
+			String mensaje = ("El parámetro introducido debe de ser un número.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+		}
+
+		if (comprobarDecimal(txtPrecioGuia.getText())) {
+			guia.setPrecio_hora(Double.parseDouble(txtPrecioGuia.getText()));
+		} else {
+			String mensaje = ("El parámetro introducido debe de ser un número.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+		}
+		if (comprobarDecimal(txtPuntuacionGuia.getText())) {
+			guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
+		} else {
+			String mensaje = ("El parámetro introducido debe de ser un número.");
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+		}
+
+		guia.setDisponibilidad(rbtnSi_2.isSelected());
+
+	}
+
+	private void modificar_grupo() {
+		grupo = lista_grupos.get(pnListaGrupos.getList().getSelectedIndex());
+		if (comprobar_campoGrupo()) {
+			grupo.setNombre(txtNombreGrupo.getText());
+			grupo.setPais(txtPais.getText());
+			grupo.setAlojamiento(txtAlojamiento.getText());
+			grupo.setTipologia((String) comboTipGrupo.getSelectedItem());
+			grupo.setGuia(txtfGuiaGrupo.getText());
+			mostrar_lista2(pnRestricciones.getModeloLista(), grupo.getRestricciones_lista());
+			mostrar_lista2(pnInteresesGrupo.getModeloLista(), grupo.getIntereses());
+			// modificar tabla
+		} else {
+			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private boolean comprobar_camposCircuito() {
@@ -1097,24 +1227,54 @@ public class VentanaPrincipal {
 				|| txtfPrecioCircuito.getText() == null);
 	}
 
-	public static boolean comprobarNumero(String cadena) {
+	private boolean comprobar_camposGuia() {
+		return !(txtNombreguia.getText() == null || txtApellidosGuia.getText() == null
+				|| txtCorreoguia.getText() == null || txtNumeroGuia.getText() == null || txtPrecioGuia.getText() == null
+				|| txtPuntuacionGuia.getText() == null || (!rbtnSi_2.isSelected() && !rbtnNo_2.isSelected()));
+	}
+
+	private boolean comprobar_campoGrupo() {
+		return !(txtNombreGrupo.getText() == null || txtPais.getText() == null || txtAlojamiento.getText() == null
+				|| comboTipGrupo.getSelectedItem() == "" || txtfGuiaGrupo.getText() == null);
+	}
+
+	public static boolean comprobarEntero(String cadena) {
 
 		try {
-			Double.parseDouble(cadena);
+			Integer.parseInt(cadena);
 			return true;
 		} catch (Exception e) {
-			String mensaje = ("El parámetro introducido debe de ser un número.");
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			return false;
 
 		}
 	}
 
-//////////////////////////////////////////Metodos ActionListener (Acciones Botones) //////////////////////////////////////
+	public static boolean comprobarDecimal(String cadena) {
+
+		try {
+			Double.parseDouble(cadena);
+			return true;
+		} catch (Exception e) {
+			return false;
+
+		}
+	}
+
+	private String[] generar_listaGuias(List<Guia> lista) {
+		String[] guias = new String[lista.size()];
+		for (int i = 0; i < lista.size(); i++) {
+			guias[i] = lista.get(i).getNombre() + " " + lista.get(i).getApellidos();
+		}
+		return guias;
+	}
+
+////////////////////////////////////////// Metodos Getter`s y Setter`s //////////////////////////////////////
 
 	public JFrame getFrame() {
 		return frmManchatours;
 	}
+
+////////////////////////////////////////// Metodos ActionListener (Acciones Botones) //////////////////////////////////////
 
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -1182,14 +1342,14 @@ public class VentanaPrincipal {
 		public void actionPerformed(ActionEvent e) {
 			if (btnAgregarlugar.getIcon() != icono_info) {
 
-				VentanaLugar ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, 0, true);
+				VentanaLugar ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, 0, true, vp);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
 			} else {
 				String lugar_aux = modelo_lugaresLista.getElementAt(listLugares.getSelectedIndex());
 				int id_lugar = Integer.parseInt(Character.toString(lugar_aux.charAt(lugar_aux.length() - 1)));
 
-				VentanaLugar ventana_lugar = new VentanaLugar(null, null, id_lugar, false);
+				VentanaLugar ventana_lugar = new VentanaLugar(null, null, id_lugar, false, vp);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getTxtfNombreLugar().setEditable(false);
 				btnAgregarlugar.setIcon(icono_aniadir);
@@ -1200,9 +1360,12 @@ public class VentanaPrincipal {
 
 	private class BtnEliminarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			modelo_lugaresLista.remove(listLugares.getSelectedIndex());
 			lista_lugares.remove(listLugares.getSelectedIndex());
+			modelo_lugaresLista.remove(listLugares.getSelectedIndex());
 			btnAgregarlugar.setIcon(icono_aniadir);
+
+			txtUsuario.setText(Integer.toString(lista_lugares.size()));
+			txtNombre.setText(Integer.toString(modelo_lugaresLista.size()));
 		}
 	}
 
@@ -1216,6 +1379,48 @@ public class VentanaPrincipal {
 	private class PnListaCircuitosBtnModificarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modificar_circuito();
+		}
+	}
+
+	private class ListLugaresMouseListener extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (!listLugares.isSelectionEmpty()) {
+				btnEliminarlugar.setEnabled(true);
+				btnAgregarlugar.setIcon(icono_info);
+			}
+		}
+	}
+
+	private class PnListaGuiasBtnAniadirActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			aniadir_guia();
+			limpiar_guia();
+		}
+	}
+
+	private class PnListaGuiasBtnModificarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			modificar_guia();
+		}
+	}
+
+	private class BtnSeleccionarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo);
+			vl.getFrame().setVisible(true);
+		}
+	}
+
+	private class PnListaGruposBtnAniadirActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			aniadir_grupo();
+			limpiar_grupo();
+		}
+	}
+	private class PnListaGruposBtnModificarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			modificar_grupo();
 		}
 	}
 

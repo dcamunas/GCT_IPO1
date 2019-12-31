@@ -1,9 +1,10 @@
 package dominio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Guia {
-	private static int id = -1;
+	private static int id;
 	private String nombre;
 	private String apellidos;
 	private String correo;
@@ -11,10 +12,11 @@ public class Guia {
 	private double precio_hora;
 	private double puntuacion;
 	private boolean disponibilidad;
-	private ArrayList<Circuito> historial_ruta;
-	private ArrayList<String> idiomas;
+	private String historial;
+	private List<String> idiomas;
+	
 	public Guia(String nombre, String apellidos, String correo, int telefono, double precio_hora, double puntuacion,
-			boolean disponibilidad) {
+			boolean disponibilidad, List<String> idiomas) {
 		
 		this.id++;
 		this.nombre = nombre;
@@ -24,8 +26,8 @@ public class Guia {
 		this.precio_hora = precio_hora;
 		this.puntuacion = puntuacion;
 		this.disponibilidad = disponibilidad;
-		this.historial_ruta = new ArrayList<Circuito>();
-		this.idiomas = new ArrayList<String>();
+		this.idiomas = idiomas;
+		this.historial = null;
 	}
 	public String getNombre() {
 		return nombre;
@@ -69,16 +71,16 @@ public class Guia {
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
-	public ArrayList<Circuito> getHistorial_ruta() {
-		return historial_ruta;
+	public String getHistorial() {
+		return historial;
 	}
-	public void setHistorial_ruta(ArrayList<Circuito> historial_ruta) {
-		this.historial_ruta = historial_ruta;
+	public void setHistorial(String historial) {
+		this.historial = historial;
 	}
-	public ArrayList<String> getIdiomas() {
+	public List<String> getIdiomas() {
 		return idiomas;
 	}
-	public void setIdiomas(ArrayList<String> idiomas) {
+	public void setIdiomas(List<String> idiomas) {
 		this.idiomas = idiomas;
 	}
 	public int getId() {

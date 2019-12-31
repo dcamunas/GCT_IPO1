@@ -128,10 +128,16 @@ public class MiListaJPanel_2 extends JPanel {
 
 
 
+	public JScrollPane getSpnLista() {
+		return spnLista;
+	}
+
+
+
 	private class BtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (mostrar_lista) {
-				VentanaLista vl = new VentanaLista(lista, valores, modelo_lista);
+				VentanaLista vl = new VentanaLista(lista, valores, modelo_lista, null);
 				vl.getFrame().setVisible(true);
 			} else {
 				VentanaIncidencia vi;
@@ -149,7 +155,6 @@ public class MiListaJPanel_2 extends JPanel {
 
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			lista.remove(list.getSelectedIndex());
 			modelo_lista.remove(list.getSelectedIndex());
 		}
 	}

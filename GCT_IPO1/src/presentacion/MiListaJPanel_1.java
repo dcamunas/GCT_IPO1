@@ -67,30 +67,6 @@ public class MiListaJPanel_1 extends JPanel {
 		list.addMouseListener(new ListMouseListener());
 		modelo_lista = new DefaultListModel();
 		list.setModel(modelo_lista);
-		/*ListSelectionModel pos = list.getSelectionModel();
-		pos.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-				if (!lsm.isSelectionEmpty()) {
-					String aux = list.getSelectedValue();
-					switch (aux.charAt(1)) {
-					case 'i':
-						vp.mostrar_circuito(list.getSelectedIndex());
-						break;
-					case 'u':
-						vp.limpiar_guias();
-						// mostrarguia
-						break;
-
-					default:
-						// por defecto grupos
-
-						break;
-					}
-
-				}
-			}
-		});*/
 		scrollPane.setViewportView(list);
 
 	}
@@ -163,7 +139,6 @@ public class MiListaJPanel_1 extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// lista.remove(list.getSelectedIndex());
 			modelo_lista.remove(list.getSelectedIndex());
-			vp.limpiar_circuito();
 
 		}
 	}
@@ -171,7 +146,8 @@ public class MiListaJPanel_1 extends JPanel {
 	private class BtnLimpiarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			vp.limpiar_circuito();
-			vp.limpiar_guias();
+			vp.limpiar_guia();
+			vp.limpiar_grupo();
 
 		}
 	}
@@ -186,12 +162,11 @@ public class MiListaJPanel_1 extends JPanel {
 					vp.mostrar_circuito(list.getSelectedIndex());
 					break;
 				case 'u':
-					// mostrarguia
+					vp.mostrar_guia(list.getSelectedIndex());
 					break;
 
 				default:
-					// por defecto grupos
-
+					vp.mostrar_grupo(list.getSelectedIndex());
 					break;
 				}
 			}

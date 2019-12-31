@@ -1,6 +1,7 @@
 package dominio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GrupoTuristas {
 	
@@ -9,12 +10,11 @@ public class GrupoTuristas {
 	private String pais;
 	private String alojamiento;
 	private String tipologia;
-	private Guia guia;
-	private boolean restricciones;					// true: se activa lista restricciones | false: se deja desactiva lista de restricciones
-	private ArrayList<String> restricciones_lista;
-	private ArrayList<String> intereses;
+	private String guia;
+	private List<String> restricciones_lista;
+	private List<String> intereses;
 	
-	public GrupoTuristas(String nombre, String pais, String alojamiento, String tipologia, Guia guia, ArrayList<String> restricciones_lista, ArrayList<String> intereses, boolean restricciones) {
+	public GrupoTuristas(String nombre, String pais, String alojamiento, String tipologia, String guia, List<String> restricciones_lista, List<String> intereses) {
 		
 		this.id++;
 		this.nombre = nombre;
@@ -23,7 +23,6 @@ public class GrupoTuristas {
 		this.tipologia = tipologia;
 		this.guia = guia;
 		this.restricciones_lista = restricciones_lista;
-		this.restricciones = restricciones;
 		this.intereses = intereses;	
 	}
 	
@@ -61,31 +60,23 @@ public class GrupoTuristas {
 		this.tipologia = tipologia;
 	}
 
-	public Guia getGuia() {
+	public String getGuia() {
 		return guia;
 	}
 
-	public void setGuia(Guia guia) {
+	public void setGuia(String guia) {
 		this.guia = guia;
 	}
 
-	public boolean isRestricciones() {
-		return restricciones;
-	}
-
-	public void setRestricciones(boolean restricciones) {
-		this.restricciones = restricciones;
-	}
-
-	public ArrayList<String> getRestricciones_lista() {
+	public List<String> getRestricciones_lista() {
 		return restricciones_lista;
 	}
 
-	public void setRestricciones_lista(ArrayList<String> restricciones_lista) {
+	public void setRestricciones_lista(List<String> restricciones_lista) {
 		this.restricciones_lista = restricciones_lista;
 	}
 
-	public ArrayList<String> getIntereses() {
+	public List<String> getIntereses() {
 		return intereses;
 	}
 
