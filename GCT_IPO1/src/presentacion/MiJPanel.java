@@ -85,7 +85,7 @@ public class MiJPanel extends JPanel {
 	private class BtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Window parentWindow = SwingUtilities.getWindowAncestor(MiJPanel.this);	
-			parentWindow.setVisible(false);
+			//parentWindow.setVisible(false);
 		}
 	}
 }

@@ -52,28 +52,25 @@ public class VentanaLugar {
 	private JTextField txtPrecio;
 	private JTextField txtfDuracion;
 	private JComboBox comboTipologia;
-	private List<Lugar> lugares;
+	private List<Lugar> lista_lugares;
 	private JComboBox comboHorario;
 	private DefaultListModel<String> modelo_lugares;
-	private int id_lugar;
 	private VentanaPrincipal vp;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaLugar(List<Lugar> lista, DefaultListModel<String> modelo_lista, int id_lugar, boolean edicion,
-			VentanaPrincipal vp) {
-		this.lugares = lista;
+	public VentanaLugar(List<Lugar> lista, DefaultListModel<String> modelo_lista) {
+		this.lista_lugares = lista;
 		this.modelo_lugares = modelo_lista;
-		this.id_lugar = id_lugar;
 		this.vp = vp;
-		initialize(edicion);
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(boolean edicion) {
+	private void initialize() {
 		frmLugarVisita = new JFrame();
 		frmLugarVisita.setResizable(false);
 		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit()
@@ -179,11 +176,60 @@ public class VentanaLugar {
 		panel.add(txtPrecio, gbc_txtPrecio);
 		txtPrecio.setColumns(10);
 
-		if (!edicion) {
-			mostrar_lugar();
+		if (modelo_lugares == null) {
 			activar_edicion(false);
 		}
 
+	}
+
+	private void activar_edicion(boolean condicion) {
+		txtfNombreLugar.setEditable(condicion);
+		txtfDuracion.setEditable(condicion);
+		txtPrecio.setEditable(condicion);
+		comboHorario.setEditable(condicion);
+		comboTipologia.setEditable(condicion);
+		lblImagen.setEnabled(condicion);
+	}
+
+	private boolean comprobar_campos() {
+		return !(txtfNombreLugar.getText() == null || txtfDuracion.getText() == null || txtPrecio.getText() == null
+				|| comboHorario.getSelectedItem() == "" || comboTipologia.getSelectedItem() == "");
+	}
+
+	public static boolean comprobarDecimal(String cadena) {
+
+		try {
+			Double.parseDouble(cadena);
+			return true;
+		} catch (Exception e) {
+			return false;
+
+		}
+	}
+
+	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar") && comprobar_campos()) {
+				if (comprobarDecimal(txtPrecio.getText()) || comprobarDecimal(txtfDuracion.getText())) {
+					Lugar l = new Lugar(txtfNombreLugar.getText(), (String)comboHorario.getSelectedItem(),
+							Double.parseDouble(txtfDuracion.getText()), (String)comboTipologia.getSelectedItem(),
+							Double.parseDouble(txtPrecio.getText()), lblImagen);
+
+					lista_lugares.add(l);
+					modelo_lugares.addElement("Lugar " + l.getId());
+
+					getFrmLugarVisita().dispose();
+
+				} else {
+					JOptionPane.showMessageDialog(null, "El parámetro introducido debe de ser un número.", "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
 	}
 
 	public JFrame getFrmLugarVisita() {
@@ -210,49 +256,52 @@ public class VentanaLugar {
 		this.txtfNombreLugar = txtfNombreLugar;
 	}
 
-	private void activar_edicion(boolean condicion) {
-		txtfNombreLugar.setEditable(condicion);
-		txtfDuracion.setEditable(condicion);
-		txtPrecio.setEditable(condicion);
-		comboHorario.setEditable(condicion);
-		comboTipologia.setEditable(condicion);
-		lblImagen.setEnabled(condicion);
+	public JTextField getTxtPrecio() {
+		return txtPrecio;
 	}
 
-	private void mostrar_lugar() {
-		Lugar l = seleccionar_lugar();
-		txtfNombreLugar.setText(l.getNombre());
-		lblImagen = l.getImagen_lugar();
-		comboHorario.setToolTipText(l.getHorario_visita());
-		comboTipologia.setToolTipText(l.getTipologia());
-		txtfDuracion.setText(Integer.toString(l.getDuracion_visita()));
-		txtPrecio.setText(Double.toString(l.getPrecio()));
+	public void setTxtPrecio(JTextField txtPrecio) {
+		this.txtPrecio = txtPrecio;
 	}
 
-	private Lugar seleccionar_lugar() {
-		Lugar aux = null;
-		for (Lugar l : lugares) {
-			if (l.getId() == id_lugar) {
-				aux = l;
-				break;
-			}
-		}
-		return aux;
-
+	public JTextField getTxtfDuracion() {
+		return txtfDuracion;
 	}
 
-	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar")) {
-				Lugar l = new Lugar(txtfNombreLugar.getText(), comboHorario.getToolTipText(),
-						Integer.parseInt(txtfDuracion.getText()), comboTipologia.getToolTipText(),
-						Double.parseDouble(txtPrecio.getText()), lblImagen);
-				lugares.add(l);
-				modelo_lugares.addElement("Lugar " + l.getId());
-			}
-			vp.txtUsuario.setText(Integer.toString(lugares.size()));
-			vp.txtNombre.setText(Integer.toString(modelo_lugares.size()));
-			getFrmLugarVisita().dispose();
-		}
+	public void setTxtfDuracion(JTextField txtfDuracion) {
+		this.txtfDuracion = txtfDuracion;
 	}
+
+	public JComboBox getComboTipologia() {
+		return comboTipologia;
+	}
+
+	public void setComboTipologia(JComboBox comboTipologia) {
+		this.comboTipologia = comboTipologia;
+	}
+
+	public List<Lugar> getLista_lugares() {
+		return lista_lugares;
+	}
+
+	public void setLista_lugares(List<Lugar> lista_lugares) {
+		this.lista_lugares = lista_lugares;
+	}
+
+	public JComboBox getComboHorario() {
+		return comboHorario;
+	}
+
+	public void setComboHorario(JComboBox comboHorario) {
+		this.comboHorario = comboHorario;
+	}
+
+	public DefaultListModel<String> getModelo_lugares() {
+		return modelo_lugares;
+	}
+
+	public void setModelo_lugares(DefaultListModel<String> modelo_lugares) {
+		this.modelo_lugares = modelo_lugares;
+	}
+
 }

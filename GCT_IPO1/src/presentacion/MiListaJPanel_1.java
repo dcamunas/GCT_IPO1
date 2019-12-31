@@ -137,9 +137,9 @@ public class MiListaJPanel_1 extends JPanel {
 
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// lista.remove(list.getSelectedIndex());
-			modelo_lista.remove(list.getSelectedIndex());
-
+			int indice = list.getSelectedIndex();
+			lista.remove(indice);
+			modelo_lista.remove(indice);
 		}
 	}
 

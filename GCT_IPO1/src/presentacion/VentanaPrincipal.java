@@ -72,6 +72,7 @@ import javax.swing.BoxLayout;
 public class VentanaPrincipal {
 
 	private VentanaPrincipal vp = this;
+	private VentanaLugar ventana_lugar;
 	private JFrame frmManchatours;
 	private JPanel pnInfoUsuario;
 	private JPanel pnAreaImagen;
@@ -211,6 +212,7 @@ public class VentanaPrincipal {
 	// ArrayList listas
 	private List<Circuito> lista_circuitos;
 	private List<Lugar> lista_lugares;
+	private DefaultListModel<String> modelo_lugaresLista;
 	private List<GrupoTuristas> lista_grupos;
 	private List<Guia> lista_guias;
 
@@ -223,7 +225,7 @@ public class VentanaPrincipal {
 			"Visitar el museo municipal", "La catedral es impresionante" };
 	String[] idiomas_globales = new String[] { "Español", "Inglés", "Aleman", "Chino", "Francés", "Italiano",
 			"Holandes", "Portugues", "Ruso" };
-	private DefaultListModel<String> modelo_lugaresLista;
+
 	private JButton btnSeleccionar;
 
 	;
@@ -252,6 +254,7 @@ public class VentanaPrincipal {
 		// INICIALIZAR LISTAS
 		lista_circuitos = new ArrayList<Circuito>();
 		lista_lugares = new ArrayList<Lugar>();
+		modelo_lugaresLista = new DefaultListModel<String>();
 		lista_guias = new ArrayList<Guia>();
 		lista_grupos = new ArrayList<GrupoTuristas>();
 		initialize();
@@ -1004,12 +1007,10 @@ public class VentanaPrincipal {
 		pnListaSugerencias.getModeloLista().clear();
 		modelo_lugaresLista.clear();
 		lista_lugares = null;
+		modelo_lugaresLista.clear();
 		btnContratar.setEnabled(true);
 		chckbxContratado.setEnabled(false);
 		chckbxContratado.setSelected(false);
-
-		// Lista lugares
-
 	}
 
 	public void limpiar_grupo() {
@@ -1042,12 +1043,8 @@ public class VentanaPrincipal {
 		mostrar_lista2(pnListaptosInteres.getModeloLista(), circuito.getPuntos_interes());
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
-		/*
-		 * txtUsuario.setText(Integer.toString(circuito.getPuntos_interes().size()));
-		 * txtNombre.setText(Integer.toString(pnListaptosInteres.getModeloLista().size()
-		 * ));
-		 */
-		// copiar_lugares();
+		mostrar_lugares(modelo_lugaresLista, circuito.getLugares());
+
 	}
 
 	public void mostrar_grupo(int indice) {
@@ -1069,15 +1066,21 @@ public class VentanaPrincipal {
 		txtPrecioGuia.setText(Double.toString(guia.getPrecio_hora()));
 		txtPuntuacionGuia.setText(Double.toString(guia.getPuntuacion()));
 		mostrar_lista2(pnListaIdioma.getModeloLista(), guia.getIdiomas());
-		// Historial de rutas
 	}
 
-	private void copiar_lugares() {
-		if (!modelo_lugaresLista.isEmpty()) {
-			for (int i = 0; i < lista_lugares.size(); i++) {
-				modelo_lugaresLista.addElement("Lugar " + lista_lugares.get(i).getId());
+	private void mostrar_lugar(int indice) {
+		Lugar l = lista_lugares.get(indice);
+		ventana_lugar.getTxtfNombreLugar().setText(l.getNombre());
+		ventana_lugar.getComboHorario().setSelectedItem(l.getHorario_visita());
+		ventana_lugar.getTxtfDuracion().setText(Double.toString(l.getDuracion_visita()));
+		ventana_lugar.getComboTipologia().setSelectedItem(l.getTipologia());
+		ventana_lugar.getTxtPrecio().setText(Double.toString(l.getPrecio()));
+	}
+
+	private void mostrar_lugares(DefaultListModel<String> modelo_destino, List<Lugar> lista_origen) {
+			for (int i = 0; i < lista_origen.size(); i++) {
+				modelo_destino.add(i, "Lugar " + lista_origen.get(i).getId());
 			}
-		}
 	}
 
 	private void mostrar_lista2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
@@ -1095,6 +1098,7 @@ public class VentanaPrincipal {
 
 		return aux;
 	}
+	
 
 	public void aniadirCircuito() {
 		if (comprobar_camposCircuito()) {
@@ -1108,6 +1112,8 @@ public class VentanaPrincipal {
 
 				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
 				pnListaCircuitos.getLista().add(circuito);
+				
+				txtNombre.setText(Integer.toString(circuito.getLugares().size()));
 
 				limpiar_circuito();
 			} else {
@@ -1117,8 +1123,9 @@ public class VentanaPrincipal {
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
-
 		}
+		
+
 	}
 
 	private void aniadir_guia() {
@@ -1133,7 +1140,7 @@ public class VentanaPrincipal {
 				pnListaGuias.getModelolista().addElement("Guia " + guia.getId());
 				pnListaGuias.getLista().add(guia);
 
-				limpiar_circuito();
+				limpiar_guia();
 			} else {
 				String mensaje = ("El parámetro introducido debe de ser un número.");
 				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
@@ -1153,6 +1160,8 @@ public class VentanaPrincipal {
 
 			pnListaGrupos.getModelolista().addElement("Grupo " + guia.getId());
 			pnListaGrupos.getLista().add(grupo);
+
+			limpiar_grupo();
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1173,6 +1182,10 @@ public class VentanaPrincipal {
 		circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
 		circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 		circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
+		circuito.setLugares(lista_lugares);
+		
+		txtNombre.setText(Integer.toString(circuito.getLugares().size()));
+
 
 	}
 
@@ -1216,6 +1229,9 @@ public class VentanaPrincipal {
 			mostrar_lista2(pnRestricciones.getModeloLista(), grupo.getRestricciones_lista());
 			mostrar_lista2(pnInteresesGrupo.getModeloLista(), grupo.getIntereses());
 			// modificar tabla
+
+			limpiar_grupo();
+
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1236,6 +1252,7 @@ public class VentanaPrincipal {
 	private boolean comprobar_campoGrupo() {
 		return !(txtNombreGrupo.getText() == null || txtPais.getText() == null || txtAlojamiento.getText() == null
 				|| comboTipGrupo.getSelectedItem() == "" || txtfGuiaGrupo.getText() == null);
+
 	}
 
 	public static boolean comprobarEntero(String cadena) {
@@ -1342,17 +1359,16 @@ public class VentanaPrincipal {
 		public void actionPerformed(ActionEvent e) {
 			if (btnAgregarlugar.getIcon() != icono_info) {
 
-				VentanaLugar ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, 0, true, vp);
+				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
 			} else {
-				String lugar_aux = modelo_lugaresLista.getElementAt(listLugares.getSelectedIndex());
-				int id_lugar = Integer.parseInt(Character.toString(lugar_aux.charAt(lugar_aux.length() - 1)));
 
-				VentanaLugar ventana_lugar = new VentanaLugar(null, null, id_lugar, false, vp);
+				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getTxtfNombreLugar().setEditable(false);
 				btnAgregarlugar.setIcon(icono_aniadir);
+				mostrar_lugar(listLugares.getSelectedIndex());
 			}
 
 		}
@@ -1360,12 +1376,11 @@ public class VentanaPrincipal {
 
 	private class BtnEliminarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			lista_lugares.remove(listLugares.getSelectedIndex());
-			modelo_lugaresLista.remove(listLugares.getSelectedIndex());
-			btnAgregarlugar.setIcon(icono_aniadir);
+			int indice = listLugares.getSelectedIndex();
 
-			txtUsuario.setText(Integer.toString(lista_lugares.size()));
-			txtNombre.setText(Integer.toString(modelo_lugaresLista.size()));
+			lista_lugares.remove(indice);
+			modelo_lugaresLista.remove(indice);
+			btnAgregarlugar.setIcon(icono_aniadir);
 		}
 	}
 
@@ -1418,6 +1433,7 @@ public class VentanaPrincipal {
 			limpiar_grupo();
 		}
 	}
+
 	private class PnListaGruposBtnModificarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modificar_grupo();

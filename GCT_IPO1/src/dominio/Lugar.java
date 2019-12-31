@@ -7,13 +7,13 @@ public class Lugar {
 	private static int id;
 	private String nombre;
 	private String horario_visita;	// Mirar que date si el de sql o el de java.util || poner string menos problema si da error
-	private int duracion_visita;
+	private double duracion_visita;
 	private String tipologia;
 	private double precio;
 	private JLabel imagen_lugar;
 	
 	
-	public Lugar(String nombre, String horario_visita, int duracion_visita, String tipologia, double precio,
+	public Lugar(String nombre, String horario_visita, double duracion_visita, String tipologia, double precio,
 			JLabel imagen_lugar) {
 		
 		this.id++;
@@ -56,7 +56,7 @@ public class Lugar {
 	}
 
 
-	public int getDuracion_visita() {
+	public double getDuracion_visita() {
 		return duracion_visita;
 	}
 
