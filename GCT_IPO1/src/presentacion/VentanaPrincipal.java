@@ -1078,9 +1078,9 @@ public class VentanaPrincipal {
 	}
 
 	private void mostrar_lugares(DefaultListModel<String> modelo_destino, List<Lugar> lista_origen) {
-			for (int i = 0; i < lista_origen.size(); i++) {
-				modelo_destino.add(i, "Lugar " + lista_origen.get(i).getId());
-			}
+		for (int i = 0; i < lista_origen.size(); i++) {
+			modelo_destino.add(i, "Lugar " + lista_origen.get(i).getId());
+		}
 	}
 
 	private void mostrar_lista2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
@@ -1098,7 +1098,6 @@ public class VentanaPrincipal {
 
 		return aux;
 	}
-	
 
 	public void aniadirCircuito() {
 		if (comprobar_camposCircuito()) {
@@ -1112,7 +1111,7 @@ public class VentanaPrincipal {
 
 				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
 				pnListaCircuitos.getLista().add(circuito);
-				
+
 				txtNombre.setText(Integer.toString(circuito.getLugares().size()));
 
 				limpiar_circuito();
@@ -1124,7 +1123,6 @@ public class VentanaPrincipal {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		
 
 	}
 
@@ -1183,9 +1181,8 @@ public class VentanaPrincipal {
 		circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 		circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 		circuito.setLugares(lista_lugares);
-		
-		txtNombre.setText(Integer.toString(circuito.getLugares().size()));
 
+		txtNombre.setText(Integer.toString(circuito.getLugares().size()));
 
 	}
 
@@ -1422,8 +1419,13 @@ public class VentanaPrincipal {
 
 	private class BtnSeleccionarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo);
-			vl.getFrame().setVisible(true);
+			if (!lista_guias.isEmpty()) {
+				VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo);
+				vl.getFrame().setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "No hay guías existentes, se debe añadir alguno.", "",
+						JOptionPane.WARNING_MESSAGE);
+			}
 		}
 	}
 
