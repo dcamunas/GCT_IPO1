@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 
 public class Lugar {
 	
-	private static int id;
+	private int id;
 	private String nombre;
 	private String horario_visita;	// Mirar que date si el de sql o el de java.util || poner string menos problema si da error
 	private double duracion_visita;
@@ -13,10 +13,10 @@ public class Lugar {
 	private JLabel imagen_lugar;
 	
 	
-	public Lugar(String nombre, String horario_visita, double duracion_visita, String tipologia, double precio,
+	public Lugar(int id, String nombre, String horario_visita, double duracion_visita, String tipologia, double precio,
 			JLabel imagen_lugar) {
 		
-		this.id++;
+		this.id = id;
 		this.nombre = nombre;
 		this.horario_visita = horario_visita;
 		this.duracion_visita = duracion_visita;

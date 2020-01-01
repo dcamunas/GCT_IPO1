@@ -269,7 +269,7 @@ public class VentanaPrincipal {
 				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
 		frmManchatours.setTitle("Manchatours");
 		frmManchatours.setBounds(100, 100, 1156, 700);
-		frmManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frmManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		pnInfoUsuario = new JPanel();
 		pnInfoUsuario.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -1044,6 +1044,7 @@ public class VentanaPrincipal {
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
 		mostrar_lugares(modelo_lugaresLista, circuito.getLugares());
+		pnListaCircuitos.getList().clearSelection();
 
 	}
 
@@ -1054,6 +1055,7 @@ public class VentanaPrincipal {
 		txtAlojamiento.setText(grupo.getAlojamiento());
 		comboTipGrupo.setSelectedItem(grupo.getTipologia());
 		txtfGuiaGrupo.setText(grupo.getGuia());
+		pnListaGrupos.getList().clearSelection();
 		// mostrar tabla
 	}
 
@@ -1066,6 +1068,7 @@ public class VentanaPrincipal {
 		txtPrecioGuia.setText(Double.toString(guia.getPrecio_hora()));
 		txtPuntuacionGuia.setText(Double.toString(guia.getPuntuacion()));
 		mostrar_lista2(pnListaIdioma.getModeloLista(), guia.getIdiomas());
+		pnListaGuias.getList().clearSelection();
 	}
 
 	private void mostrar_lugar(int indice) {
@@ -1078,12 +1081,15 @@ public class VentanaPrincipal {
 	}
 
 	private void mostrar_lugares(DefaultListModel<String> modelo_destino, List<Lugar> lista_origen) {
+		modelo_destino.clear();
+		lista_lugares = lista_origen;
 		for (int i = 0; i < lista_origen.size(); i++) {
 			modelo_destino.add(i, "Lugar " + lista_origen.get(i).getId());
 		}
 	}
 
 	private void mostrar_lista2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
+		modlista_destino.clear();
 		for (int i = 0; i < lista_origen.size(); i++) {
 			modlista_destino.add(i, lista_origen.get(i));
 		}
@@ -1168,70 +1174,87 @@ public class VentanaPrincipal {
 	}
 
 	private void modificar_circuito() {
-		circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
-		circuito.setNombre_circuito(txtfNombreCircuito.getText());
-		circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
-		if (comprobarDecimal(txtfPrecioCircuito.getText())) {
-			circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
-		} else {
-			String mensaje = ("El parámetro introducido debe de ser un número.");
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-		}
-		circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
-		circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
-		circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
-		circuito.setLugares(lista_lugares);
+		if (!pnListaCircuitos.getList().isSelectionEmpty()) {
+			circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
+			circuito.setNombre_circuito(txtfNombreCircuito.getText());
+			circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
+			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+				circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
+			circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
+			circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
+			circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
+			circuito.setLugares(lista_lugares);
 
-		txtNombre.setText(Integer.toString(circuito.getLugares().size()));
+			limpiar_circuito();
+
+			txtNombre.setText(Integer.toString(circuito.getLugares().size()));
+		} else {
+			JOptionPane.showMessageDialog(null, "Ningún circuito seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+		}
 
 	}
 
 	private void modificar_guia() {
-		guia = lista_guias.get(pnListaGuias.getList().getSelectedIndex());
-		guia.setNombre(txtNombreguia.getText());
-		guia.setApellidos(txtApellidosGuia.getText());
-		guia.setCorreo(txtCorreoguia.getText());
-		if (comprobarEntero(txtNumeroGuia.getText())) {
-			guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
-		} else {
-			String mensaje = ("El parámetro introducido debe de ser un número.");
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-		}
+		if (!pnListaGuias.getList().isSelectionEmpty()) {
+			guia = lista_guias.get(pnListaGuias.getList().getSelectedIndex());
+			guia.setNombre(txtNombreguia.getText());
+			guia.setApellidos(txtApellidosGuia.getText());
+			guia.setCorreo(txtCorreoguia.getText());
+			if (comprobarEntero(txtNumeroGuia.getText())) {
+				guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
 
-		if (comprobarDecimal(txtPrecioGuia.getText())) {
-			guia.setPrecio_hora(Double.parseDouble(txtPrecioGuia.getText()));
-		} else {
-			String mensaje = ("El parámetro introducido debe de ser un número.");
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-		}
-		if (comprobarDecimal(txtPuntuacionGuia.getText())) {
-			guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
-		} else {
-			String mensaje = ("El parámetro introducido debe de ser un número.");
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-		}
+			if (comprobarDecimal(txtPrecioGuia.getText())) {
+				guia.setPrecio_hora(Double.parseDouble(txtPrecioGuia.getText()));
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
+			if (comprobarDecimal(txtPuntuacionGuia.getText())) {
+				guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
+			} else {
+				String mensaje = ("El parámetro introducido debe de ser un número.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
 
-		guia.setDisponibilidad(rbtnSi_2.isSelected());
+			guia.setDisponibilidad(guia.isDisponibilidad());
+
+			limpiar_guia();
+		} else {
+			JOptionPane.showMessageDialog(null, "Ningún guía seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+		}
 
 	}
 
 	private void modificar_grupo() {
-		grupo = lista_grupos.get(pnListaGrupos.getList().getSelectedIndex());
-		if (comprobar_campoGrupo()) {
-			grupo.setNombre(txtNombreGrupo.getText());
-			grupo.setPais(txtPais.getText());
-			grupo.setAlojamiento(txtAlojamiento.getText());
-			grupo.setTipologia((String) comboTipGrupo.getSelectedItem());
-			grupo.setGuia(txtfGuiaGrupo.getText());
-			mostrar_lista2(pnRestricciones.getModeloLista(), grupo.getRestricciones_lista());
-			mostrar_lista2(pnInteresesGrupo.getModeloLista(), grupo.getIntereses());
-			// modificar tabla
+		if (!pnListaGrupos.getList().isSelectionEmpty()) {
+			grupo = lista_grupos.get(pnListaGrupos.getList().getSelectedIndex());
+			if (comprobar_campoGrupo()) {
+				grupo.setNombre(txtNombreGrupo.getText());
+				grupo.setPais(txtPais.getText());
+				grupo.setAlojamiento(txtAlojamiento.getText());
+				grupo.setTipologia((String) comboTipGrupo.getSelectedItem());
+				grupo.setGuia(txtfGuiaGrupo.getText());
+				mostrar_lista2(pnRestricciones.getModeloLista(), grupo.getRestricciones_lista());
+				mostrar_lista2(pnInteresesGrupo.getModeloLista(), grupo.getIntereses());
+				// modificar tabla
 
-			limpiar_grupo();
+				limpiar_grupo();
 
+			} else {
+				JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ningún grupo seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+
 		}
 	}
 
@@ -1292,6 +1315,9 @@ public class VentanaPrincipal {
 
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			// PASAR DE BLANCO A NEGRO
+			// pnInfoUsuario.setBackground((Color) new Color(240,240,240));
+
 			VentanaLogin ventana_login = new VentanaLogin();
 			frmManchatours.dispose();
 			ventana_login.getFrmAccesoManchatours().setVisible(true);
@@ -1367,7 +1393,7 @@ public class VentanaPrincipal {
 				btnAgregarlugar.setIcon(icono_aniadir);
 				mostrar_lugar(listLugares.getSelectedIndex());
 			}
-
+			listLugares.clearSelection();
 		}
 	}
 

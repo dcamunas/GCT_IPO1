@@ -94,9 +94,9 @@ public class VentanaLugar {
 		panel = new JPanel();
 		pnPrincipal.add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 101, 101, 101, 30 };
+		gbl_panel.columnWidths = new int[] { 101, 101, 0, 101, 30 };
 		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 20 };
-		gbl_panel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
 		panel.setLayout(gbl_panel);
 
@@ -113,13 +113,14 @@ public class VentanaLugar {
 		comboHorario.setModel(new DefaultComboBoxModel(
 				new String[] { "", "De 10:00 a 14:00", "De 16:00 a 20:00", "De 15:00 a 19:00", "De 9:00 a 13:00" }));
 		GridBagConstraints gbc_comboHorario = new GridBagConstraints();
+		gbc_comboHorario.gridwidth = 2;
 		gbc_comboHorario.insets = new Insets(0, 0, 5, 5);
 		gbc_comboHorario.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboHorario.gridx = 1;
 		gbc_comboHorario.gridy = 1;
 		panel.add(comboHorario, gbc_comboHorario);
 
-		lblDuracion = new JLabel("Duración visita:");
+		lblDuracion = new JLabel("Duración:");
 		lblDuracion.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/clock.png")));
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_lblDuracion = new GridBagConstraints();
@@ -211,7 +212,7 @@ public class VentanaLugar {
 		public void actionPerformed(ActionEvent e) {
 			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar") && comprobar_campos()) {
 				if (comprobarDecimal(txtPrecio.getText()) || comprobarDecimal(txtfDuracion.getText())) {
-					Lugar l = new Lugar(txtfNombreLugar.getText(), (String)comboHorario.getSelectedItem(),
+					Lugar l = new Lugar(lista_lugares.size()+1,txtfNombreLugar.getText(), (String)comboHorario.getSelectedItem(),
 							Double.parseDouble(txtfDuracion.getText()), (String)comboTipologia.getSelectedItem(),
 							Double.parseDouble(txtPrecio.getText()), lblImagen);
 
