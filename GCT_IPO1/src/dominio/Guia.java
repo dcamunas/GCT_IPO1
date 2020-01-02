@@ -3,6 +3,8 @@ package dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 public class Guia {
 	private static int id;
 	private String nombre;
@@ -14,9 +16,10 @@ public class Guia {
 	private boolean disponibilidad;
 	private String historial;
 	private List<String> idiomas;
+	private ImageIcon imagen;
 	
 	public Guia(String nombre, String apellidos, String correo, int telefono, double precio_hora, double puntuacion,
-			boolean disponibilidad, List<String> idiomas) {
+			boolean disponibilidad, List<String> idiomas, ImageIcon imagen) {
 		
 		this.id++;
 		this.nombre = nombre;
@@ -28,6 +31,7 @@ public class Guia {
 		this.disponibilidad = disponibilidad;
 		this.idiomas = idiomas;
 		this.historial = null;
+		this.imagen = imagen;
 	}
 	public String getNombre() {
 		return nombre;
@@ -86,5 +90,13 @@ public class Guia {
 	public int getId() {
 		return id;
 	}
+	public ImageIcon getImagen() {
+		return imagen;
+	}
+	public void setImagen(ImageIcon imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 	
 }

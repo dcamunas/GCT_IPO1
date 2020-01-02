@@ -228,6 +228,8 @@ public class VentanaPrincipal {
 
 	private JButton btnSeleccionar;
 	private JButton btnModo;
+	
+	private ImageIcon imagen_guiaInicial;
 
 	;
 
@@ -258,6 +260,7 @@ public class VentanaPrincipal {
 		modelo_lugaresLista = new DefaultListModel<String>();
 		lista_guias = new ArrayList<Guia>();
 		lista_grupos = new ArrayList<GrupoTuristas>();
+		imagen_guiaInicial = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));
 		initialize();
 	}
 
@@ -595,7 +598,7 @@ public class VentanaPrincipal {
 		lblImagenGuia = new JLabel("");
 		lblImagenGuia.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblImagenGuia
-				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
+				.setIcon(imagen_guiaInicial);
 		pnImagenGuia.add(lblImagenGuia);
 
 		btnSeleccionarGuia = new JButton("Seleccionar");
@@ -991,6 +994,7 @@ public class VentanaPrincipal {
 	}
 
 	public void limpiar_guia() {
+		lblImagenGuia.setIcon(imagen_guiaInicial);
 		txtNombreguia.setText(null);
 		txtApellidosGuia.setText(null);
 		txtCorreoguia.setText(null);
@@ -1069,6 +1073,7 @@ public class VentanaPrincipal {
 
 	public void mostrar_guia(int indice) {
 		guia = lista_guias.get(indice);
+		lblImagenGuia.setIcon(guia.getImagen());
 		txtNombreguia.setText(guia.getNombre());
 		txtApellidosGuia.setText(guia.getApellidos());
 		txtCorreoguia.setText(guia.getCorreo());
@@ -1147,7 +1152,7 @@ public class VentanaPrincipal {
 				guia = new Guia(txtNombreguia.getText(), txtApellidosGuia.getText(), txtCorreoguia.getText(),
 						Integer.parseInt(txtNumeroGuia.getText()), Double.parseDouble(txtPrecioGuia.getText()),
 						Double.parseDouble(txtPuntuacionGuia.getText()), rbtnSi_2.isSelected(),
-						generar_lista(pnListaIdioma.getModeloLista()));
+						generar_lista(pnListaIdioma.getModeloLista()), (ImageIcon) lblImagenGuia.getIcon());
 
 				pnListaGuias.getModelolista().addElement("Guia " + guia.getId());
 				pnListaGuias.getLista().add(guia);
@@ -1212,6 +1217,7 @@ public class VentanaPrincipal {
 			guia.setNombre(txtNombreguia.getText());
 			guia.setApellidos(txtApellidosGuia.getText());
 			guia.setCorreo(txtCorreoguia.getText());
+			guia.setImagen((ImageIcon) lblImagenGuia.getIcon());
 			if (comprobarEntero(txtNumeroGuia.getText())) {
 				guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
 			} else {
