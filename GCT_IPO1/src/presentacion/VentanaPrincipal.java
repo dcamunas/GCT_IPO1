@@ -90,7 +90,7 @@ public class VentanaPrincipal {
 	private JPanel pnCircuitos;
 	private JPanel pnGuias;
 	private JPanel pnGrupos;
-	private JPanel pnDiseñoRuta;
+	private MiEditorGrafico pnDiseñoRuta;
 	private JPanel pnLugares;
 	private JPanel pnContratacion;
 	private JButton btnContratar;
@@ -227,6 +227,7 @@ public class VentanaPrincipal {
 			"Holandes", "Portugues", "Ruso" };
 
 	private JButton btnSeleccionar;
+	private JButton btnModo;
 
 	;
 
@@ -339,6 +340,13 @@ public class VentanaPrincipal {
 		FlowLayout fl_pnHerramientas = (FlowLayout) pnHerramientas.getLayout();
 		fl_pnHerramientas.setAlignment(FlowLayout.RIGHT);
 		frmManchatours.getContentPane().add(pnHerramientas, BorderLayout.NORTH);
+		
+		btnModo = new JButton("");
+		btnModo.addActionListener(new BtnModoActionListener());
+		btnModo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/brightness-32.png")));
+		pnHerramientas.add(btnModo);
+		btnModo.setBorderPainted(false);
+		btnModo.setContentAreaFilled(false);
 
 		btnAyuda = new JButton("");
 		btnAyuda.setIcon(
@@ -946,7 +954,7 @@ public class VentanaPrincipal {
 		lblRestricciones = new JLabel("Restricciones: ");
 		pnTituloRestric.add(lblRestricciones);
 
-		pnDiseñoRuta = new JPanel();
+		pnDiseñoRuta = new MiEditorGrafico(this);
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
 
 		// mostrar_usuario();
@@ -1465,6 +1473,10 @@ public class VentanaPrincipal {
 	private class PnListaGruposBtnModificarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modificar_grupo();
+		}
+	}
+	private class BtnModoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
 		}
 	}
 
