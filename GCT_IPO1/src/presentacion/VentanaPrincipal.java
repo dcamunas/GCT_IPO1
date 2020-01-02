@@ -51,6 +51,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 import com.sun.xml.internal.ws.policy.sourcemodel.attach.ExternalAttachmentsUnmarshaller;
 
 import dominio.Circuito;
@@ -59,6 +60,7 @@ import dominio.Guia;
 import dominio.Lugar;
 import dominio.Usuario;
 import javafx.scene.control.RadioButton;
+import sun.awt.PaintEventDispatcher;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
@@ -113,7 +115,6 @@ public class VentanaPrincipal {
 	private JPanel pnEspacio;
 	private JPanel pnInciden_Puntos_Opiniones;
 	private JPanel pnIncidencias;
-	private JPanel pntituloIncidencia;
 	private MiListaJPanel_2 pnListaIncidencia;
 	private JPanel pnSugerencias;
 	private JLabel lblOpinionesYSugerencias;
@@ -205,9 +206,13 @@ public class VentanaPrincipal {
 	private MiModeloJTable modeloTabla;
 	private ImageIcon icono_info = new ImageIcon(
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
-
+	private ImageIcon imagen_guiaInicial;
 	private ImageIcon icono_aniadir = new ImageIcon(
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
+	private ImageIcon modo_noche = new ImageIcon(
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_noche-32.png"));
+	private ImageIcon modo_dia = new ImageIcon(
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_dia-32.png"));
 
 	// ArrayList listas
 	private List<Circuito> lista_circuitos;
@@ -228,8 +233,13 @@ public class VentanaPrincipal {
 
 	private JButton btnSeleccionar;
 	private JButton btnModo;
-	
-	private ImageIcon imagen_guiaInicial;
+
+	private final int DIA = 0; 
+	private final int NOCHE = 1;
+	private int tema = DIA;
+
+	private Color color_dia = new Color(240, 240, 240);
+	private JLabel lblIncidencias;
 
 	;
 
@@ -260,7 +270,8 @@ public class VentanaPrincipal {
 		modelo_lugaresLista = new DefaultListModel<String>();
 		lista_guias = new ArrayList<Guia>();
 		lista_grupos = new ArrayList<GrupoTuristas>();
-		imagen_guiaInicial = new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));
+		imagen_guiaInicial = new ImageIcon(
+				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));
 		initialize();
 	}
 
@@ -343,10 +354,10 @@ public class VentanaPrincipal {
 		FlowLayout fl_pnHerramientas = (FlowLayout) pnHerramientas.getLayout();
 		fl_pnHerramientas.setAlignment(FlowLayout.RIGHT);
 		frmManchatours.getContentPane().add(pnHerramientas, BorderLayout.NORTH);
-		
+
 		btnModo = new JButton("");
 		btnModo.addActionListener(new BtnModoActionListener());
-		btnModo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/brightness-32.png")));
+		btnModo.setIcon(modo_noche);
 		pnHerramientas.add(btnModo);
 		btnModo.setBorderPainted(false);
 		btnModo.setContentAreaFilled(false);
@@ -385,7 +396,7 @@ public class VentanaPrincipal {
 		lblCircuitosContratados = new JLabel("Circuitos contratados:");
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
 
-		pnLugares = new MiJPanel(new JLabel());
+		pnLugares = new JPanel();
 		pnLugares.setPreferredSize(new Dimension(320, 10));
 		pnLugares.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnCircuitos.add(pnLugares, BorderLayout.EAST);
@@ -520,12 +531,10 @@ public class VentanaPrincipal {
 		pnInciden_Puntos_Opiniones.add(pnIncidencias, BorderLayout.NORTH);
 		pnIncidencias.setLayout(new BorderLayout(0, 0));
 
-		pntituloIncidencia = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pntituloIncidencia.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		pnIncidencias.add(pntituloIncidencia, BorderLayout.NORTH);
+		lblIncidencias = new JLabel("Incidencias:");
+		pnIncidencias.add(lblIncidencias, BorderLayout.WEST);
 
-		pnListaIncidencia = new MiListaJPanel_2(new String[] {}, false);
+		pnListaIncidencia = new MiListaJPanel_2(new String[] {}, false, tema);
 		pnIncidencias.add(pnListaIncidencia, BorderLayout.SOUTH);
 
 		pnSugerencias = new JPanel();
@@ -535,7 +544,7 @@ public class VentanaPrincipal {
 		lblOpinionesYSugerencias = new JLabel("Opiniones y sugerencias:");
 		pnSugerencias.add(lblOpinionesYSugerencias, BorderLayout.NORTH);
 
-		pnListaSugerencias = new MiListaJPanel_2(sugerencias_globales, true);
+		pnListaSugerencias = new MiListaJPanel_2(sugerencias_globales, true, tema);
 		pnSugerencias.add(pnListaSugerencias, BorderLayout.SOUTH);
 
 		pnptosInteres = new JPanel();
@@ -545,7 +554,7 @@ public class VentanaPrincipal {
 		lblPuntosDeInteres = new JLabel("Puntos de interes:");
 		pnptosInteres.add(lblPuntosDeInteres, BorderLayout.NORTH);
 
-		pnListaptosInteres = new MiListaJPanel_2(ptosInteres_globales, true);
+		pnListaptosInteres = new MiListaJPanel_2(ptosInteres_globales, true, tema);
 		pnptosInteres.add(pnListaptosInteres, BorderLayout.CENTER);
 
 		pnGuias = new JPanel();
@@ -576,7 +585,7 @@ public class VentanaPrincipal {
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
 
-		pnListaIdioma = new MiListaJPanel_2(idiomas_globales, true);
+		pnListaIdioma = new MiListaJPanel_2(idiomas_globales, true,tema);
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
 
 		pnInfoGuia = new JPanel();
@@ -597,8 +606,7 @@ public class VentanaPrincipal {
 
 		lblImagenGuia = new JLabel("");
 		lblImagenGuia.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lblImagenGuia
-				.setIcon(imagen_guiaInicial);
+		lblImagenGuia.setIcon(imagen_guiaInicial);
 		pnImagenGuia.add(lblImagenGuia);
 
 		btnSeleccionarGuia = new JButton("Seleccionar");
@@ -940,13 +948,13 @@ public class VentanaPrincipal {
 		gbc_btnSeleccionar.gridy = 6;
 		pnInfoGrupo1.add(btnSeleccionar, gbc_btnSeleccionar);
 
-		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, true);
+		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, true, tema);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
 
 		lblIntereses = new JLabel("Intereses:");
 		pnInteresesGrupo.add(lblIntereses, BorderLayout.NORTH);
 
-		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true);
+		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true, tema);
 		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
 
 		pnTituloRestric = new JPanel();
@@ -1319,6 +1327,86 @@ public class VentanaPrincipal {
 		return guias;
 	}
 
+	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
+		JLabel aux;
+		for (int i = 0; i < panel.getComponentCount(); i++) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jlabel")) {
+				aux = (JLabel) panel.getComponent(i);
+				aux.setForeground(color_texto);
+			}
+		}
+	}
+
+	private void cambiar_miListaJpanel2(MiListaJPanel_2 panel, Color color_panel, Color color_texto) {
+		panel.setBackground(color_panel);
+		panel.getPnBotones().setBackground(color_panel);
+		panel.getList().setBackground(Color.GRAY);
+		panel.getList().setForeground(color_texto);
+
+	}
+	
+	private void cambiar_miListaJpanel1(MiListaJPanel_1 panel, Color color_panel, Color color_texto) {
+		panel.setBackground(color_panel);
+		panel.getPnBotones().setBackground(color_panel);
+		panel.getList().setBackground(Color.DARK_GRAY);
+		panel.getList().setForeground(color_texto);
+
+	}
+
+	// PASAR DE BLANCO A NEGRO
+	// pnInfoUsuario.setBackground((Color) new Color(240,240,240));
+	private void activar_contraste(Color color_panel, Color color_texto) {
+		// Panel usuario
+		pnInfoUsuario.setBackground(color_panel);
+		pnImagen.setBackground(color_panel);
+		pnContenidoUsuario.setBackground(color_panel);
+		cambiar_colorTexto(pnContenidoUsuario, color_texto);
+		lblUltimaConexion.setForeground(color_texto);
+
+		// Panel herramientas
+		pnHerramientas.setBackground(color_panel);
+
+		/* Panel Principal */
+		tbPestañas.setBackground(color_panel);
+		tbPestañas.setForeground(color_texto);
+		pnPrincipal.setBackground(color_panel);
+		
+		// Panel circuitos
+		pnCircuitos.setBackground(color_panel);
+		pnListaCircuitos.setBackground(color_panel);
+		lblCircuitosContratados.setForeground(color_texto);
+		cambiar_miListaJpanel1(pnListaCircuitos, color_panel, color_texto);
+		pnLugares.setBackground(color_panel);
+		pnBotonesLugares.setBackground(color_panel);
+		pnContratacion.setBackground(color_panel);
+		chckbxContratado.setForeground(color_texto);
+		chckbxContratado.setBackground(color_panel);
+		pnListaLugares.setBackground(color_panel);
+		lblLugaresDeVisita.setForeground(color_texto);
+		listLugares.setBackground(Color.GRAY);
+		listLugares.setForeground(color_texto);
+		pnDatosCircuito.setBackground(color_panel);
+		cambiar_colorTexto(pnDatosCircuito, color_texto);
+		pnEspacio.setBackground(color_panel);
+		pnEspacio1.setBackground(color_panel);
+		pnEspacio2.setBackground(color_panel);
+		pnEspacio3.setBackground(color_panel);
+		pnInciden_Puntos_Opiniones.setBackground(color_panel);
+		pnIncidencias.setBackground(color_panel);
+		pnptosInteres.setBackground(color_panel);
+		pnSugerencias.setBackground(color_panel);
+		lblIncidencias.setForeground(color_texto);
+		cambiar_miListaJpanel2(pnListaIncidencia, color_panel, color_texto);
+		lblOpinionesYSugerencias.setForeground(color_texto);
+		cambiar_miListaJpanel2(pnListaSugerencias, color_panel, color_texto);
+		lblPuntosDeInteres.setForeground(color_texto);
+		cambiar_miListaJpanel2(pnListaptosInteres, color_panel, color_texto);
+		
+		// Panel Guias
+		
+
+	}
+
 ////////////////////////////////////////// Metodos Getter`s y Setter`s //////////////////////////////////////
 
 	public JFrame getFrame() {
@@ -1329,9 +1417,6 @@ public class VentanaPrincipal {
 
 	private class BtnCerrarSesionActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			// PASAR DE BLANCO A NEGRO
-			// pnInfoUsuario.setBackground((Color) new Color(240,240,240));
-
 			VentanaLogin ventana_login = new VentanaLogin();
 			frmManchatours.dispose();
 			ventana_login.getFrmAccesoManchatours().setVisible(true);
@@ -1481,8 +1566,21 @@ public class VentanaPrincipal {
 			modificar_grupo();
 		}
 	}
+
 	private class BtnModoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
+			if (tema == DIA) {
+				activar_contraste(Color.DARK_GRAY, Color.WHITE);
+				btnModo.setIcon(modo_dia);
+				tema = NOCHE;
+			} else {
+				activar_contraste(color_dia, Color.BLACK);
+				btnModo.setIcon(modo_noche);
+				tema = DIA;
+			}
+			pnListaIncidencia.setTema(tema);;
+
 		}
 	}
 

@@ -305,4 +305,29 @@ public class VentanaLugar {
 		this.modelo_lugares = modelo_lugares;
 	}
 
+	public JLabel getLblImagen() {
+		return lblImagen;
+	}
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public JLabel getLblHorario() {
+		return lblHorario;
+	}
+
+	public JLabel getLblDuracion() {
+		return lblDuracion;
+	}
+
+	public JLabel getLblTipologia() {
+		return lblTipologia;
+	}
+
+	public JLabel getLblPrecio() {
+		return lblPrecio;
+	}
+
+	
 }

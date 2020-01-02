@@ -100,10 +100,6 @@ public class MiEditorGrafico extends JPanel {
 
 		btnMonumento = new JButton("");
 		btnMonumento.addActionListener(new BtnMonumentoActionListener());
-
-		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.addActionListener(new BtnLimpiarActionListener());
-		toolBar.add(btnLimpiar);
 		btnMonumento
 				.setIcon(new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/iconos/castle.png")));
 		btnMonumento.setBorderPainted(false);
@@ -141,16 +137,31 @@ public class MiEditorGrafico extends JPanel {
 		btnRectangulo.addActionListener(new BtnRectanguloActionListener());
 		btnRectangulo.setIcon(
 				new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/iconos/rectangulo.png")));
+		btnRectangulo.setBorderPainted(false);
+		btnRectangulo.setContentAreaFilled(false);
 		toolBar.add(btnRectangulo);
 		btnNota.setIcon(
 				new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/iconos/add_note-32.png")));
 		btnNota.setBorderPainted(false);
 		btnNota.setContentAreaFilled(false);
+
 		toolBar.add(btnNota);
 
-		btnPorDefecto = new JButton("POR DEFECTO");
+		btnPorDefecto = new JButton("");
+		btnPorDefecto
+				.setIcon(new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/iconos/cursor.png")));
 		btnPorDefecto.addActionListener(new BtnPorDefectoActionListener());
+		btnPorDefecto.setBorderPainted(false);
+		btnPorDefecto.setContentAreaFilled(false);
 		toolBar.add(btnPorDefecto);
+
+		btnLimpiar = new JButton("");
+		btnLimpiar
+				.setIcon(new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/iconos/eraser.png")));
+		btnLimpiar.addActionListener(new BtnLimpiarActionListener());
+		btnLimpiar.setBorderPainted(false);
+		btnLimpiar.setContentAreaFilled(false);
+		toolBar.add(btnLimpiar);
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
@@ -300,7 +311,8 @@ public class MiEditorGrafico extends JPanel {
 
 	private class BtnLimpiarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			imagen = new ImageIcon(MiEditorGrafico.class.getResource("/presentacion/imagenes/lugares/MapPrincCiudadReal.gif"));
+			imagen = new ImageIcon(
+					MiEditorGrafico.class.getResource("/presentacion/imagenes/lugares/MapPrincCiudadReal.gif"));
 			miAreaDibujo.setIcon(imagen);
 			miAreaDibujo.limpiar_mapa();
 

@@ -134,6 +134,8 @@ public class MiListaJPanel_1 extends JPanel {
 	public void setLista(List lista) {
 		this.lista = lista;
 	}
+	
+	
 
 	private class BtnEliminarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

@@ -9,6 +9,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -27,21 +28,24 @@ public class VentanaIncidencia {
 	private DefaultListModel<String> modelo_lista;
 	private JList<String> list;
 	private List<String> lista;
+	private final int DIA = 0;
+	private Color color_dia = new Color(240, 240, 240);
+
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaIncidencia(List<String> lista, DefaultListModel<String> modelo_lista, JList<String> list, boolean modo) {
+	public VentanaIncidencia(List<String> lista, DefaultListModel<String> modelo_lista, JList<String> list, boolean modo, int tema) {
 		this.modelo_lista = modelo_lista;
 		this.list = list;
 		this.lista = lista;
-		initialize(modelo_lista, modo);
+		initialize(modelo_lista, modo, tema);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(DefaultListModel<String> modelo_lista, boolean modo) {
+	private void initialize(DefaultListModel<String> modelo_lista, boolean modo, int tema) {
 		frmRegistroDeIncidencia = new JFrame();
 		frmRegistroDeIncidencia.setTitle("Registro de incidencia");
 		frmRegistroDeIncidencia.setResizable(false);
@@ -65,10 +69,26 @@ public class VentanaIncidencia {
 		textPane.setBounds(20, 36, 275, 56);
 		panel_1.add(textPane);
 		panel.getBtnAceptar().setText("Añadir");
+		
 		if (!modo) {
 			textPane.setEnabled(false);
 			textPane.setText((String) list.getSelectedValue());
 			panel.getBtnAceptar().setText("Aceptar");
+			
+		}
+		
+		if(tema != DIA) {
+			lblIncidencia.setForeground(Color.WHITE);
+			panel_1.setBackground(Color.DARK_GRAY);
+			textPane.setBackground(Color.GRAY);
+			textPane.setForeground(Color.WHITE);
+			panel.getPnAceptar().setBackground(Color.DARK_GRAY);
+		} else {
+			lblIncidencia.setForeground(Color.BLACK);
+			panel_1.setBackground(color_dia);
+			textPane.setBackground(Color.WHITE);
+			textPane.setForeground(Color.BLACK);
+			panel.getPnAceptar().setBackground(color_dia);
 		}
 	}
 

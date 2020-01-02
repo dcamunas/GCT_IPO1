@@ -35,14 +35,16 @@ public class MiListaJPanel_2 extends JPanel {
 			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
 	private String[] valores;
 	private List<String> lista;
+	private int tema;
 
 	/**
 	 * Create the panel.
 	 */
-	public MiListaJPanel_2(String[] valores, boolean mostrar_lista) {
+	public MiListaJPanel_2(String[] valores, boolean mostrar_lista, int tema) {
 		this.lista = new ArrayList<String>();
 		this.mostrar_lista = mostrar_lista;
 		this.valores = valores;
+		this.tema = tema;
 		setLayout(new BorderLayout(0, 0));
 
 		pnBotones = new JPanel();
@@ -120,19 +122,17 @@ public class MiListaJPanel_2 extends JPanel {
 		this.lista = lista;
 	}
 
-	
-
 	public void setModelolista(DefaultListModel<String> modelo_lista) {
 		this.modelo_lista = modelo_lista;
 	}
-
-
 
 	public JScrollPane getSpnLista() {
 		return spnLista;
 	}
 
-
+	public void setTema(int tema) {
+		this.tema = tema;
+	}
 
 	private class BtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -144,7 +144,7 @@ public class MiListaJPanel_2 extends JPanel {
 
 				// True == Text activado (introducir incidencia) | False == Text desactivado
 				// (ver informacion)
-				vi = new VentanaIncidencia(lista, modelo_lista, list, true);
+				vi = new VentanaIncidencia(lista, modelo_lista, list, true, tema);
 				vi.getFrame().setVisible(true);
 				btnAniadir.setIcon(icono_aniadir);
 				btnEliminar.setEnabled(false);

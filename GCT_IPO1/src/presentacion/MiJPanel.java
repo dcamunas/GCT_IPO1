@@ -69,6 +69,11 @@ public class MiJPanel extends JPanel {
 
 
 
+	public JPanel getPnAceptar() {
+		return pnAceptar;
+	}
+
+
 	public JButton getBtnAceptar() {
 		return btnAceptar;
 	}
