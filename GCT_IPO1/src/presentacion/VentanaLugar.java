@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
@@ -55,15 +57,17 @@ public class VentanaLugar {
 	private List<Lugar> lista_lugares;
 	private JComboBox comboHorario;
 	private DefaultListModel<String> modelo_lugares;
-	private VentanaPrincipal vp;
+	private int tema;
+	private Color color_dia = new Color(240, 240, 240);
+	private Color color_noche = new Color(51, 51, 51);
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaLugar(List<Lugar> lista, DefaultListModel<String> modelo_lista) {
+	public VentanaLugar(List<Lugar> lista, DefaultListModel<String> modelo_lista, int tema) {
 		this.lista_lugares = lista;
 		this.modelo_lugares = modelo_lista;
-		this.vp = vp;
+		this.tema = tema;
 		initialize();
 	}
 
@@ -180,7 +184,33 @@ public class VentanaLugar {
 		if (modelo_lugares == null) {
 			activar_edicion(false);
 		}
+		
+		if(tema == 0) {
+			cambiar_tema(color_dia, Color.BLACK, color_dia);
+		} else {
+			cambiar_tema(color_noche, Color.WHITE, Color.DARK_GRAY);
+		}
 
+	}
+	
+	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
+		JLabel aux;
+		for (int i = 0; i < panel.getComponentCount(); i++) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jlabel")) {
+				aux = (JLabel) panel.getComponent(i);
+				aux.setForeground(color_texto);
+			}
+		}
+	}
+	
+	private void cambiar_tema(Color color_panel, Color color_texto, Color textfield) {
+		txtfNombreLugar.setBackground(textfield);
+		txtfNombreLugar.setForeground(color_texto);
+		pnPrincipal.getPnimagen().setBackground(color_panel);
+		pnPrincipal.getPnAceptar().setBackground(color_panel);
+		panel.setBackground(color_panel);
+		cambiar_colorTexto(panel, color_texto);
+		
 	}
 
 	private void activar_edicion(boolean condicion) {
@@ -235,10 +265,6 @@ public class VentanaLugar {
 
 	public JFrame getFrmLugarVisita() {
 		return frmLugarVisita;
-	}
-
-	public void setFrmLugarVisita(JFrame frmLugarVisita) {
-		this.frmLugarVisita = frmLugarVisita;
 	}
 
 	public MiJPanel getPnPrincipal() {

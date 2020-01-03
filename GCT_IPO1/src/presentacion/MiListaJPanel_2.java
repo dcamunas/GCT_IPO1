@@ -137,7 +137,7 @@ public class MiListaJPanel_2 extends JPanel {
 	private class BtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (mostrar_lista) {
-				VentanaLista vl = new VentanaLista(lista, valores, modelo_lista, null);
+				VentanaLista vl = new VentanaLista(lista, valores, modelo_lista, null, tema);
 				vl.getFrame().setVisible(true);
 			} else {
 				VentanaIncidencia vi;

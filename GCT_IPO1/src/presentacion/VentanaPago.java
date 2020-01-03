@@ -30,6 +30,7 @@ import javax.swing.border.MatteBorder;
 import dominio.Lugar;
 
 import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
 
 public class VentanaPago {
 
@@ -43,25 +44,29 @@ public class VentanaPago {
 	private JScrollPane scrollPane;
 	private JList listaLugares;
 	private JScrollPane scrollPane_1;
-	private JList list;
 	private JCheckBox contratado;
 	private JButton contratar;
 	private ArrayList<Lugar> lista_lugares;
+	private int tema;
+	private Color color_dia = new Color(240, 240, 240);
+	private Color color_noche = new Color(51, 51, 51);
+	private JTextPane textPane;
 
 	/**
 	 * Create the application.
 	 */
 
 	public VentanaPago(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
-			List<Lugar> lugares) {
-		initialize(contratar, contratado, nombreCircuito, precio_total, lugares);
+			List<Lugar> lugares, int tema) {
+		initialize(contratar, contratado, nombreCircuito, precio_total, lugares, tema);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
-			List<Lugar> lugares) {
+			List<Lugar> lugares, int tema) {
+		this.tema = tema;
 		this.contratar = contratar;
 		this.contratado = contratado;
 		frmPasarelaDePago = new JFrame();
@@ -110,15 +115,20 @@ public class VentanaPago {
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 47, 217, 155);
 		pnContenido.add(scrollPane_1);
-
-		list = new JList();
-		list.setEnabled(false);
-		scrollPane_1.setViewportView(list);
+		
+		textPane = new JTextPane();
+		scrollPane_1.setViewportView(textPane);
 		
 		if(es_gratis(precio_total)) {
 			textField.setEditable(false);
 			rdbtnGratis.setEnabled(true);
 			rdbtnGratis.setSelected(true);
+		}
+		
+		if(tema == 0) {
+			cambiar_tema(color_dia, Color.BLACK);
+		} else {
+			cambiar_tema(color_noche, Color.WHITE);
 		}
 
 	}
@@ -127,10 +137,32 @@ public class VentanaPago {
 		return frmPasarelaDePago;
 	}
 
-	public void setFrmPasarelaDePago(JFrame frmPasarelaDePago) {
-		this.frmPasarelaDePago = frmPasarelaDePago;
+	public void setTema(int tema) {
+		this.tema = tema;
 	}
 
+	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
+		JLabel aux;
+		for (int i = 0; i < panel.getComponentCount(); i++) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jlabel")) {
+				aux = (JLabel) panel.getComponent(i);
+				aux.setForeground(color_texto);
+			}
+		}
+	}
+	
+	private void cambiar_tema(Color color_panel, Color color_texto) {
+		pnPrincipal.getPnimagen().setBackground(color_panel);
+		pnPrincipal.getPnAceptar().setBackground(color_panel);
+		pnContenido.setBackground(color_panel);
+		cambiar_colorTexto(pnContenido, color_texto);
+		textPane.setBackground(color_panel);
+		textPane.setForeground(color_texto);
+		rdbtnGratis.setBackground(color_panel);
+		rdbtnGratis.setForeground(color_texto);
+		
+	}
+	
 	public boolean es_gratis(String precio_total) {
 		boolean gratis = false;
 		int precio = (int) Double.parseDouble(precio_total);

@@ -37,6 +37,7 @@ public class MiEditorGrafico extends JPanel {
 	private JButton btnNota;
 	private JButton btnMonumento;
 	private JButton btnRectangulo;
+	private JPanel pnPrincipal;
 
 	// Area de dibujo personalizada (creada extendiendo de JLabel)
 	private MiAreaDibujo miAreaDibujo;
@@ -51,7 +52,6 @@ public class MiEditorGrafico extends JPanel {
 	private final int GASTRONOMIA = 4;
 	private final int NOTA = 5;
 	private final int RECTANGULO = 6;
-	private final int TEXTO = 7;
 	private final int CURSOR_POR_DEFECTO = 8;
 
 	// Cursores e imagenes
@@ -86,9 +86,14 @@ public class MiEditorGrafico extends JPanel {
 				MiEditorGrafico.class.getResource("/presentacion/imagenes/lugares/MapPrincCiudadReal.gif"));
 
 		setLayout(new BorderLayout(0, 0));
+		
+		pnPrincipal = new JPanel();
+		pnPrincipal.setLayout(new BorderLayout(0, 0));
+		add(pnPrincipal, BorderLayout.CENTER);
+		
 		toolBar = new JToolBar();
 		toolBar.setBorder(new LineBorder(new Color(0, 0, 0)));
-		add(toolBar, BorderLayout.NORTH);
+		pnPrincipal.add(toolBar, BorderLayout.NORTH);
 
 		btnMapa = new JButton("");
 		btnMapa.addActionListener(new BtnMapaActionListener());
@@ -164,7 +169,7 @@ public class MiEditorGrafico extends JPanel {
 		toolBar.add(btnLimpiar);
 
 		scrollPane = new JScrollPane();
-		add(scrollPane, BorderLayout.CENTER);
+		pnPrincipal.add(scrollPane, BorderLayout.CENTER);
 
 		// Creación del área de dibujo personalizada
 		miAreaDibujo = new MiAreaDibujo();
@@ -326,5 +331,27 @@ public class MiEditorGrafico extends JPanel {
 
 		}
 	}
+
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public JPanel getPnPrincipal() {
+		return pnPrincipal;
+	}
+
+	public JToolBar getToolBar() {
+		return toolBar;
+	}
+
+	public JButton getBtnNota() {
+		return btnNota;
+	}
+
+	public JButton getBtnPorDefecto() {
+		return btnPorDefecto;
+	}
+	
+	
 
 }

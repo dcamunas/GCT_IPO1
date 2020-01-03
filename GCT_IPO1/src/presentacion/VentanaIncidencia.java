@@ -30,6 +30,7 @@ public class VentanaIncidencia {
 	private List<String> lista;
 	private final int DIA = 0;
 	private Color color_dia = new Color(240, 240, 240);
+	private Color color_noche = new Color(51,51,51);
 
 
 	/**
@@ -79,10 +80,10 @@ public class VentanaIncidencia {
 		
 		if(tema != DIA) {
 			lblIncidencia.setForeground(Color.WHITE);
-			panel_1.setBackground(Color.DARK_GRAY);
-			textPane.setBackground(Color.GRAY);
+			panel_1.setBackground(color_noche);
+			textPane.setBackground(Color.DARK_GRAY);
 			textPane.setForeground(Color.WHITE);
-			panel.getPnAceptar().setBackground(Color.DARK_GRAY);
+			panel.getPnAceptar().setBackground(color_noche);
 		} else {
 			lblIncidencia.setForeground(Color.BLACK);
 			panel_1.setBackground(color_dia);

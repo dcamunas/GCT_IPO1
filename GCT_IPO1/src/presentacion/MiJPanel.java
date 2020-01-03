@@ -53,21 +53,9 @@ public class MiJPanel extends JPanel {
 		this.lblImagen = lblImagen;
 	}
 	
-	
-
-
 	public JPanel getPnimagen() {
 		return pnimagen;
 	}
-
-
-	public void setPnimagen(JPanel pnimagen) {
-		this.pnimagen = pnimagen;
-	}
-
-	
-
-
 
 	public JPanel getPnAceptar() {
 		return pnAceptar;
@@ -82,9 +70,6 @@ public class MiJPanel extends JPanel {
 	public void setBtnAceptar(JButton btnAceptar) {
 		this.btnAceptar = btnAceptar;
 	}
-
-
-
 
 
 	private class BtnAceptarActionListener implements ActionListener {

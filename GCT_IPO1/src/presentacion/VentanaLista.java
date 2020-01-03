@@ -6,6 +6,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -30,14 +32,19 @@ public class VentanaLista {
 	private List<String> lista;
 	private DefaultListModel<String> modelo_lista;
 	private JTextField txtf;
+	
+	private int tema;
+	private Color color_dia = new Color(240, 240, 240);
+	private Color color_noche = new Color(51,51,51);
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaLista(List<String> lista, String[] valores, DefaultListModel<String> modelo_lista, JTextField txtf) {
+	public VentanaLista(List<String> lista, String[] valores, DefaultListModel<String> modelo_lista, JTextField txtf, int tema) {
 		this.modelo_lista = modelo_lista;
 		this.lista = lista;
 		this.txtf = txtf;
+		this.tema = tema;
 		initialize(lista, valores, modelo_lista);
 	}
 
@@ -77,12 +84,27 @@ public class VentanaLista {
 		});
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(list);
+		
+		if(tema == 0) {
+			cambiar_tema(color_dia, Color.BLACK);
+		} else {
+			cambiar_tema(color_noche, Color.WHITE);
+		}
 	}
 
 	public JFrame getFrame() {
 		return frame;
 	}
-
+	
+	private void cambiar_tema(Color color_panel, Color color_texto) {
+		panel.setBackground(color_panel);
+		panel_1.setBackground(color_panel);
+		scrollPane.setBackground(color_panel);
+		list.setBackground(color_panel);
+		list.setForeground(color_texto);
+		
+	}
+	
 	private boolean comprobarElementos() {
 		boolean esta = false;
 		for (int i = modelo_lista.size() - 1; i >= 0 && !esta; i--) {

@@ -138,7 +138,6 @@ public class VentanaPrincipal {
 	private JPanel pnHisRutasGuia;
 	private JLabel lblHistorialDeRutas;
 	private JScrollPane spnRutasGuia;
-	private JList listRutasGuia;
 	private JPanel pnListaIntegrantes;
 	private JLabel lblIntegrantes;
 	private JPanel pnBotonesIntegrantes;
@@ -161,7 +160,6 @@ public class VentanaPrincipal {
 	private MiListaJPanel_2 pnInteresesGrupo;
 	private JLabel lblIntereses;
 	private MiListaJPanel_2 pnRestricciones;
-	private JPanel pnTituloRestric;
 	private JLabel lblRestricciones;
 	private JPanel pnInfoGeneral;
 	private JTextField txtNombreguia;
@@ -234,12 +232,15 @@ public class VentanaPrincipal {
 	private JButton btnSeleccionar;
 	private JButton btnModo;
 
-	private final int DIA = 0; 
+	private final int DIA = 0;
 	private final int NOCHE = 1;
 	private int tema = DIA;
 
 	private Color color_dia = new Color(240, 240, 240);
+	private Color color_noche = new Color(51, 51, 51);
+	private Color color_lista = Color.DARK_GRAY;
 	private JLabel lblIncidencias;
+	private JTextPane txtpnHistorialGuia;
 
 	;
 
@@ -407,6 +408,7 @@ public class VentanaPrincipal {
 		pnLugares.add(pnContratacion, BorderLayout.SOUTH);
 
 		btnContratar = new JButton("Contratar");
+		btnContratar.setEnabled(false);
 		btnContratar.addActionListener(new BtnContratarActionListener());
 		btnContratar.setIcon(new ImageIcon(
 				VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/shopping-cart x16.png")));
@@ -511,6 +513,7 @@ public class VentanaPrincipal {
 		pnDatosCircuito.add(lblPrecio, gbc_lblPrecio);
 
 		txtfPrecioCircuito = new JTextField();
+		txtfPrecioCircuito.setEditable(false);
 		GridBagConstraints gbc_txtfPrecioCircuito = new GridBagConstraints();
 		gbc_txtfPrecioCircuito.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtfPrecioCircuito.insets = new Insets(0, 0, 0, 5);
@@ -518,6 +521,7 @@ public class VentanaPrincipal {
 		gbc_txtfPrecioCircuito.gridy = 3;
 		pnDatosCircuito.add(txtfPrecioCircuito, gbc_txtfPrecioCircuito);
 		txtfPrecioCircuito.setColumns(10);
+		txtfPrecioCircuito.setText("0");
 
 		pnEspacio = new JPanel();
 		pnEspacio.setPreferredSize(new Dimension(10, 42));
@@ -585,7 +589,7 @@ public class VentanaPrincipal {
 		pnEspacio3.setPreferredSize(new Dimension(10, 36));
 		pnIdiomasGuia.add(pnEspacio3, BorderLayout.SOUTH);
 
-		pnListaIdioma = new MiListaJPanel_2(idiomas_globales, true,tema);
+		pnListaIdioma = new MiListaJPanel_2(idiomas_globales, true, tema);
 		pnIdiomasGuia.add(pnListaIdioma, BorderLayout.CENTER);
 
 		pnInfoGuia = new JPanel();
@@ -625,8 +629,8 @@ public class VentanaPrincipal {
 		spnRutasGuia.setPreferredSize(new Dimension(10, 60));
 		pnHisRutasGuia.add(spnRutasGuia, BorderLayout.CENTER);
 
-		listRutasGuia = new JList();
-		spnRutasGuia.setViewportView(listRutasGuia);
+		txtpnHistorialGuia = new JTextPane();
+		spnRutasGuia.setViewportView(txtpnHistorialGuia);
 
 		pnInfoGeneral = new JPanel();
 		pnInfoCentral.add(pnInfoGeneral, BorderLayout.CENTER);
@@ -948,7 +952,7 @@ public class VentanaPrincipal {
 		gbc_btnSeleccionar.gridy = 6;
 		pnInfoGrupo1.add(btnSeleccionar, gbc_btnSeleccionar);
 
-		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, true, tema);
+		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, false, tema);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
 
 		lblIntereses = new JLabel("Intereses:");
@@ -956,14 +960,9 @@ public class VentanaPrincipal {
 
 		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true, tema);
 		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
-
-		pnTituloRestric = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) pnTituloRestric.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		pnRestricciones.add(pnTituloRestric, BorderLayout.NORTH);
-
-		lblRestricciones = new JLabel("Restricciones: ");
-		pnTituloRestric.add(lblRestricciones);
+		
+				lblRestricciones = new JLabel("Restricciones: ");
+				pnRestricciones.add(lblRestricciones, BorderLayout.NORTH);
 
 		pnDiseñoRuta = new MiEditorGrafico(this);
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
@@ -1021,14 +1020,13 @@ public class VentanaPrincipal {
 	public void limpiar_circuito() {
 		txtfNombreCircuito.setText(null);
 		spinnerPersonasCircuito.setValue(0);
-		txtfPrecioCircuito.setText(null);
+		txtfPrecioCircuito.setText("0");
 		pnListaIncidencia.getModeloLista().clear();
 		pnListaptosInteres.getModeloLista().clear();
 		pnListaSugerencias.getModeloLista().clear();
 		modelo_lugaresLista.clear();
 		lista_lugares = null;
 		modelo_lugaresLista.clear();
-		btnContratar.setEnabled(true);
 		chckbxContratado.setEnabled(false);
 		chckbxContratado.setSelected(false);
 	}
@@ -1064,6 +1062,14 @@ public class VentanaPrincipal {
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
 		mostrar_lugares(modelo_lugaresLista, circuito.getLugares());
+		btnContratar.setEnabled(!circuito.isContratado());
+		if(circuito.isContratado()) {
+			chckbxContratado.setEnabled(true);
+			chckbxContratado.setSelected(true);
+		} else {
+			chckbxContratado.setEnabled(false);
+			chckbxContratado.setSelected(false);
+		}
 		pnListaCircuitos.getList().clearSelection();
 
 	}
@@ -1128,24 +1134,22 @@ public class VentanaPrincipal {
 
 	public void aniadirCircuito() {
 		if (comprobar_camposCircuito()) {
-			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
-				circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
-						Double.parseDouble(txtfPrecioCircuito.getText()),
-						generar_lista(pnListaIncidencia.getModeloLista()),
-						generar_lista(pnListaptosInteres.getModeloLista()),
-						generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares,
-						chckbxContratado.isSelected());
+			// if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+			circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
+					Double.parseDouble(txtfPrecioCircuito.getText()), generar_lista(pnListaIncidencia.getModeloLista()),
+					generar_lista(pnListaptosInteres.getModeloLista()),
+					generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares, btnContratar.isEnabled());
 
-				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
-				pnListaCircuitos.getLista().add(circuito);
+			pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
+			pnListaCircuitos.getLista().add(circuito);
 
-				txtNombre.setText(Integer.toString(circuito.getLugares().size()));
-
-				limpiar_circuito();
-			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-			}
+			limpiar_circuito();
+			/*
+			 * } else { String mensaje =
+			 * ("El parámetro introducido debe de ser un número.");
+			 * JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			 * }
+			 */
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1199,16 +1203,19 @@ public class VentanaPrincipal {
 			circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
 			circuito.setNombre_circuito(txtfNombreCircuito.getText());
 			circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
-			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
-				circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
-			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-			}
+			// if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+			circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
+			/*
+			 * } else { String mensaje =
+			 * ("El parámetro introducido debe de ser un número.");
+			 * JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			 * }
+			 */
 			circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
 			circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 			circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 			circuito.setLugares(lista_lugares);
+			circuito.setContratado(!btnContratar.isEnabled());
 
 			limpiar_circuito();
 
@@ -1337,31 +1344,45 @@ public class VentanaPrincipal {
 		}
 	}
 
-	private void cambiar_miListaJpanel2(MiListaJPanel_2 panel, Color color_panel, Color color_texto) {
+	private void cambiar_textField(JPanel panel, Color color_texto, Color color_textfield) {
+		JTextField aux;
+		for (int i = 0; i < panel.getComponentCount(); i++) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jtextfield")) {
+				aux = (JTextField) panel.getComponent(i);
+				aux.setForeground(color_texto);
+				aux.setBackground(color_textfield);
+			}
+		}
+	}
+
+	private void cambiar_miListaJpanel2(MiListaJPanel_2 panel, Color color_panel, Color color_texto,
+			Color color_lista) {
 		panel.setBackground(color_panel);
 		panel.getPnBotones().setBackground(color_panel);
-		panel.getList().setBackground(Color.GRAY);
+		panel.getList().setBackground(color_lista);
 		panel.getList().setForeground(color_texto);
 
 	}
-	
-	private void cambiar_miListaJpanel1(MiListaJPanel_1 panel, Color color_panel, Color color_texto) {
+
+	private void cambiar_miListaJpanel1(MiListaJPanel_1 panel, Color color_panel, Color color_texto,
+			Color color_lista) {
 		panel.setBackground(color_panel);
 		panel.getPnBotones().setBackground(color_panel);
-		panel.getList().setBackground(Color.DARK_GRAY);
+		panel.getList().setBackground(color_lista);
 		panel.getList().setForeground(color_texto);
 
 	}
 
 	// PASAR DE BLANCO A NEGRO
 	// pnInfoUsuario.setBackground((Color) new Color(240,240,240));
-	private void activar_contraste(Color color_panel, Color color_texto) {
+	private void activar_contraste(Color color_panel, Color color_texto, Color color_lista) {
 		// Panel usuario
 		pnInfoUsuario.setBackground(color_panel);
 		pnImagen.setBackground(color_panel);
 		pnContenidoUsuario.setBackground(color_panel);
 		cambiar_colorTexto(pnContenidoUsuario, color_texto);
 		lblUltimaConexion.setForeground(color_texto);
+		cambiar_textField(pnContenidoUsuario, color_texto, color_lista);
 
 		// Panel herramientas
 		pnHerramientas.setBackground(color_panel);
@@ -1370,12 +1391,12 @@ public class VentanaPrincipal {
 		tbPestañas.setBackground(color_panel);
 		tbPestañas.setForeground(color_texto);
 		pnPrincipal.setBackground(color_panel);
-		
+
 		// Panel circuitos
 		pnCircuitos.setBackground(color_panel);
 		pnListaCircuitos.setBackground(color_panel);
 		lblCircuitosContratados.setForeground(color_texto);
-		cambiar_miListaJpanel1(pnListaCircuitos, color_panel, color_texto);
+		cambiar_miListaJpanel1(pnListaCircuitos, color_panel, color_texto, color_lista);
 		pnLugares.setBackground(color_panel);
 		pnBotonesLugares.setBackground(color_panel);
 		pnContratacion.setBackground(color_panel);
@@ -1383,7 +1404,7 @@ public class VentanaPrincipal {
 		chckbxContratado.setBackground(color_panel);
 		pnListaLugares.setBackground(color_panel);
 		lblLugaresDeVisita.setForeground(color_texto);
-		listLugares.setBackground(Color.GRAY);
+		listLugares.setBackground(color_lista);
 		listLugares.setForeground(color_texto);
 		pnDatosCircuito.setBackground(color_panel);
 		cambiar_colorTexto(pnDatosCircuito, color_texto);
@@ -1396,14 +1417,58 @@ public class VentanaPrincipal {
 		pnptosInteres.setBackground(color_panel);
 		pnSugerencias.setBackground(color_panel);
 		lblIncidencias.setForeground(color_texto);
-		cambiar_miListaJpanel2(pnListaIncidencia, color_panel, color_texto);
+		cambiar_miListaJpanel2(pnListaIncidencia, color_panel, color_texto, color_lista);
 		lblOpinionesYSugerencias.setForeground(color_texto);
-		cambiar_miListaJpanel2(pnListaSugerencias, color_panel, color_texto);
+		cambiar_miListaJpanel2(pnListaSugerencias, color_panel, color_texto, color_lista);
 		lblPuntosDeInteres.setForeground(color_texto);
-		cambiar_miListaJpanel2(pnListaptosInteres, color_panel, color_texto);
-		
+		cambiar_miListaJpanel2(pnListaptosInteres, color_panel, color_texto, color_lista);
+
 		// Panel Guias
-		
+		cambiar_miListaJpanel1(pnListaGuias, color_panel, color_texto, color_lista);
+		lblGuiasContratados.setForeground(color_texto);
+		pnIdiomasGuia.setBackground(color_panel);
+		lblIdiomas.setForeground(color_texto);
+		cambiar_miListaJpanel2(pnListaIdioma, color_panel, color_texto, color_lista);
+		pnInfoGuia.setBackground(color_panel);
+		pnImagenGuia.setBackground(color_panel);
+		pnInfoGeneral.setBackground(color_panel);
+		cambiar_colorTexto(pnInfoGeneral, color_texto);
+		pnHisRutasGuia.setBackground(color_panel);
+		lblHistorialDeRutas.setForeground(color_texto);
+		txtpnHistorialGuia.setBackground(color_lista);
+		txtpnHistorialGuia.setForeground(color_texto);
+		rbtnNo_2.setBackground(color_panel);
+		rbtnNo_2.setForeground(color_texto);
+		rbtnSi_2.setBackground(color_panel);
+		rbtnSi_2.setForeground(color_texto);
+
+		// Panel grupos
+		cambiar_miListaJpanel1(pnListaGrupos, color_panel, color_texto, color_lista);
+		lblGruposTusiticos.setForeground(color_texto);
+		pnListaIntegrantes.setBackground(color_panel);
+		lblIntegrantes.setForeground(color_texto);
+		pnBotonesIntegrantes.setBackground(color_panel);
+		pnTablaIntegrantes.setBackground(color_panel);
+		spnTablaIntegrantes.setBackground(color_lista);
+		spnTablaIntegrantes.setForeground(color_texto);
+		txIntegranteSeleccionado.setBackground(color_lista);
+		txIntegranteSeleccionado.setForeground(color_texto);
+		tablaIntegrantes.setBackground(color_lista);
+		tablaIntegrantes.setForeground(color_texto);
+		pnFotoIntegrante.setBackground(color_panel);
+		pnInfoGrupo.setBackground(color_panel);
+		pnInfoCentral.setBackground(color_panel);
+		pnInfoGrupo1.setBackground(color_panel);
+		cambiar_colorTexto(pnInfoGrupo1, color_texto);
+		lblIntereses.setForeground(color_texto);
+		cambiar_miListaJpanel2(pnRestricciones, color_panel, color_texto, color_lista);
+		cambiar_miListaJpanel2(pnInteresesGrupo, color_panel, color_texto, color_lista);
+
+		// Panel diseño
+		pnDiseñoRuta.setBackground(color_panel);
+		pnDiseñoRuta.getPnPrincipal().setBackground(color_panel);
+		pnDiseñoRuta.getScrollPane().setBackground(color_panel);
+		pnDiseñoRuta.getToolBar().setBackground(color_panel);
 
 	}
 
@@ -1411,6 +1476,10 @@ public class VentanaPrincipal {
 
 	public JFrame getFrame() {
 		return frmManchatours;
+	}
+
+	public JButton getBtnContratar() {
+		return btnContratar;
 	}
 
 ////////////////////////////////////////// Metodos ActionListener (Acciones Botones) //////////////////////////////////////
@@ -1471,22 +1540,30 @@ public class VentanaPrincipal {
 
 	private class BtnContratarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
-					txtfPrecioCircuito.getText(), null);
-			ventana_pago.getFrmPasarelaDePago().setVisible(true);
+			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+				VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
+						txtfPrecioCircuito.getText(), null, tema);
+				ventana_pago.getFrmPasarelaDePago().setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "El campo precio circuito esta incompleto.", "",
+						JOptionPane.WARNING_MESSAGE);
+
+			}
+			limpiar_circuito();
 		}
+		
 	}
 
 	private class BtnAgregarlugarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (btnAgregarlugar.getIcon() != icono_info) {
 
-				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista);
+				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, tema);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
 			} else {
 
-				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista);
+				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, tema);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
 				ventana_lugar.getTxtfNombreLugar().setEditable(false);
 				btnAgregarlugar.setIcon(icono_aniadir);
@@ -1545,7 +1622,7 @@ public class VentanaPrincipal {
 	private class BtnSeleccionarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!lista_guias.isEmpty()) {
-				VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo);
+				VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo, tema);
 				vl.getFrame().setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(null, "No hay guías existentes, se debe añadir alguno.", "",
@@ -1569,17 +1646,24 @@ public class VentanaPrincipal {
 
 	private class BtnModoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (tema == DIA) {
-				activar_contraste(Color.DARK_GRAY, Color.WHITE);
+				activar_contraste(color_noche, Color.WHITE, color_lista);
 				btnModo.setIcon(modo_dia);
 				tema = NOCHE;
 			} else {
-				activar_contraste(color_dia, Color.BLACK);
+				activar_contraste(color_dia, Color.BLACK, color_dia);
 				btnModo.setIcon(modo_noche);
+
 				tema = DIA;
 			}
-			pnListaIncidencia.setTema(tema);;
+			pnListaSugerencias.setTema(tema);
+			pnListaIncidencia.setTema(tema);
+			pnListaIdioma.setTema(tema);
+			pnListaptosInteres.setTema(tema);
+			pnRestricciones.setTema(tema);
+			pnInteresesGrupo.setTema(tema);
+			
 
 		}
 	}
