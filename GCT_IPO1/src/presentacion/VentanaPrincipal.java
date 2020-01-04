@@ -960,9 +960,9 @@ public class VentanaPrincipal {
 
 		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true, tema);
 		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
-		
-				lblRestricciones = new JLabel("Restricciones: ");
-				pnRestricciones.add(lblRestricciones, BorderLayout.NORTH);
+
+		lblRestricciones = new JLabel("Restricciones: ");
+		pnRestricciones.add(lblRestricciones, BorderLayout.NORTH);
 
 		pnDiseñoRuta = new MiEditorGrafico(this);
 		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
@@ -1015,6 +1015,8 @@ public class VentanaPrincipal {
 		buttonGroup_2.clearSelection();
 		buttonGroup.clearSelection();
 		buttonGroup_1.clearSelection();
+		pnListaGuias.getList().clearSelection();
+
 	}
 
 	public void limpiar_circuito() {
@@ -1029,6 +1031,8 @@ public class VentanaPrincipal {
 		modelo_lugaresLista.clear();
 		chckbxContratado.setEnabled(false);
 		chckbxContratado.setSelected(false);
+		pnListaCircuitos.getList().clearSelection();
+
 	}
 
 	public void limpiar_grupo() {
@@ -1039,6 +1043,8 @@ public class VentanaPrincipal {
 		txtfGuiaGrupo.setText(null);
 		pnRestricciones.getModeloLista().clear();
 		pnListaptosInteres.getModeloLista().clear();
+		pnListaGrupos.getList().clearSelection();
+
 		// tabla
 	}
 
@@ -1061,17 +1067,23 @@ public class VentanaPrincipal {
 		mostrar_lista2(pnListaptosInteres.getModeloLista(), circuito.getPuntos_interes());
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
+
 		mostrar_lugares(modelo_lugaresLista, circuito.getLugares());
-		btnContratar.setEnabled(!circuito.isContratado());
-		if(circuito.isContratado()) {
+
+		/*
+		 * JOptionPane.showMessageDialog(null, "Cambio listas", "",
+		 * JOptionPane.INFORMATION_MESSAGE);
+		 * txtUsuario.setText(Integer.toString(lista_lugares.size()));
+		 * txtNombre.setText(Integer.toString(modelo_lugaresLista.size()));
+		 */
+		chckbxContratado.setSelected(circuito.isContratado());
+		if (circuito.isContratado()) {
 			chckbxContratado.setEnabled(true);
-			chckbxContratado.setSelected(true);
+			btnContratar.setEnabled(false);
 		} else {
 			chckbxContratado.setEnabled(false);
-			chckbxContratado.setSelected(false);
+			btnContratar.setEnabled(true);
 		}
-		pnListaCircuitos.getList().clearSelection();
-
 	}
 
 	public void mostrar_grupo(int indice) {
@@ -1081,7 +1093,6 @@ public class VentanaPrincipal {
 		txtAlojamiento.setText(grupo.getAlojamiento());
 		comboTipGrupo.setSelectedItem(grupo.getTipologia());
 		txtfGuiaGrupo.setText(grupo.getGuia());
-		pnListaGrupos.getList().clearSelection();
 		// mostrar tabla
 	}
 
@@ -1091,11 +1102,10 @@ public class VentanaPrincipal {
 		txtNombreguia.setText(guia.getNombre());
 		txtApellidosGuia.setText(guia.getApellidos());
 		txtCorreoguia.setText(guia.getCorreo());
-		txtNumeroGuia.setText(Integer.toString(guia.getTelefono()));
+		txtNumeroGuia.setText(Long.toString(guia.getTelefono()));
 		txtPrecioGuia.setText(Double.toString(guia.getPrecio_hora()));
 		txtPuntuacionGuia.setText(Double.toString(guia.getPuntuacion()));
 		mostrar_lista2(pnListaIdioma.getModeloLista(), guia.getIdiomas());
-		pnListaGuias.getList().clearSelection();
 	}
 
 	private void mostrar_lugar(int indice) {
@@ -1111,8 +1121,9 @@ public class VentanaPrincipal {
 		modelo_destino.clear();
 		lista_lugares = lista_origen;
 		for (int i = 0; i < lista_origen.size(); i++) {
-			modelo_destino.add(i, "Lugar " + lista_origen.get(i).getId());
+			modelo_destino.addElement("Lugar " + lista_origen.get(i).getId());
 		}
+
 	}
 
 	private void mostrar_lista2(DefaultListModel<String> modlista_destino, List<String> lista_origen) {
@@ -1134,22 +1145,23 @@ public class VentanaPrincipal {
 
 	public void aniadirCircuito() {
 		if (comprobar_camposCircuito()) {
-			// if (comprobarDecimal(txtfPrecioCircuito.getText())) {
-			circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
-					Double.parseDouble(txtfPrecioCircuito.getText()), generar_lista(pnListaIncidencia.getModeloLista()),
-					generar_lista(pnListaptosInteres.getModeloLista()),
-					generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares, btnContratar.isEnabled());
+			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+				circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
+						Double.parseDouble(txtfPrecioCircuito.getText()),
+						generar_lista(pnListaIncidencia.getModeloLista()),
+						generar_lista(pnListaptosInteres.getModeloLista()),
+						generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares,
+						chckbxContratado.isSelected());
 
-			pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
-			pnListaCircuitos.getLista().add(circuito);
+				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
+				pnListaCircuitos.getLista().add(circuito);
+				limpiar_circuito();
 
-			limpiar_circuito();
-			/*
-			 * } else { String mensaje =
-			 * ("El parámetro introducido debe de ser un número.");
-			 * JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-			 * }
-			 */
+			} else {
+				JOptionPane.showMessageDialog(null, "Precio introducido incorrectamente.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1158,9 +1170,43 @@ public class VentanaPrincipal {
 	}
 
 	private void aniadir_guia() {
+		boolean aniadir = true;
 		if (comprobar_camposGuia()) {
-			if (comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
-					|| comprobarDecimal(txtPuntuacionGuia.getText())) {
+			if (!(comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
+					|| comprobarDecimal(txtPuntuacionGuia.getText()))) {
+				JOptionPane.showMessageDialog(null, "El parámetro introducido debe de ser un número.", "",
+						JOptionPane.ERROR_MESSAGE);
+				aniadir = false;
+			}
+			if (pnListaIdioma.getModeloLista().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Lista idiomas vacía.", "", JOptionPane.WARNING_MESSAGE);
+				aniadir = false;
+			}
+
+			if (comprobar_correo(txtCorreoguia.getText())) {
+				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta (no contiene '@').", "",
+						JOptionPane.ERROR_MESSAGE);
+				aniadir = false;
+			}
+
+			if (!comprobar_puntuacion(Double.parseDouble(txtPuntuacionGuia.getText()))) {
+				JOptionPane.showMessageDialog(null, "La puntuacion debe pertenecer al rango [0 - 10].", "",
+						JOptionPane.ERROR_MESSAGE);
+				aniadir = false;
+			}
+
+			if (!comprobar_telefono(txtNumeroGuia.getText())) {
+				String mensaje = ("Número de teléfono incorrecto.");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+				aniadir = false;
+			}
+
+			if (!comprobar_disponibilidad()) {
+				JOptionPane.showMessageDialog(null, "Disponibilidad no seleccionada.", "", JOptionPane.WARNING_MESSAGE);
+				aniadir = false;
+			}
+
+			if (aniadir) {
 				guia = new Guia(txtNombreguia.getText(), txtApellidosGuia.getText(), txtCorreoguia.getText(),
 						Integer.parseInt(txtNumeroGuia.getText()), Double.parseDouble(txtPrecioGuia.getText()),
 						Double.parseDouble(txtPuntuacionGuia.getText()), rbtnSi_2.isSelected(),
@@ -1168,12 +1214,9 @@ public class VentanaPrincipal {
 
 				pnListaGuias.getModelolista().addElement("Guia " + guia.getId());
 				pnListaGuias.getLista().add(guia);
-
 				limpiar_guia();
-			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			}
+
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1181,16 +1224,26 @@ public class VentanaPrincipal {
 
 	}
 
+	private boolean comprobar_disponibilidad() {
+		return (rbtnNo_2.isSelected() || rbtnSi_2.isSelected());
+	}
+
 	private void aniadir_grupo() {
 		if (comprobar_campoGrupo()) {
-			grupo = new GrupoTuristas(txtNombreGrupo.getText(), txtPais.getText(), txtAlojamiento.getText(),
-					(String) comboTipGrupo.getSelectedItem(), txtfGuiaGrupo.getText(),
-					generar_lista(pnRestricciones.getModeloLista()), generar_lista(pnInteresesGrupo.getModeloLista()));
+			if (!pnInteresesGrupo.getModeloLista().isEmpty()) {
+				grupo = new GrupoTuristas(txtNombreGrupo.getText(), txtPais.getText(), txtAlojamiento.getText(),
+						(String) comboTipGrupo.getSelectedItem(), txtfGuiaGrupo.getText(),
+						generar_lista(pnRestricciones.getModeloLista()),
+						generar_lista(pnInteresesGrupo.getModeloLista()));
 
-			pnListaGrupos.getModelolista().addElement("Grupo " + guia.getId());
-			pnListaGrupos.getLista().add(grupo);
+				pnListaGrupos.getModelolista().addElement("Grupo " + guia.getId());
+				pnListaGrupos.getLista().add(grupo);
+				limpiar_grupo();
+			} else {
+				JOptionPane.showMessageDialog(null, "Lista intereses grupo se encuentra vacía.", "",
+						JOptionPane.WARNING_MESSAGE);
+			}
 
-			limpiar_grupo();
 		} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
@@ -1203,23 +1256,21 @@ public class VentanaPrincipal {
 			circuito = lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex());
 			circuito.setNombre_circuito(txtfNombreCircuito.getText());
 			circuito.setPersonas_realizado((int) spinnerPersonasCircuito.getValue());
-			// if (comprobarDecimal(txtfPrecioCircuito.getText())) {
-			circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
-			/*
-			 * } else { String mensaje =
-			 * ("El parámetro introducido debe de ser un número.");
-			 * JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-			 * }
-			 */
+			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+				circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
+
+			} else {
+				String mensaje = ("Precio debe de ser un número");
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+			}
 			circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
 			circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 			circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 			circuito.setLugares(lista_lugares);
-			circuito.setContratado(!btnContratar.isEnabled());
+			circuito.setContratado(chckbxContratado.isSelected());
 
 			limpiar_circuito();
 
-			txtNombre.setText(Integer.toString(circuito.getLugares().size()));
 		} else {
 			JOptionPane.showMessageDialog(null, "Ningún circuito seleccionado.", "", JOptionPane.WARNING_MESSAGE);
 		}
@@ -1227,34 +1278,60 @@ public class VentanaPrincipal {
 	}
 
 	private void modificar_guia() {
+		boolean limpiar = false;
 		if (!pnListaGuias.getList().isSelectionEmpty()) {
 			guia = lista_guias.get(pnListaGuias.getList().getSelectedIndex());
-			guia.setNombre(txtNombreguia.getText());
-			guia.setApellidos(txtApellidosGuia.getText());
-			guia.setCorreo(txtCorreoguia.getText());
+			if (!comprobarEntero(txtNombreguia.getText())) {
+				guia.setNombre(txtNombreguia.getText());
+			} else {
+				JOptionPane.showMessageDialog(null, "Nombre incorrecto, no se aceptan parámetros numéricos.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			if (!comprobarEntero(txtApellidosGuia.getText())) {
+				guia.setApellidos(txtApellidosGuia.getText());
+			} else {
+				JOptionPane.showMessageDialog(null, "Apellidos incorrectos, no se aceptan parámetros numéricos.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			if (comprobar_correo(txtCorreoguia.getText())) {
+				guia.setCorreo(txtCorreoguia.getText());
+			} else {
+				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta (no contiene '@').", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			guia.setImagen((ImageIcon) lblImagenGuia.getIcon());
-			if (comprobarEntero(txtNumeroGuia.getText())) {
+			if (comprobarEntero(txtNumeroGuia.getText()) && comprobar_telefono(txtNumeroGuia.getText())) {
 				guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
 			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
+				String mensaje = ("Número de teléfono incorrecto.");
 				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			}
 
 			if (comprobarDecimal(txtPrecioGuia.getText())) {
 				guia.setPrecio_hora(Double.parseDouble(txtPrecioGuia.getText()));
 			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
+				String mensaje = ("El precio introducido, no es un precio correcto.");
 				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			}
 			if (comprobarDecimal(txtPuntuacionGuia.getText())) {
-				guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
+				if (comprobar_puntuacion(Double.parseDouble(txtPuntuacionGuia.getText())))
+					guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
+				else
+					JOptionPane.showMessageDialog(null, "La puntuacion debe pertenecer al rango [0 - 10].", "",
+							JOptionPane.ERROR_MESSAGE);
+
 			} else {
-				String mensaje = ("El parámetro introducido debe de ser un número.");
+				String mensaje = ("La puntuación introducida es incorrecta.");
 				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
 			}
-
 			guia.setDisponibilidad(guia.isDisponibilidad());
 
+			if (!pnListaIdioma.getModeloLista().isEmpty()) {
+				guia.setIdiomas(generar_lista(pnListaIdioma.getModeloLista()));
+			} else {
+				JOptionPane.showMessageDialog(null, "Se debe seleccionar como mínimo un idioma.", "",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			limpiar_guia();
 		} else {
 			JOptionPane.showMessageDialog(null, "Ningún guía seleccionado.", "", JOptionPane.WARNING_MESSAGE);
@@ -1287,6 +1364,24 @@ public class VentanaPrincipal {
 		}
 	}
 
+	private boolean comprobar_correo(String correo) {
+		int contador = 0;
+		for (int i = 0; i < correo.length(); i++) {
+			if (correo.charAt(i) == '@')
+				contador++;
+		}
+		return contador == 1;
+	}
+
+	private boolean comprobar_puntuacion(double puntuacion) {
+		return (0 <= puntuacion && puntuacion <= 10);
+	}
+
+	private boolean comprobar_telefono(String numero) {
+		return numero.length() == 9;
+
+	}
+
 	private boolean comprobar_camposCircuito() {
 		return !(txtfNombreCircuito.getText() == null || txtfPrecioCircuito.getText() == null
 				|| txtfPrecioCircuito.getText() == null);
@@ -1305,7 +1400,6 @@ public class VentanaPrincipal {
 	}
 
 	public static boolean comprobarEntero(String cadena) {
-
 		try {
 			Integer.parseInt(cadena);
 			return true;
@@ -1315,7 +1409,19 @@ public class VentanaPrincipal {
 		}
 	}
 
+	public static boolean comprobarLong(String cadena) {
+		try {
+			Long.parseLong(cadena);
+			return true;
+		} catch (Exception e) {
+			return false;
+
+		}
+	}
+
 	public static boolean comprobarDecimal(String cadena) {
+		if (cadena.charAt(cadena.length() - 1) == '€')
+			cadena.replace('€', ' ');
 
 		try {
 			Double.parseDouble(cadena);
@@ -1544,14 +1650,14 @@ public class VentanaPrincipal {
 				VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
 						txtfPrecioCircuito.getText(), null, tema);
 				ventana_pago.getFrmPasarelaDePago().setVisible(true);
+				limpiar_circuito();
 			} else {
 				JOptionPane.showMessageDialog(null, "El campo precio circuito esta incompleto.", "",
 						JOptionPane.WARNING_MESSAGE);
 
 			}
-			limpiar_circuito();
 		}
-		
+
 	}
 
 	private class BtnAgregarlugarActionListener implements ActionListener {
@@ -1586,7 +1692,6 @@ public class VentanaPrincipal {
 	private class PnListaCircuitosBtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			aniadirCircuito();
-			limpiar_circuito();
 		}
 	}
 
@@ -1609,7 +1714,6 @@ public class VentanaPrincipal {
 	private class PnListaGuiasBtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			aniadir_guia();
-			limpiar_guia();
 		}
 	}
 
@@ -1634,7 +1738,6 @@ public class VentanaPrincipal {
 	private class PnListaGruposBtnAniadirActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			aniadir_grupo();
-			limpiar_grupo();
 		}
 	}
 
@@ -1663,7 +1766,6 @@ public class VentanaPrincipal {
 			pnListaptosInteres.setTema(tema);
 			pnRestricciones.setTema(tema);
 			pnInteresesGrupo.setTema(tema);
-			
 
 		}
 	}

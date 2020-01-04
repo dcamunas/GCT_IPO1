@@ -10,7 +10,7 @@ public class Guia {
 	private String nombre;
 	private String apellidos;
 	private String correo;
-	private int telefono;
+	private long telefono;
 	private double precio_hora;
 	private double puntuacion;
 	private boolean disponibilidad;
@@ -18,7 +18,7 @@ public class Guia {
 	private List<String> idiomas;
 	private ImageIcon imagen;
 	
-	public Guia(String nombre, String apellidos, String correo, int telefono, double precio_hora, double puntuacion,
+	public Guia(String nombre, String apellidos, String correo, long telefono, double precio_hora, double puntuacion,
 			boolean disponibilidad, List<String> idiomas, ImageIcon imagen) {
 		
 		this.id++;
@@ -51,10 +51,10 @@ public class Guia {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public int getTelefono() {
+	public long getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(int telefono) {
+	public void setTelefono(long telefono) {
 		this.telefono = telefono;
 	}
 	public double getPrecio_hora() {
