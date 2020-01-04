@@ -49,7 +49,7 @@ public class VentanaLugar {
 	private JFrame frmLugarVisita;
 	private MiJPanel pnPrincipal;
 	private JLabel lblImagen;
-	private JTextField txtfNombreLugar;
+	public JTextField txtfNombreLugar;
 	private JPanel panel;
 	private JLabel lblHorario;
 	private JLabel lblDuracion;
@@ -64,6 +64,8 @@ public class VentanaLugar {
 	private int tema;
 	private Color color_dia = new Color(240, 240, 240);
 	private Color color_noche = new Color(51, 51, 51);
+	public JLabel lblNombre;
+	public JTextField txtNombre;
 
 	/**
 	 * Create the application.
@@ -84,7 +86,7 @@ public class VentanaLugar {
 		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setTitle("Lugar visita");
-		frmLugarVisita.setBounds(100, 100, 450, 300);
+		frmLugarVisita.setBounds(100, 100, 440, 265);
 
 		lblImagen = new JLabel();
 		lblImagen.setIcon(new ImageIcon(MiJPanel.class.getResource("/presentacion/imagenes/lugares/picture.png")));
@@ -98,92 +100,63 @@ public class VentanaLugar {
 		txtfNombreLugar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtfNombreLugar.setHorizontalAlignment(SwingConstants.CENTER);
 		pnPrincipal.add(txtfNombreLugar, BorderLayout.NORTH);
-
+		txtfNombreLugar.setVisible(false);
 		panel = new JPanel();
 		pnPrincipal.add(panel, BorderLayout.CENTER);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 101, 101, 0, 101, 30 };
-		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 20 };
-		gbl_panel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
-		panel.setLayout(gbl_panel);
+		panel.setLayout(null);
+		
+		lblNombre = new JLabel("Nombre:");
+		lblNombre.setBounds(54, 14, 59, 14);
+		panel.add(lblNombre);
 
 		lblHorario = new JLabel("Horario visita:");
+		lblHorario.setBounds(22, 39, 91, 14);
 		lblHorario.setHorizontalAlignment(SwingConstants.RIGHT);
-		GridBagConstraints gbc_lblHorario = new GridBagConstraints();
-		gbc_lblHorario.anchor = GridBagConstraints.EAST;
-		gbc_lblHorario.insets = new Insets(0, 0, 5, 5);
-		gbc_lblHorario.gridx = 0;
-		gbc_lblHorario.gridy = 1;
-		panel.add(lblHorario, gbc_lblHorario);
+		panel.add(lblHorario);
 
 		comboHorario = new JComboBox();
+		comboHorario.setBounds(118, 36, 126, 20);
 		comboHorario.setModel(new DefaultComboBoxModel(
 				new String[] { "", "De 10:00 a 14:00", "De 16:00 a 20:00", "De 15:00 a 19:00", "De 9:00 a 13:00" }));
-		GridBagConstraints gbc_comboHorario = new GridBagConstraints();
-		gbc_comboHorario.gridwidth = 2;
-		gbc_comboHorario.insets = new Insets(0, 0, 5, 5);
-		gbc_comboHorario.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboHorario.gridx = 1;
-		gbc_comboHorario.gridy = 1;
-		panel.add(comboHorario, gbc_comboHorario);
+		panel.add(comboHorario);
 
 		lblDuracion = new JLabel("Duración:");
+		lblDuracion.setBounds(22, 63, 91, 16);
 		lblDuracion.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/clock.png")));
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
-		GridBagConstraints gbc_lblDuracion = new GridBagConstraints();
-		gbc_lblDuracion.anchor = GridBagConstraints.EAST;
-		gbc_lblDuracion.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDuracion.gridx = 0;
-		gbc_lblDuracion.gridy = 2;
-		panel.add(lblDuracion, gbc_lblDuracion);
+		panel.add(lblDuracion);
 
 		txtfDuracion = new JTextField();
+		txtfDuracion.setBounds(118, 61, 46, 20);
 		lblDuracion.setLabelFor(txtfDuracion);
-		GridBagConstraints gbc_txtfDuracion = new GridBagConstraints();
-		gbc_txtfDuracion.insets = new Insets(0, 0, 5, 5);
-		gbc_txtfDuracion.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtfDuracion.gridx = 1;
-		gbc_txtfDuracion.gridy = 2;
-		panel.add(txtfDuracion, gbc_txtfDuracion);
+		panel.add(txtfDuracion);
 		txtfDuracion.setColumns(10);
 
 		lblTipologia = new JLabel("Tipología:");
+		lblTipologia.setBounds(44, 89, 69, 14);
 		lblTipologia.setHorizontalAlignment(SwingConstants.RIGHT);
-		GridBagConstraints gbc_lblTipologia = new GridBagConstraints();
-		gbc_lblTipologia.anchor = GridBagConstraints.EAST;
-		gbc_lblTipologia.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTipologia.gridx = 0;
-		gbc_lblTipologia.gridy = 3;
-		panel.add(lblTipologia, gbc_lblTipologia);
+		panel.add(lblTipologia);
 
 		comboTipologia = new JComboBox();
+		comboTipologia.setBounds(118, 86, 96, 20);
 		comboTipologia.setModel(
 				new DefaultComboBoxModel(new String[] { "", "Histórico", "Natural", "Deporitvo", "Gastronómico" }));
-		GridBagConstraints gbc_comboTipologia = new GridBagConstraints();
-		gbc_comboTipologia.insets = new Insets(0, 0, 5, 5);
-		gbc_comboTipologia.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboTipologia.gridx = 1;
-		gbc_comboTipologia.gridy = 3;
-		panel.add(comboTipologia, gbc_comboTipologia);
+		panel.add(comboTipologia);
 
 		lblPrecio = new JLabel("Precio:");
+		lblPrecio.setBounds(44, 113, 69, 16);
 		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
-		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
-		gbc_lblPrecio.anchor = GridBagConstraints.EAST;
-		gbc_lblPrecio.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPrecio.gridx = 0;
-		gbc_lblPrecio.gridy = 4;
-		panel.add(lblPrecio, gbc_lblPrecio);
+		panel.add(lblPrecio);
 
 		txtPrecio = new JTextField();
-		GridBagConstraints gbc_txtPrecio = new GridBagConstraints();
-		gbc_txtPrecio.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPrecio.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPrecio.gridx = 1;
-		gbc_txtPrecio.gridy = 4;
-		panel.add(txtPrecio, gbc_txtPrecio);
+		txtPrecio.setBounds(118, 111, 53, 20);
+		panel.add(txtPrecio);
 		txtPrecio.setColumns(10);
+		
+		txtNombre = new JTextField();
+		txtNombre.setBounds(118, 11, 126, 20);
+		panel.add(txtNombre);
+		txtNombre.setColumns(10);
 
 		if (modelo_lugares == null) {
 			activar_edicion(false);
@@ -224,6 +197,8 @@ public class VentanaLugar {
 		comboHorario.setEditable(condicion);
 		comboTipologia.setEditable(condicion);
 		lblImagen.setEnabled(condicion);
+		txtNombre.setVisible(false);
+		lblNombre.setVisible(false);
 	}
 
 	private boolean comprobar_campos() {
@@ -246,7 +221,7 @@ public class VentanaLugar {
 		public void actionPerformed(ActionEvent e) {
 			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar") && comprobar_campos()) {
 				if (comprobarDecimal(txtPrecio.getText()) || comprobarDecimal(txtfDuracion.getText())) {
-					Lugar l = new Lugar(lista_lugares.size()+1,txtfNombreLugar.getText(), (String)comboHorario.getSelectedItem(),
+					Lugar l = new Lugar(lista_lugares.size()+1,txtNombre.getText(), (String)comboHorario.getSelectedItem(),
 							Double.parseDouble(txtfDuracion.getText()), (String)comboTipologia.getSelectedItem(),
 							Double.parseDouble(txtPrecio.getText()), lblImagen);
 
@@ -358,6 +333,4 @@ public class VentanaLugar {
 	public JLabel getLblPrecio() {
 		return lblPrecio;
 	}
-
-	
 }

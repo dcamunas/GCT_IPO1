@@ -214,8 +214,8 @@ public class VentanaPrincipal {
 
 	// ArrayList listas
 	private List<Circuito> lista_circuitos;
-	private List<Lugar> lista_lugares;
-	private DefaultListModel<String> modelo_lugaresLista;
+	private List<Lugar> lista_lugares = new ArrayList<Lugar>();
+	private DefaultListModel<String> modelo_lugaresLista = new DefaultListModel<String>();
 	private List<GrupoTuristas> lista_grupos;
 	private List<Guia> lista_guias;
 
@@ -267,8 +267,6 @@ public class VentanaPrincipal {
 
 		// INICIALIZAR LISTAS
 		lista_circuitos = new ArrayList<Circuito>();
-		lista_lugares = new ArrayList<Lugar>();
-		modelo_lugaresLista = new DefaultListModel<String>();
 		lista_guias = new ArrayList<Guia>();
 		lista_grupos = new ArrayList<GrupoTuristas>();
 		imagen_guiaInicial = new ImageIcon(
@@ -1026,7 +1024,6 @@ public class VentanaPrincipal {
 		pnListaIncidencia.getModeloLista().clear();
 		pnListaptosInteres.getModeloLista().clear();
 		pnListaSugerencias.getModeloLista().clear();
-		modelo_lugaresLista.clear();
 		lista_lugares = null;
 		modelo_lugaresLista.clear();
 		chckbxContratado.setEnabled(false);
@@ -1067,25 +1064,21 @@ public class VentanaPrincipal {
 		mostrar_lista2(pnListaptosInteres.getModeloLista(), circuito.getPuntos_interes());
 		mostrar_lista2(pnListaIncidencia.getModeloLista(), circuito.getIncidencias());
 		mostrar_lista2(pnListaSugerencias.getModeloLista(), circuito.getSugerencias());
-
 		mostrar_lugares(modelo_lugaresLista, circuito.getLugares());
+		mostrar_contratacion(circuito);
 
-		/*
-		 * JOptionPane.showMessageDialog(null, "Cambio listas", "",
-		 * JOptionPane.INFORMATION_MESSAGE);
-		 * txtUsuario.setText(Integer.toString(lista_lugares.size()));
-		 * txtNombre.setText(Integer.toString(modelo_lugaresLista.size()));
-		 */
-		chckbxContratado.setSelected(circuito.isContratado());
-		if (circuito.isContratado()) {
-			chckbxContratado.setEnabled(true);
+	}
+	
+	private void mostrar_contratacion(Circuito c) {
+		if(c.isContratado()) {
 			btnContratar.setEnabled(false);
+			chckbxContratado.setSelected(true);
 		} else {
-			chckbxContratado.setEnabled(false);
 			btnContratar.setEnabled(true);
+			chckbxContratado.setSelected(false);
 		}
 	}
-
+	
 	public void mostrar_grupo(int indice) {
 		grupo = lista_grupos.get(indice);
 		txtNombreGrupo.setText(grupo.getNombre());
@@ -1106,10 +1099,14 @@ public class VentanaPrincipal {
 		txtPrecioGuia.setText(Double.toString(guia.getPrecio_hora()));
 		txtPuntuacionGuia.setText(Double.toString(guia.getPuntuacion()));
 		mostrar_lista2(pnListaIdioma.getModeloLista(), guia.getIdiomas());
+		mostrar_disponibilidad(guia);
 	}
 
 	private void mostrar_lugar(int indice) {
 		Lugar l = lista_lugares.get(indice);
+		ventana_lugar.txtfNombreLugar.setVisible(true);
+		ventana_lugar.txtNombre.setVisible(false);
+		ventana_lugar.lblNombre.setVisible(false);
 		ventana_lugar.getTxtfNombreLugar().setText(l.getNombre());
 		ventana_lugar.getComboHorario().setSelectedItem(l.getHorario_visita());
 		ventana_lugar.getTxtfDuracion().setText(Double.toString(l.getDuracion_visita()));
@@ -1144,8 +1141,21 @@ public class VentanaPrincipal {
 	}
 
 	public void aniadirCircuito() {
+		boolean aniadir = true;
 		if (comprobar_camposCircuito()) {
-			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
+			if (!comprobarDecimal(txtfPrecioCircuito.getText())) {
+				JOptionPane.showMessageDialog(null, "Precio introducido incorrectamente.", "",
+						JOptionPane.ERROR_MESSAGE);
+				aniadir = false;
+			}
+
+			if (pnListaptosInteres.getModeloLista().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "La lista puntos de interes no puede estar vacía.", "",
+						JOptionPane.WARNING_MESSAGE);
+				aniadir = false;
+			}
+
+			if (aniadir) {
 				circuito = new Circuito(txtfNombreCircuito.getText(), (Integer) spinnerPersonasCircuito.getValue(),
 						Double.parseDouble(txtfPrecioCircuito.getText()),
 						generar_lista(pnListaIncidencia.getModeloLista()),
@@ -1156,10 +1166,6 @@ public class VentanaPrincipal {
 				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
 				pnListaCircuitos.getLista().add(circuito);
 				limpiar_circuito();
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Precio introducido incorrectamente.", "",
-						JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else {
@@ -1171,7 +1177,7 @@ public class VentanaPrincipal {
 
 	private void aniadir_guia() {
 		boolean aniadir = true;
-		if (comprobar_camposGuia()) {
+		//if (comprobar_camposGuia()) {
 			if (!(comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
 					|| comprobarDecimal(txtPuntuacionGuia.getText()))) {
 				JOptionPane.showMessageDialog(null, "El parámetro introducido debe de ser un número.", "",
@@ -1183,8 +1189,8 @@ public class VentanaPrincipal {
 				aniadir = false;
 			}
 
-			if (comprobar_correo(txtCorreoguia.getText())) {
-				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta (no contiene '@').", "",
+			if (!comprobar_correo(txtCorreoguia.getText())) {
+				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta", "",
 						JOptionPane.ERROR_MESSAGE);
 				aniadir = false;
 			}
@@ -1217,10 +1223,10 @@ public class VentanaPrincipal {
 				limpiar_guia();
 			}
 
-		} else {
+		//} else {
 			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
 					JOptionPane.ERROR_MESSAGE);
-		}
+		//}
 
 	}
 
@@ -1267,7 +1273,6 @@ public class VentanaPrincipal {
 			circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
 			circuito.setSugerencias(generar_lista(pnListaSugerencias.getModeloLista()));
 			circuito.setLugares(lista_lugares);
-			circuito.setContratado(chckbxContratado.isSelected());
 
 			limpiar_circuito();
 
@@ -1296,7 +1301,7 @@ public class VentanaPrincipal {
 			if (comprobar_correo(txtCorreoguia.getText())) {
 				guia.setCorreo(txtCorreoguia.getText());
 			} else {
-				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta (no contiene '@').", "",
+				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta.", "",
 						JOptionPane.ERROR_MESSAGE);
 			}
 			guia.setImagen((ImageIcon) lblImagenGuia.getIcon());
@@ -1332,11 +1337,25 @@ public class VentanaPrincipal {
 				JOptionPane.showMessageDialog(null, "Se debe seleccionar como mínimo un idioma.", "",
 						JOptionPane.ERROR_MESSAGE);
 			}
+
+			guia.setDisponibilidad(rbtnSi_2.isSelected());
+
 			limpiar_guia();
 		} else {
 			JOptionPane.showMessageDialog(null, "Ningún guía seleccionado.", "", JOptionPane.WARNING_MESSAGE);
 		}
 
+	}
+
+	private void mostrar_disponibilidad(Guia guia) {
+		boolean disponible = guia.isDisponibilidad();
+		if (disponible) {
+			rbtnSi_2.setSelected(true);
+			rbtnNo_2.setSelected(false);
+		} else {
+			rbtnSi_2.setSelected(false);
+			rbtnNo_2.setSelected(true);
+		}
 	}
 
 	private void modificar_grupo() {
@@ -1383,8 +1402,7 @@ public class VentanaPrincipal {
 	}
 
 	private boolean comprobar_camposCircuito() {
-		return !(txtfNombreCircuito.getText() == null || txtfPrecioCircuito.getText() == null
-				|| txtfPrecioCircuito.getText() == null);
+		return (txtfNombreCircuito.getText() != null || !modelo_lugaresLista.isEmpty());
 	}
 
 	private boolean comprobar_camposGuia() {
@@ -1648,9 +1666,8 @@ public class VentanaPrincipal {
 		public void actionPerformed(ActionEvent e) {
 			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
 				VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
-						txtfPrecioCircuito.getText(), null, tema);
+						txtfPrecioCircuito.getText(), null, tema, lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex()));
 				ventana_pago.getFrmPasarelaDePago().setVisible(true);
-				limpiar_circuito();
 			} else {
 				JOptionPane.showMessageDialog(null, "El campo precio circuito esta incompleto.", "",
 						JOptionPane.WARNING_MESSAGE);

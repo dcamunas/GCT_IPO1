@@ -27,6 +27,7 @@ import java.awt.Font;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 
+import dominio.Circuito;
 import dominio.Lugar;
 
 import javax.swing.SwingConstants;
@@ -46,26 +47,27 @@ public class VentanaPago {
 	private JScrollPane scrollPane_1;
 	private JCheckBox contratado;
 	private JButton contratar;
-	private ArrayList<Lugar> lista_lugares;
 	private int tema;
 	private Color color_dia = new Color(240, 240, 240);
 	private Color color_noche = new Color(51, 51, 51);
 	private JTextPane textPane;
+	private Circuito circuito;
 
 	/**
 	 * Create the application.
 	 */
 
 	public VentanaPago(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
-			List<Lugar> lugares, int tema) {
-		initialize(contratar, contratado, nombreCircuito, precio_total, lugares, tema);
+			int tema, Circuito c) {
+		this.circuito= c;
+		initialize(contratar, contratado, nombreCircuito, precio_total, tema);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(JButton contratar, JCheckBox contratado, String nombreCircuito, String precio_total,
-			List<Lugar> lugares, int tema) {
+			int tema) {
 		this.tema = tema;
 		this.contratar = contratar;
 		this.contratado = contratado;
@@ -117,6 +119,7 @@ public class VentanaPago {
 		pnContenido.add(scrollPane_1);
 		
 		textPane = new JTextPane();
+		textPane.setEditable(false);
 		scrollPane_1.setViewportView(textPane);
 		
 		if(es_gratis(precio_total)) {
@@ -139,6 +142,14 @@ public class VentanaPago {
 
 	public void setTema(int tema) {
 		this.tema = tema;
+	}
+
+	public JTextPane getTextPane() {
+		return textPane;
+	}
+
+	public void setTextPane(JTextPane textPane) {
+		this.textPane = textPane;
 	}
 
 	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
@@ -178,7 +189,10 @@ public class VentanaPago {
 			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);
 			contratar.setEnabled(false);
 			contratado.setSelected(true);
+			circuito.setContratado(true);
 			getFrmPasarelaDePago().dispose();
+
+			
 
 		}
 	}

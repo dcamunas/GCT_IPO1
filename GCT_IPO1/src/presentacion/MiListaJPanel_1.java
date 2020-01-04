@@ -161,7 +161,7 @@ public class MiListaJPanel_1 extends JPanel {
 				String aux = list.getSelectedValue();
 				switch (aux.charAt(1)) {
 				case 'i':
-					vp.mostrar_circuito(list.getSelectedIndex());
+					vp.mostrar_circuito(list.getSelectedIndex());					
 					//vp.getBtnContratar().setEnabled(true);
 					break;
 				case 'u':
