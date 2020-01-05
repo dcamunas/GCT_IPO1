@@ -82,6 +82,7 @@ public class VentanaLugar {
 	 */
 	private void initialize() {
 		frmLugarVisita = new JFrame();
+		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setResizable(false);
 		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 440, 265);
@@ -138,9 +139,11 @@ public class VentanaLugar {
 		comboTipologia = new JComboBox();
 		comboTipologia.setBounds(118, 86, 96, 20);
 		comboTipologia.setModel(
-				new DefaultComboBoxModel(new String[] { "", "Histórico", "Natural", "Deporitvo", "Gastronómico" }));
+				new DefaultComboBoxModel(new String[] { "", MessagesGCT.getString("VentanaLugar.historico.text"),
+						MessagesGCT.getString("VentanaLugar.natural.text"),
+						MessagesGCT.getString("VentanaLugar.deportivo.text"),
+						MessagesGCT.getString("VentanaLugar.gastronomico.text") }));
 		panel.add(comboTipologia);
-
 		lblPrecio = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPrecio.text"));
 		lblPrecio.setBounds(44, 113, 69, 16);
 		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
@@ -200,7 +203,7 @@ public class VentanaLugar {
 	}
 
 	private boolean comprobar_campos() {
-		return !(txtfNombreLugar.getText() == null || txtfDuracion.getText() == null || txtPrecio.getText() == null
+		return !(txtNombre.getText() == null || txtfDuracion.getText() == null || txtPrecio.getText() == null
 				|| comboHorario.getSelectedItem() == "" || comboTipologia.getSelectedItem() == "");
 	}
 
@@ -218,14 +221,16 @@ public class VentanaLugar {
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			boolean aniadir = true;
-			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar") && comprobar_campos()) {
+			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase(MessagesGCT.getString("VentanaPrincipal.133")) && comprobar_campos()) {
 				if (!comprobarDecimal(txtPrecio.getText())) {
 					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.107"), "",
 							JOptionPane.ERROR_MESSAGE);
+					aniadir = false;
 				}
 				if (!comprobarDecimal(txtfDuracion.getText())) {
 					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.duracion.text"), "",
 							JOptionPane.ERROR_MESSAGE);
+					aniadir = false;
 				}
 				if (aniadir) {
 					Lugar l = new Lugar(lista_lugares.size() + 1, txtNombre.getText(),
@@ -242,7 +247,7 @@ public class VentanaLugar {
 			} else
 
 			{
-				JOptionPane.showMessageDialog(null,MessagesGCT.getString("VentanaPrincipal.73") , "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.73"), "",
 						JOptionPane.ERROR_MESSAGE);
 			}
 

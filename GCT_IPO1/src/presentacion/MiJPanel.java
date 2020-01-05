@@ -37,7 +37,7 @@ public class MiJPanel extends JPanel {
 		pnAceptar = new JPanel();
 		add(pnAceptar, BorderLayout.SOUTH);
 		
-		btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton(MessagesGCT.getString("VentanaIncidencia.btnAceptar.text"));
 		btnAceptar.addActionListener(new BtnAceptarActionListener());
 		pnAceptar.add(btnAceptar);
 

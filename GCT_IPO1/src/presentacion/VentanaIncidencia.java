@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class VentanaIncidencia {
 
@@ -48,7 +49,8 @@ public class VentanaIncidencia {
 	 */
 	private void initialize(DefaultListModel<String> modelo_lista, boolean modo, int tema) {
 		frmRegistroDeIncidencia = new JFrame();
-		frmRegistroDeIncidencia.setTitle("Registro de información");
+		frmRegistroDeIncidencia.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaIncidencia.class.getResource("/presentacion/imagenes/iconos/compass.png")));
+		frmRegistroDeIncidencia.setTitle(MessagesGCT.getString("VentanaIncidencia.tituloVentana.text"));
 		frmRegistroDeIncidencia.setResizable(false);
 		frmRegistroDeIncidencia.setBounds(100, 100, 325, 169);
 
@@ -61,7 +63,7 @@ public class VentanaIncidencia {
 		panel.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 
-		lblIncidencia = new JLabel("Información a registrar :");
+		lblIncidencia = new JLabel(MessagesGCT.getString("VentanaIncidencia.titulo.text"));
 		lblIncidencia.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblIncidencia.setBounds(20, 11, 169, 14);
 		panel_1.add(lblIncidencia);
@@ -69,12 +71,12 @@ public class VentanaIncidencia {
 		textPane = new JTextPane();
 		textPane.setBounds(20, 36, 275, 56);
 		panel_1.add(textPane);
-		panel.getBtnAceptar().setText("Añadir");
+		panel.getBtnAceptar().setText(MessagesGCT.getString("VentanaIncidencia.btnAniadir.text"));
 		
 		if (!modo) {
 			textPane.setEnabled(false);
 			textPane.setText((String) list.getSelectedValue());
-			panel.getBtnAceptar().setText("Aceptar");
+			panel.getBtnAceptar().setText(MessagesGCT.getString("VentanaIncidencia.btnAceptar.text"));
 			
 		}
 		

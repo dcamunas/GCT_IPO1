@@ -113,7 +113,7 @@ public class VentanaLogin {
 		pwdContrasenia.setBounds(151, 116, 137, 20);
 		panel.add(pwdContrasenia);
 
-		btnEntrar = new JButton("Entrar");
+		btnEntrar = new JButton("OK");
 		btnEntrar.addActionListener(new BtnEntrarActionListener());
 		btnEntrar.setBounds(178, 160, 86, 23);
 		panel.add(btnEntrar);
@@ -190,7 +190,7 @@ public class VentanaLogin {
 				// Se crea una instancia de la ventana principal (JFrame)
 				user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
 
-				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+				VentanaPrincipal ventana_principal = new VentanaPrincipal(tfUsuario.getText(), pass);
 				// Se hace visible la VentanaPrincipal
 				ventana_principal.getFrame().setVisible(true);
 				// Se elimina la ventana actual (atributo a nivel de clase)
@@ -204,7 +204,7 @@ public class VentanaLogin {
 			lblAviso.setVisible(true);
 			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
 				// Se crea una instancia de la ventana principal (JFrame)
-				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+				VentanaPrincipal ventana_principal = new VentanaPrincipal(tfUsuario.getText(), pass);
 				// Se hace visible la VentanaPrincipal
 				ventana_principal.getFrame().setVisible(true);
 				// Se elimina la ventana actual (atributo a nivel de clase)

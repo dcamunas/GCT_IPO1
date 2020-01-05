@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class VentanaLista {
 
@@ -53,6 +54,7 @@ public class VentanaLista {
 	 */
 	private void initialize(List<String> lista, String[] valores, DefaultListModel<String> modelo_lista) {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLista.class.getResource("/presentacion/imagenes/iconos/compass.png")));
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 300, 434);
 

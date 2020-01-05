@@ -1,33 +1,41 @@
 package dominio;
 
+import javax.swing.ImageIcon;
+
+import presentacion.MessagesGCT;
+import presentacion.VentanaPrincipal;
+
 public class Usuario {
-	
-	private static int id = -1;
+
 	private String usuario;
 	private String nombre;
 	private String correo;
 	private String contrasenia;
 	private String ultima_conexion;
-	private String imagen;
-	//private UsuarioDAO gestor;
-	
+	private ImageIcon imagen;
+	// private UsuarioDAO gestor;
+
 	public Usuario(String usuario, String contrasenia) {
-		
-		this.id++;
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
-		this.nombre = "David";
-		this.correo = "david@alu.com";
-		this.ultima_conexion = "Ayer a las 18:00";
-		this.imagen = "Mou.png";
-	}
-	
-	
+		this.nombre = "Ana Isabel Molina";
+		this.correo = "thisuser@gmail.com";
+		this.ultima_conexion = MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion2.text");
+		this.imagen = new ImageIcon(
+				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/userGirl.png"));;
+		mostrar_usuario();
 
-	public int getId() {
-		return id;
 	}
-	
+
+	private void mostrar_usuario() {
+		if (usuario.equalsIgnoreCase("david")) {
+			this.nombre = "David Camuñas";
+			this.ultima_conexion = MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion.text");
+			this.imagen = new ImageIcon(
+					VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));;
+		}
+	}
+
 	public String getContrasenia() {
 		return contrasenia;
 	}
@@ -60,32 +68,21 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-
-
 	public String getUltima_conexion() {
 		return ultima_conexion;
 	}
-
-
 
 	public void setUltima_conexion(String ultima_conexion) {
 		this.ultima_conexion = ultima_conexion;
 	}
 
-
-
-	public String getImagen() {
-		return "presentacion/imagenes/perfiles/" + imagen;
+	public ImageIcon getImagen() {
+		return imagen;
 	}
 
-
-
-	public void setImagen(String imagen) {
+	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
 	
 	
-	
-	
-
 }
