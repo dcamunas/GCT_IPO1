@@ -46,17 +46,17 @@ public class MiListaJPanel_1 extends JPanel {
 		pnBotones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		add(pnBotones, BorderLayout.SOUTH);
 
-		btnAniadir = new JButton("Añadir");
+		btnAniadir = new JButton(MessagesGCT.getString("MiListaJPanel_1.btnAniadir.text"));
 		pnBotones.add(btnAniadir);
 
-		btnModificar = new JButton("Modificar");
+		btnModificar = new JButton(MessagesGCT.getString("MiListaJPanel_1.btnModificar.text"));
 		pnBotones.add(btnModificar);
 
-		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar = new JButton(MessagesGCT.getString("MiListaJPanel_1.btnLimpiar.text"));
 		btnLimpiar.addActionListener(new BtnLimpiarActionListener());
 		pnBotones.add(btnLimpiar);
 
-		btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton(MessagesGCT.getString("MiListaJPanel_1.btnEliminar.text"));
 		btnEliminar.addActionListener(new BtnEliminarActionListener());
 		pnBotones.add(btnEliminar);
 

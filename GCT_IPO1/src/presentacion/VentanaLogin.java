@@ -24,6 +24,8 @@ import javax.swing.JCheckBox;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaLogin {
 
@@ -38,6 +40,10 @@ public class VentanaLogin {
 	private JButton btnEntrar;
 	private final String pass = "ipo1";
 	private Usuario user;
+	private JButton btnIdioma;
+	private DialogoSeleccionIdioma dsi;
+	private boolean ingles;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -71,7 +77,7 @@ public class VentanaLogin {
 		frmAccesoManchatours.setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(VentanaLogin.class.getResource("/presentacion/imagenes/iconos/compass.png")));
 		frmAccesoManchatours.setTitle("Acceso Manchatours");
-		frmAccesoManchatours.setBounds(100, 100, 450, 300);
+		frmAccesoManchatours.setBounds(100, 100, 442, 263);
 		// frmAccesoManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		panel = new JPanel();
@@ -85,32 +91,46 @@ public class VentanaLogin {
 		btnAyuda.setBounds(383, 11, 41, 35);
 		panel.add(btnAyuda);
 
-		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(168, 32, 120, 14);
+		lblUsuario = new JLabel("Usuario / User:");
+		lblUsuario.setBounds(151, 22, 120, 14);
 		panel.add(lblUsuario);
 
 		tfUsuario = new JTextField();
 		tfUsuario.addActionListener(new TfUsuarioActionListener());
-		tfUsuario.setBounds(168, 56, 120, 20);
+		tfUsuario.setBounds(151, 46, 137, 20);
 		panel.add(tfUsuario);
 		tfUsuario.setColumns(10);
 
-		lblContrasenia = new JLabel("Contraseña:");
+		lblContrasenia = new JLabel("Contraseña / Password:");
 		lblContrasenia.setEnabled(true);
-		lblContrasenia.setBounds(168, 101, 120, 14);
+		lblContrasenia.setBounds(151, 91, 137, 14);
 		panel.add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
 		pwdContrasenia.addKeyListener(new PwdContraseniaKeyListener());
 		pwdContrasenia.addActionListener(new PwdContraseniaActionListener());
 		pwdContrasenia.setEnabled(false);
-		pwdContrasenia.setBounds(168, 126, 120, 20);
+		pwdContrasenia.setBounds(151, 116, 137, 20);
 		panel.add(pwdContrasenia);
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new BtnEntrarActionListener());
-		btnEntrar.setBounds(183, 177, 89, 23);
+		btnEntrar.setBounds(178, 160, 86, 23);
 		panel.add(btnEntrar);
+
+		btnIdioma = new JButton("");
+		btnIdioma.addActionListener(new BtnIdiomaActionListener());
+		btnIdioma.setIcon(new ImageIcon(VentanaLogin.class.getResource("/presentacion/imagenes/iconos/worldwide.png")));
+		btnIdioma.setContentAreaFilled(false);
+		btnIdioma.setBorderPainted(false);
+		btnIdioma.setBounds(383, 159, 41, 35);
+		panel.add(btnIdioma);
+
+		lblNewLabel = new JLabel("");
+		lblNewLabel.addMouseListener(new LblNewLabelMouseListener());
+		lblNewLabel.setIcon(new ImageIcon(VentanaLogin.class.getResource("/presentacion/imagenes/iconos/map (1).png")));
+		lblNewLabel.setBounds(25, 11, 64, 64);
+		panel.add(lblNewLabel);
 
 		lblAviso = new JLabel("");
 		lblAviso.setPreferredSize(new Dimension(0, 25));
@@ -166,24 +186,9 @@ public class VentanaLogin {
 	private class BtnEntrarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			lblAviso.setVisible(true);
-			// if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
-			// Se crea una instancia de la ventana principal (JFrame)
-			user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
-
-			VentanaPrincipal ventana_principal = new VentanaPrincipal();
-			// Se hace visible la VentanaPrincipal
-			ventana_principal.getFrame().setVisible(true);
-			// Se elimina la ventana actual (atributo a nivel de clase)
-			frmAccesoManchatours.dispose();
-			// }
-		}
-	}
-
-	private class PwdContraseniaKeyListener extends KeyAdapter {
-		public void keyPressed(KeyEvent e) {
-			// lblAviso.setVisible(true);
 			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
 				// Se crea una instancia de la ventana principal (JFrame)
+				user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
 
 				VentanaPrincipal ventana_principal = new VentanaPrincipal();
 				// Se hace visible la VentanaPrincipal
@@ -191,7 +196,43 @@ public class VentanaLogin {
 				// Se elimina la ventana actual (atributo a nivel de clase)
 				frmAccesoManchatours.dispose();
 			}
+		}
+	}
 
+	private class PwdContraseniaKeyListener extends KeyAdapter {
+		public void keyPressed(KeyEvent e) {
+			lblAviso.setVisible(true);
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+				// Se crea una instancia de la ventana principal (JFrame)
+				VentanaPrincipal ventana_principal = new VentanaPrincipal();
+				// Se hace visible la VentanaPrincipal
+				ventana_principal.getFrame().setVisible(true);
+				// Se elimina la ventana actual (atributo a nivel de clase)
+
+				frmAccesoManchatours.dispose();
+			}
+
+		}
+	}
+
+	private class BtnIdiomaActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			dsi = new DialogoSeleccionIdioma();
+			dsi.setVisible(true);
+
+		}
+	}
+
+	private class LblNewLabelMouseListener extends MouseAdapter {
+		@Override
+		public void mouseExited(MouseEvent e) {
+			lblNewLabel.setVisible(true);
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			lblNewLabel.setVisible(false);
 		}
 	}
 
@@ -199,8 +240,7 @@ public class VentanaLogin {
 		return frmAccesoManchatours;
 	}
 
-	public void setFrmAccesoManchatours(JFrame frmAccesoManchatours) {
-		this.frmAccesoManchatours = frmAccesoManchatours;
+	public boolean isIngles() {
+		return ingles;
 	}
-
 }

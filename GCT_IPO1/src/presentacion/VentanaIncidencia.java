@@ -48,7 +48,7 @@ public class VentanaIncidencia {
 	 */
 	private void initialize(DefaultListModel<String> modelo_lista, boolean modo, int tema) {
 		frmRegistroDeIncidencia = new JFrame();
-		frmRegistroDeIncidencia.setTitle("Registro de incidencia");
+		frmRegistroDeIncidencia.setTitle("Registro de información");
 		frmRegistroDeIncidencia.setResizable(false);
 		frmRegistroDeIncidencia.setBounds(100, 100, 325, 169);
 
@@ -61,9 +61,9 @@ public class VentanaIncidencia {
 		panel.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(null);
 
-		lblIncidencia = new JLabel("Incidencia :");
+		lblIncidencia = new JLabel("Información a registrar :");
 		lblIncidencia.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblIncidencia.setBounds(20, 11, 63, 14);
+		lblIncidencia.setBounds(20, 11, 169, 14);
 		panel_1.add(lblIncidencia);
 
 		textPane = new JTextPane();
@@ -109,12 +109,12 @@ public class VentanaIncidencia {
 		public void actionPerformed(ActionEvent e) {
 			if (panel.getBtnAceptar().getText().equals("Añadir")) {
 				if (comprobarElementos()) {
-					JOptionPane.showMessageDialog(null, "Esta incidencia ya ha sido añadida.", "",
+					JOptionPane.showMessageDialog(null, "Este dato ya ha sido registrado", "",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 					modelo_lista.addElement((String) textPane.getText());
 					lista.add((String)textPane.getText());
-					JOptionPane.showMessageDialog(null, "Incidencia añadida.", "", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Información añadida", "", JOptionPane.INFORMATION_MESSAGE);
 					getFrame().dispose();
 					
 				}

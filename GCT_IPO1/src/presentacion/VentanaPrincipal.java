@@ -52,6 +52,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+import com.sun.javafx.scene.layout.region.SliceSequenceConverter;
 import com.sun.xml.internal.ws.policy.sourcemodel.attach.ExternalAttachmentsUnmarshaller;
 
 import dominio.Circuito;
@@ -203,14 +204,14 @@ public class VentanaPrincipal {
 	private GrupoTuristas grupo;
 	private MiModeloJTable modeloTabla;
 	private ImageIcon icono_info = new ImageIcon(
-			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png"));
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-24.png")); //$NON-NLS-1$
 	private ImageIcon imagen_guiaInicial;
 	private ImageIcon icono_aniadir = new ImageIcon(
-			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"));
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png")); //$NON-NLS-1$
 	private ImageIcon modo_noche = new ImageIcon(
-			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_noche-32.png"));
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_noche-32.png")); //$NON-NLS-1$
 	private ImageIcon modo_dia = new ImageIcon(
-			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_dia-32.png"));
+			VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/modo_dia-32.png")); //$NON-NLS-1$
 
 	// ArrayList listas
 	private List<Circuito> lista_circuitos;
@@ -220,14 +221,14 @@ public class VentanaPrincipal {
 	private List<Guia> lista_guias;
 
 	// Inicializar listas circuitos
-	String[] restricciones_globales = new String[] { "Prohibido a menores de 18 años", "Prohibido animales",
-			"Prohibido fumar", "Prohibido el uso de télefonos móviles" };
-	String[] ptosInteres_globales = new String[] { "Restaurantes alredor catedral", "Asador Maripili",
-			"Teatro municipal", "Coliseum", "Parque turístico", "Área de acampada", "Piscina municipal" };
-	String[] sugerencias_globales = new String[] { "Ruta muy entretenida", "Guía muy simpático",
-			"Visitar el museo municipal", "La catedral es impresionante" };
-	String[] idiomas_globales = new String[] { "Español", "Inglés", "Aleman", "Chino", "Francés", "Italiano",
-			"Holandes", "Portugues", "Ruso" };
+	String[] restricciones_globales = new String[] { MessagesGCT.getString("VentanaPrincipal.4"), MessagesGCT.getString("VentanaPrincipal.5"), //$NON-NLS-1$ //$NON-NLS-2$
+			MessagesGCT.getString("VentanaPrincipal.6"), MessagesGCT.getString("VentanaPrincipal.7") }; //$NON-NLS-1$ //$NON-NLS-2$
+	String[] ptosInteres_globales = new String[] { MessagesGCT.getString("VentanaPrincipal.8"), MessagesGCT.getString("VentanaPrincipal.9"), //$NON-NLS-1$ //$NON-NLS-2$
+			MessagesGCT.getString("VentanaPrincipal.10"), MessagesGCT.getString("VentanaPrincipal.11"), MessagesGCT.getString("VentanaPrincipal.12"), MessagesGCT.getString("VentanaPrincipal.13"), MessagesGCT.getString("VentanaPrincipal.14") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+	String[] sugerencias_globales = new String[] { MessagesGCT.getString("VentanaPrincipal.15"), MessagesGCT.getString("VentanaPrincipal.16"), //$NON-NLS-1$ //$NON-NLS-2$
+			MessagesGCT.getString("VentanaPrincipal.17"), MessagesGCT.getString("VentanaPrincipal.18") }; //$NON-NLS-1$ //$NON-NLS-2$
+	String[] idiomas_globales = new String[] { MessagesGCT.getString("VentanaPrincipal.19"), MessagesGCT.getString("VentanaPrincipal.20"), MessagesGCT.getString("VentanaPrincipal.21"), MessagesGCT.getString("VentanaPrincipal.22"), MessagesGCT.getString("VentanaPrincipal.23"), MessagesGCT.getString("VentanaPrincipal.24"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+			MessagesGCT.getString("VentanaPrincipal.25"), MessagesGCT.getString("VentanaPrincipal.26"), MessagesGCT.getString("VentanaPrincipal.27") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	private JButton btnSeleccionar;
 	private JButton btnModo;
@@ -270,7 +271,7 @@ public class VentanaPrincipal {
 		lista_guias = new ArrayList<Guia>();
 		lista_grupos = new ArrayList<GrupoTuristas>();
 		imagen_guiaInicial = new ImageIcon(
-				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));
+				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")); //$NON-NLS-1$
 		initialize();
 	}
 
@@ -280,8 +281,8 @@ public class VentanaPrincipal {
 	private void initialize() {
 		frmManchatours = new JFrame();
 		frmManchatours.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png")));
-		frmManchatours.setTitle("Manchatours");
+				.getImage(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/compass.png"))); //$NON-NLS-1$
+		frmManchatours.setTitle(MessagesGCT.getString("VentanaPrincipal.30")); //$NON-NLS-1$
 		frmManchatours.setBounds(100, 100, 1156, 700);
 		// frmManchatours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -299,14 +300,14 @@ public class VentanaPrincipal {
 		pnImagen = new JPanel();
 		pnAreaImagen.add(pnImagen, BorderLayout.NORTH);
 
-		lblImagen = new JLabel("");
+		lblImagen = new JLabel(MessagesGCT.getString("VentanaPrincipal.31")); //$NON-NLS-1$
 		lblImagen.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblImagen
-				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
+				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource(MessagesGCT.getString("VentanaPrincipal.32")))); //$NON-NLS-1$
 		pnImagen.add(lblImagen);
 
-		lblUltimaConexion = new JLabel("Ultima conexion");
-		lblUltimaConexion.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUltimaConexion = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion.text")); //$NON-NLS-1$
+		lblUltimaConexion.setFont(new Font(MessagesGCT.getString("VentanaPrincipal.33"), Font.BOLD, 11)); //$NON-NLS-1$
 		lblUltimaConexion.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnInfoUsuario.add(lblUltimaConexion, BorderLayout.SOUTH);
 
@@ -314,8 +315,8 @@ public class VentanaPrincipal {
 		pnInfoUsuario.add(pnContenidoUsuario, BorderLayout.CENTER);
 		pnContenidoUsuario.setLayout(new GridLayout(6, 1, 0, 0));
 
-		lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUsuario = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblUsuario.text")); //$NON-NLS-1$
+		lblUsuario.setFont(new Font(MessagesGCT.getString("VentanaPrincipal.34"), Font.BOLD, 12)); //$NON-NLS-1$
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblUsuario);
 
@@ -326,8 +327,8 @@ public class VentanaPrincipal {
 		pnContenidoUsuario.add(txtUsuario);
 		txtUsuario.setColumns(10);
 
-		lblNombre = new JLabel("Nombre");
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNombre = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNombre.text")); //$NON-NLS-1$
+		lblNombre.setFont(new Font(MessagesGCT.getString("VentanaPrincipal.35"), Font.BOLD, 12)); //$NON-NLS-1$
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblNombre);
 
@@ -337,8 +338,8 @@ public class VentanaPrincipal {
 		pnContenidoUsuario.add(txtNombre);
 		txtNombre.setColumns(10);
 
-		lblDireccinDeCorreo = new JLabel("Dirección de correo");
-		lblDireccinDeCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDireccinDeCorreo = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblDireccinDeCorreo.text")); //$NON-NLS-1$
+		lblDireccinDeCorreo.setFont(new Font(MessagesGCT.getString("VentanaPrincipal.36"), Font.BOLD, 12)); //$NON-NLS-1$
 		lblDireccinDeCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		pnContenidoUsuario.add(lblDireccinDeCorreo);
 
@@ -354,24 +355,24 @@ public class VentanaPrincipal {
 		fl_pnHerramientas.setAlignment(FlowLayout.RIGHT);
 		frmManchatours.getContentPane().add(pnHerramientas, BorderLayout.NORTH);
 
-		btnModo = new JButton("");
+		btnModo = new JButton(""); //$NON-NLS-1$
 		btnModo.addActionListener(new BtnModoActionListener());
 		btnModo.setIcon(modo_noche);
 		pnHerramientas.add(btnModo);
 		btnModo.setBorderPainted(false);
 		btnModo.setContentAreaFilled(false);
 
-		btnAyuda = new JButton("");
+		btnAyuda = new JButton(""); //$NON-NLS-1$
 		btnAyuda.setIcon(
-				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-32.png")));
+				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-32.png"))); //$NON-NLS-1$
 		pnHerramientas.add(btnAyuda);
 		btnAyuda.setBorderPainted(false);
 		btnAyuda.setContentAreaFilled(false);
 
-		btnCerrarSesion = new JButton("Cerrar Sesión");
+		btnCerrarSesion = new JButton(MessagesGCT.getString("VentanaPrincipal.btnCerrarSesion.text")); //$NON-NLS-1$
 		btnCerrarSesion.addActionListener(new BtnCerrarSesionActionListener());
 
-		btnSalir = new JButton("Salir");
+		btnSalir = new JButton(MessagesGCT.getString("VentanaPrincipal.btnSalir.text")); //$NON-NLS-1$
 		btnSalir.addActionListener(new BtnSalirActionListener());
 		pnHerramientas.add(btnSalir);
 		pnHerramientas.add(btnCerrarSesion);
@@ -384,7 +385,7 @@ public class VentanaPrincipal {
 		pnPrincipal.add(tbPestañas, BorderLayout.CENTER);
 
 		pnCircuitos = new JPanel();
-		tbPestañas.addTab("Circuitos", null, pnCircuitos, null);
+		tbPestañas.addTab(MessagesGCT.getString("VentanaPrincipal.40"), null, pnCircuitos, null); //$NON-NLS-1$
 		pnCircuitos.setLayout(new BorderLayout(0, 0));
 
 		pnListaCircuitos = new MiListaJPanel_1(lista_circuitos, vp);
@@ -392,7 +393,7 @@ public class VentanaPrincipal {
 		pnListaCircuitos.getBtnAniadir().addActionListener(new PnListaCircuitosBtnAniadirActionListener());
 		pnCircuitos.add(pnListaCircuitos, BorderLayout.WEST);
 
-		lblCircuitosContratados = new JLabel("Circuitos contratados:");
+		lblCircuitosContratados = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblCircuitosContratados.text")); //$NON-NLS-1$
 		pnListaCircuitos.add(lblCircuitosContratados, BorderLayout.NORTH);
 
 		pnLugares = new JPanel();
@@ -405,14 +406,12 @@ public class VentanaPrincipal {
 		pnContratacion.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnLugares.add(pnContratacion, BorderLayout.SOUTH);
 
-		btnContratar = new JButton("Contratar");
+		btnContratar = new JButton(MessagesGCT.getString("VentanaPrincipal.btnContratar.text")); //$NON-NLS-1$
 		btnContratar.setEnabled(false);
 		btnContratar.addActionListener(new BtnContratarActionListener());
-		btnContratar.setIcon(new ImageIcon(
-				VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/shopping-cart x16.png")));
 		pnContratacion.add(btnContratar);
 
-		chckbxContratado = new JCheckBox("Contratado");
+		chckbxContratado = new JCheckBox("Contratado"); 
 		chckbxContratado.setEnabled(false);
 		pnContratacion.add(chckbxContratado);
 
@@ -420,19 +419,19 @@ public class VentanaPrincipal {
 		pnLugares.add(pnBotonesLugares, BorderLayout.EAST);
 		pnBotonesLugares.setLayout(new GridLayout(0, 1, 0, 0));
 
-		btnAgregarlugar = new JButton("");
+		btnAgregarlugar = new JButton(""); //$NON-NLS-1$
 		btnAgregarlugar.addActionListener(new BtnAgregarlugarActionListener());
 		btnAgregarlugar.setIcon(
-				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png")));
+				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/plus-24.png"))); //$NON-NLS-1$
 		btnAgregarlugar.setBorderPainted(false);
 		btnAgregarlugar.setContentAreaFilled(false);
 		pnBotonesLugares.add(btnAgregarlugar);
 
-		btnEliminarlugar = new JButton("");
+		btnEliminarlugar = new JButton(""); //$NON-NLS-1$
 		btnEliminarlugar.addActionListener(new BtnEliminarlugarActionListener());
 		btnEliminarlugar.setEnabled(false);
 		btnEliminarlugar.setIcon(
-				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/remove-24.png")));
+				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/remove-24.png"))); //$NON-NLS-1$
 		btnEliminarlugar.setBorderPainted(false);
 		btnEliminarlugar.setContentAreaFilled(false);
 		pnBotonesLugares.add(btnEliminarlugar);
@@ -441,7 +440,7 @@ public class VentanaPrincipal {
 		pnLugares.add(pnListaLugares, BorderLayout.CENTER);
 		pnListaLugares.setLayout(new BorderLayout(0, 0));
 
-		lblLugaresDeVisita = new JLabel("Lugares de visita:");
+		lblLugaresDeVisita = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblLugaresDeVisita.text")); //$NON-NLS-1$
 		pnListaLugares.add(lblLugaresDeVisita, BorderLayout.NORTH);
 
 		spnLugares = new JScrollPane();
@@ -468,7 +467,7 @@ public class VentanaPrincipal {
 		gbl_pnDatosCircuito.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pnDatosCircuito.setLayout(gbl_pnDatosCircuito);
 
-		lblNombreCircuito = new JLabel("Nombre circuito:");
+		lblNombreCircuito = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNombreCircuito.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblNombreCircuito = new GridBagConstraints();
 		gbc_lblNombreCircuito.anchor = GridBagConstraints.EAST;
 		gbc_lblNombreCircuito.insets = new Insets(0, 0, 5, 5);
@@ -486,7 +485,7 @@ public class VentanaPrincipal {
 		pnDatosCircuito.add(txtfNombreCircuito, gbc_txtfNombreCircuito);
 		txtfNombreCircuito.setColumns(10);
 
-		lblPersonasQueLo = new JLabel("Personas que lo han realizado:");
+		lblPersonasQueLo = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPersonasQueLo.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblPersonasQueLo = new GridBagConstraints();
 		gbc_lblPersonasQueLo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPersonasQueLo.gridx = 0;
@@ -502,7 +501,7 @@ public class VentanaPrincipal {
 		gbc_spinnerPersonasCircuito.gridy = 2;
 		pnDatosCircuito.add(spinnerPersonasCircuito, gbc_spinnerPersonasCircuito);
 
-		lblPrecio = new JLabel("Precio:");
+		lblPrecio = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPrecio.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
 		gbc_lblPrecio.anchor = GridBagConstraints.EAST;
 		gbc_lblPrecio.insets = new Insets(0, 0, 0, 5);
@@ -519,7 +518,7 @@ public class VentanaPrincipal {
 		gbc_txtfPrecioCircuito.gridy = 3;
 		pnDatosCircuito.add(txtfPrecioCircuito, gbc_txtfPrecioCircuito);
 		txtfPrecioCircuito.setColumns(10);
-		txtfPrecioCircuito.setText("0");
+		txtfPrecioCircuito.setText("0"); //$NON-NLS-1$
 
 		pnEspacio = new JPanel();
 		pnEspacio.setPreferredSize(new Dimension(10, 42));
@@ -533,7 +532,7 @@ public class VentanaPrincipal {
 		pnInciden_Puntos_Opiniones.add(pnIncidencias, BorderLayout.NORTH);
 		pnIncidencias.setLayout(new BorderLayout(0, 0));
 
-		lblIncidencias = new JLabel("Incidencias:");
+		lblIncidencias = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblIncidencias.text")); //$NON-NLS-1$
 		pnIncidencias.add(lblIncidencias, BorderLayout.WEST);
 
 		pnListaIncidencia = new MiListaJPanel_2(new String[] {}, false, tema);
@@ -543,17 +542,17 @@ public class VentanaPrincipal {
 		pnInciden_Puntos_Opiniones.add(pnSugerencias, BorderLayout.SOUTH);
 		pnSugerencias.setLayout(new BorderLayout(0, 0));
 
-		lblOpinionesYSugerencias = new JLabel("Opiniones y sugerencias:");
+		lblOpinionesYSugerencias = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblOpinionesYSugerencias.text")); //$NON-NLS-1$
 		pnSugerencias.add(lblOpinionesYSugerencias, BorderLayout.NORTH);
 
-		pnListaSugerencias = new MiListaJPanel_2(sugerencias_globales, true, tema);
+		pnListaSugerencias = new MiListaJPanel_2(new String[] {}, false, tema);
 		pnSugerencias.add(pnListaSugerencias, BorderLayout.SOUTH);
 
 		pnptosInteres = new JPanel();
 		pnInciden_Puntos_Opiniones.add(pnptosInteres, BorderLayout.CENTER);
 		pnptosInteres.setLayout(new BorderLayout(0, 0));
 
-		lblPuntosDeInteres = new JLabel("Puntos de interes:");
+		lblPuntosDeInteres = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPuntosDeInteres.text")); //$NON-NLS-1$
 		pnptosInteres.add(lblPuntosDeInteres, BorderLayout.NORTH);
 
 		pnListaptosInteres = new MiListaJPanel_2(ptosInteres_globales, true, tema);
@@ -561,7 +560,7 @@ public class VentanaPrincipal {
 
 		pnGuias = new JPanel();
 		pnGuias.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		tbPestañas.addTab("Guías", null, pnGuias, null);
+		tbPestañas.addTab(MessagesGCT.getString("VentanaPrincipal.47"), null, pnGuias, null); //$NON-NLS-1$
 		pnGuias.setLayout(new BorderLayout(0, 0));
 
 		pnListaGuias = new MiListaJPanel_1(lista_guias, vp);
@@ -571,7 +570,7 @@ public class VentanaPrincipal {
 		pnGuias.add(pnListaGuias, BorderLayout.WEST);
 		// pnListaGuias.setLayout(new BorderLayout(0, 0));
 
-		lblGuiasContratados = new JLabel("Guías Contratados:");
+		lblGuiasContratados = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblGuiasContratados.text")); //$NON-NLS-1$
 		pnListaGuias.add(lblGuiasContratados, BorderLayout.NORTH);
 
 		pnIdiomasGuia = new JPanel();
@@ -579,7 +578,7 @@ public class VentanaPrincipal {
 		pnGuias.add(pnIdiomasGuia, BorderLayout.EAST);
 		pnIdiomasGuia.setLayout(new BorderLayout(0, 0));
 
-		lblIdiomas = new JLabel("Idiomas:");
+		lblIdiomas = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblIdiomas.text")); //$NON-NLS-1$
 		pnIdiomasGuia.add(lblIdiomas, BorderLayout.NORTH);
 
 		pnEspacio3 = new JPanel();
@@ -606,12 +605,12 @@ public class VentanaPrincipal {
 		pnImagenGuia.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		pnInfoCentral.add(pnImagenGuia, BorderLayout.NORTH);
 
-		lblImagenGuia = new JLabel("");
+		lblImagenGuia = new JLabel(""); //$NON-NLS-1$
 		lblImagenGuia.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblImagenGuia.setIcon(imagen_guiaInicial);
 		pnImagenGuia.add(lblImagenGuia);
 
-		btnSeleccionarGuia = new JButton("Seleccionar");
+		btnSeleccionarGuia = new JButton(MessagesGCT.getString("VentanaPrincipal.btnSeleccionarGuia.text")); //$NON-NLS-1$
 		btnSeleccionarGuia.addActionListener(new BtnSeleccionarGuiaActionListener());
 		pnImagenGuia.add(btnSeleccionarGuia);
 
@@ -620,7 +619,7 @@ public class VentanaPrincipal {
 		pnInfoCentral.add(pnHisRutasGuia, BorderLayout.SOUTH);
 		pnHisRutasGuia.setLayout(new BorderLayout(0, 0));
 
-		lblHistorialDeRutas = new JLabel("Historial de rutas:");
+		lblHistorialDeRutas = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblHistorialDeRutas.text")); //$NON-NLS-1$
 		pnHisRutasGuia.add(lblHistorialDeRutas, BorderLayout.NORTH);
 
 		spnRutasGuia = new JScrollPane();
@@ -639,7 +638,7 @@ public class VentanaPrincipal {
 		gbl_pnInfoGeneral.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
 		pnInfoGeneral.setLayout(gbl_pnInfoGeneral);
 
-		JLabel lblNombreGuia = new JLabel("Nombre:");
+		JLabel lblNombreGuia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNombreGuia.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblNombreGuia = new GridBagConstraints();
 		gbc_lblNombreGuia.anchor = GridBagConstraints.EAST;
 		gbc_lblNombreGuia.insets = new Insets(0, 0, 5, 5);
@@ -656,7 +655,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtNombreguia, gbc_txtNombreguia);
 		txtNombreguia.setColumns(10);
 
-		lblApellidosGuia = new JLabel("Apellidos:");
+		lblApellidosGuia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblApellidosGuia.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblApellidosGuia = new GridBagConstraints();
 		gbc_lblApellidosGuia.anchor = GridBagConstraints.EAST;
 		gbc_lblApellidosGuia.insets = new Insets(0, 0, 5, 5);
@@ -674,7 +673,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtApellidosGuia, gbc_txtApellidosGuia);
 		txtApellidosGuia.setColumns(10);
 
-		lblCorreoGuia = new JLabel("Correo:");
+		lblCorreoGuia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblCorreoGuia.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblCorreoGuia = new GridBagConstraints();
 		gbc_lblCorreoGuia.anchor = GridBagConstraints.EAST;
 		gbc_lblCorreoGuia.insets = new Insets(0, 0, 5, 5);
@@ -691,7 +690,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtCorreoguia, gbc_txtCorreoguia);
 		txtCorreoguia.setColumns(10);
 
-		lblNTelefono = new JLabel("Nº Teléfono:");
+		lblNTelefono = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNTelefono.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblNTelefono = new GridBagConstraints();
 		gbc_lblNTelefono.anchor = GridBagConstraints.EAST;
 		gbc_lblNTelefono.insets = new Insets(0, 0, 5, 5);
@@ -708,7 +707,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtNumeroGuia, gbc_txtNumeroGuia);
 		txtNumeroGuia.setColumns(10);
 
-		lblPrecioHora = new JLabel("Precio / Hora:");
+		lblPrecioHora = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPrecioHora.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblPrecioHora = new GridBagConstraints();
 		gbc_lblPrecioHora.anchor = GridBagConstraints.EAST;
 		gbc_lblPrecioHora.insets = new Insets(0, 0, 5, 5);
@@ -725,7 +724,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtPrecioGuia, gbc_txtPrecioGuia);
 		txtPrecioGuia.setColumns(10);
 
-		lblPuntuacion = new JLabel("Puntuación:");
+		lblPuntuacion = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPuntuacion.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblPuntuacion = new GridBagConstraints();
 		gbc_lblPuntuacion.anchor = GridBagConstraints.EAST;
 		gbc_lblPuntuacion.insets = new Insets(0, 0, 5, 5);
@@ -742,7 +741,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(txtPuntuacionGuia, gbc_txtPuntuacionGuia);
 		txtPuntuacionGuia.setColumns(10);
 
-		lblDisponibilidadGuia = new JLabel("Disponibilidad:");
+		lblDisponibilidadGuia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblDisponibilidadGuia.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblDisponibilidadGuia = new GridBagConstraints();
 		gbc_lblDisponibilidadGuia.anchor = GridBagConstraints.EAST;
 		gbc_lblDisponibilidadGuia.insets = new Insets(0, 0, 5, 5);
@@ -750,7 +749,7 @@ public class VentanaPrincipal {
 		gbc_lblDisponibilidadGuia.gridy = 7;
 		pnInfoGeneral.add(lblDisponibilidadGuia, gbc_lblDisponibilidadGuia);
 
-		rbtnSi_2 = new JRadioButton("Sí");
+		rbtnSi_2 = new JRadioButton(MessagesGCT.getString("VentanaPrincipal.rbtnSi_2.text")); //$NON-NLS-1$
 		buttonGroup.add(rbtnSi_2);
 		GridBagConstraints gbc_rbtnSi_2 = new GridBagConstraints();
 		gbc_rbtnSi_2.fill = GridBagConstraints.HORIZONTAL;
@@ -759,7 +758,7 @@ public class VentanaPrincipal {
 		gbc_rbtnSi_2.gridy = 7;
 		pnInfoGeneral.add(rbtnSi_2, gbc_rbtnSi_2);
 
-		rbtnNo_2 = new JRadioButton("No");
+		rbtnNo_2 = new JRadioButton(MessagesGCT.getString("VentanaPrincipal.rbtnNo_2.text")); //$NON-NLS-1$
 		buttonGroup.add(rbtnNo_2);
 		GridBagConstraints gbc_rbtnNo_2 = new GridBagConstraints();
 		gbc_rbtnNo_2.anchor = GridBagConstraints.WEST;
@@ -769,7 +768,7 @@ public class VentanaPrincipal {
 		pnInfoGeneral.add(rbtnNo_2, gbc_rbtnNo_2);
 
 		pnGrupos = new JPanel();
-		tbPestañas.addTab("Grupos", null, pnGrupos, null);
+		tbPestañas.addTab(MessagesGCT.getString("VentanaPrincipal.49"), null, pnGrupos, null); //$NON-NLS-1$
 		pnGrupos.setLayout(new BorderLayout(0, 0));
 
 		pnListaGrupos = new MiListaJPanel_1(lista_grupos, vp);
@@ -777,7 +776,7 @@ public class VentanaPrincipal {
 		pnListaGrupos.getBtnAniadir().addActionListener(new PnListaGruposBtnAniadirActionListener());
 		pnGrupos.add(pnListaGrupos, BorderLayout.WEST);
 
-		lblGruposTusiticos = new JLabel("Grupos tuísticos (4 - 20 personas):");
+		lblGruposTusiticos = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblGruposTusiticos.text")); //$NON-NLS-1$
 		pnListaGrupos.add(lblGruposTusiticos, BorderLayout.NORTH);
 
 		pnListaIntegrantes = new JPanel();
@@ -786,18 +785,18 @@ public class VentanaPrincipal {
 		pnGrupos.add(pnListaIntegrantes, BorderLayout.EAST);
 		pnListaIntegrantes.setLayout(new BorderLayout(0, 0));
 
-		lblIntegrantes = new JLabel("Integrantes:");
+		lblIntegrantes = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblIntegrantes.text")); //$NON-NLS-1$
 		pnListaIntegrantes.add(lblIntegrantes, BorderLayout.NORTH);
 
 		pnBotonesIntegrantes = new JPanel();
 		pnListaIntegrantes.add(pnBotonesIntegrantes, BorderLayout.SOUTH);
 
-		btnAgregar_1 = new JButton("Agregar");
+		btnAgregar_1 = new JButton(MessagesGCT.getString("VentanaPrincipal.btnAgregar_1.text")); //$NON-NLS-1$
 		btnAgregar_1.addActionListener(new BtnAgregar_1ActionListener());
 		btnAgregar_1.setIcon(null);
 		pnBotonesIntegrantes.add(btnAgregar_1);
 
-		btnBorrar_1 = new JButton("Borrar");
+		btnBorrar_1 = new JButton(MessagesGCT.getString("VentanaPrincipal.btnBorrar_1.text")); //$NON-NLS-1$
 		btnBorrar_1.addActionListener(new BtnBorrar_1ActionListener());
 		btnBorrar_1.setIcon(null);
 		pnBotonesIntegrantes.add(btnBorrar_1);
@@ -817,9 +816,9 @@ public class VentanaPrincipal {
 		txIntegranteSeleccionado.setEditable(false);
 		spnInfoImagenes.setViewportView(txIntegranteSeleccionado);
 
-		lblFotoSeleccionada = new JLabel("\r\n");
+		lblFotoSeleccionada = new JLabel(MessagesGCT.getString("VentanaPrincipal.50")); //$NON-NLS-1$
 		lblFotoSeleccionada
-				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png")));
+				.setIcon(new ImageIcon(VentanaPrincipal.class.getResource(MessagesGCT.getString("VentanaPrincipal.51")))); //$NON-NLS-1$
 		pnFotoIntegrante.add(lblFotoSeleccionada, BorderLayout.WEST);
 
 		spnTablaIntegrantes = new JScrollPane();
@@ -853,7 +852,7 @@ public class VentanaPrincipal {
 		gbl_pnInfoGrupo1.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pnInfoGrupo1.setLayout(gbl_pnInfoGrupo1);
 
-		lblNombreGrupo = new JLabel("Nombre grupo:");
+		lblNombreGrupo = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNombreGrupo.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblNombreGrupo = new GridBagConstraints();
 		gbc_lblNombreGrupo.anchor = GridBagConstraints.EAST;
 		gbc_lblNombreGrupo.insets = new Insets(0, 0, 5, 5);
@@ -871,7 +870,7 @@ public class VentanaPrincipal {
 		pnInfoGrupo1.add(txtNombreGrupo, gbc_txtNombreGrupo);
 		txtNombreGrupo.setColumns(10);
 
-		lblPaisOrigen = new JLabel("Pais origen:");
+		lblPaisOrigen = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPaisOrigen.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblPaisOrigen = new GridBagConstraints();
 		gbc_lblPaisOrigen.anchor = GridBagConstraints.EAST;
 		gbc_lblPaisOrigen.insets = new Insets(0, 0, 5, 5);
@@ -888,7 +887,7 @@ public class VentanaPrincipal {
 		pnInfoGrupo1.add(txtPais, gbc_txtPais);
 		txtPais.setColumns(10); //
 
-		lblLugarDeAlojamiento = new JLabel("Alojamiento:");
+		lblLugarDeAlojamiento = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblLugarDeAlojamiento.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblLugarDeAlojamiento = new GridBagConstraints();
 		gbc_lblLugarDeAlojamiento.anchor = GridBagConstraints.EAST;
 		gbc_lblLugarDeAlojamiento.insets = new Insets(0, 0, 5, 5);
@@ -905,7 +904,7 @@ public class VentanaPrincipal {
 		pnInfoGrupo1.add(txtAlojamiento, gbc_txtAlojamiento);
 		txtAlojamiento.setColumns(10);
 
-		lblTipologia = new JLabel("Tipología:");
+		lblTipologia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblTipologia.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblTipologia = new GridBagConstraints();
 		gbc_lblTipologia.anchor = GridBagConstraints.EAST;
 		gbc_lblTipologia.insets = new Insets(0, 0, 5, 5);
@@ -915,7 +914,7 @@ public class VentanaPrincipal {
 
 		comboTipGrupo = new JComboBox();
 		comboTipGrupo.setModel(
-				new DefaultComboBoxModel(new String[] { "", "Cultural", "Natural", "Gastronómico", "Reunión" }));
+				new DefaultComboBoxModel(new String[] { "", MessagesGCT.getString("VentanaPrincipal.53"), MessagesGCT.getString("VentanaPrincipal.54"), MessagesGCT.getString("VentanaPrincipal.55"), MessagesGCT.getString("VentanaPrincipal.56") })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		GridBagConstraints gbc_comboTipGrupo = new GridBagConstraints();
 		gbc_comboTipGrupo.insets = new Insets(0, 0, 5, 5);
 		gbc_comboTipGrupo.fill = GridBagConstraints.HORIZONTAL;
@@ -923,7 +922,7 @@ public class VentanaPrincipal {
 		gbc_comboTipGrupo.gridy = 4;
 		pnInfoGrupo1.add(comboTipGrupo, gbc_comboTipGrupo);
 
-		lblGua = new JLabel("Guía:");
+		lblGua = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblGua.text")); //$NON-NLS-1$
 		GridBagConstraints gbc_lblGua = new GridBagConstraints();
 		gbc_lblGua.anchor = GridBagConstraints.EAST;
 		gbc_lblGua.insets = new Insets(0, 0, 5, 5);
@@ -941,7 +940,7 @@ public class VentanaPrincipal {
 		gbc_txtfGuiaGrupo.gridy = 5;
 		pnInfoGrupo1.add(txtfGuiaGrupo, gbc_txtfGuiaGrupo);
 
-		btnSeleccionar = new JButton("Seleccionar");
+		btnSeleccionar = new JButton(MessagesGCT.getString("VentanaPrincipal.btnSeleccionar.text")); //$NON-NLS-1$
 		btnSeleccionar.addActionListener(new BtnSeleccionarActionListener());
 		GridBagConstraints gbc_btnSeleccionar = new GridBagConstraints();
 		gbc_btnSeleccionar.anchor = GridBagConstraints.SOUTH;
@@ -953,17 +952,17 @@ public class VentanaPrincipal {
 		pnInteresesGrupo = new MiListaJPanel_2(new String[] {}, false, tema);
 		pnInfoGrupCentral.add(pnInteresesGrupo, BorderLayout.SOUTH);
 
-		lblIntereses = new JLabel("Intereses:");
+		lblIntereses = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblIntereses.text")); //$NON-NLS-1$
 		pnInteresesGrupo.add(lblIntereses, BorderLayout.NORTH);
 
 		pnRestricciones = new MiListaJPanel_2(restricciones_globales, true, tema);
 		pnInfoGrupCentral.add(pnRestricciones, BorderLayout.CENTER);
 
-		lblRestricciones = new JLabel("Restricciones: ");
+		lblRestricciones = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblRestricciones.text")); //$NON-NLS-1$
 		pnRestricciones.add(lblRestricciones, BorderLayout.NORTH);
 
 		pnDiseñoRuta = new MiEditorGrafico(this);
-		tbPestañas.addTab("Diseño Ruta", null, pnDiseñoRuta, null);
+		tbPestañas.addTab(MessagesGCT.getString("VentanaPrincipal.57"), null, pnDiseñoRuta, null); //$NON-NLS-1$
 
 		// mostrar_usuario();
 
@@ -987,9 +986,10 @@ public class VentanaPrincipal {
 					modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
 					int n = tablaIntegrantes.getSelectedRow();
 					if (n != -1) {
-						String contenido = "Nombre :" + modeloTabla.getValueAt(n, 0) + ":\nApellidos: "
-								+ modeloTabla.getValueAt(n, 1) + "\nEdad: " + modeloTabla.getValueAt(n, 2)
-								+ "\nNº teléfono: " + modeloTabla.getValueAt(n, 3) + "\n";
+						String contenido = modeloTabla.getColumnName(0) + ": " + modeloTabla.getValueAt(n, 0) + MessagesGCT.getString("VentanaPrincipal.59") //$NON-NLS-1$ //$NON-NLS-2$
+								+ modeloTabla.getColumnName(1) + ": " + modeloTabla.getValueAt(n, 1) + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+								+ modeloTabla.getColumnName(2) + ": " + modeloTabla.getValueAt(n, 2) + "\n" //$NON-NLS-1$ //$NON-NLS-2$
+								+ modeloTabla.getColumnName(3) + ": " + modeloTabla.getValueAt(n, 3) + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
 						txIntegranteSeleccionado.setText(contenido);
 						lblFotoSeleccionada.setIcon((ImageIcon) modeloTabla.getValueAt(n, 4));
 					}
@@ -1020,7 +1020,7 @@ public class VentanaPrincipal {
 	public void limpiar_circuito() {
 		txtfNombreCircuito.setText(null);
 		spinnerPersonasCircuito.setValue(0);
-		txtfPrecioCircuito.setText("0");
+		txtfPrecioCircuito.setText("0"); //$NON-NLS-1$
 		pnListaIncidencia.getModeloLista().clear();
 		pnListaptosInteres.getModeloLista().clear();
 		pnListaSugerencias.getModeloLista().clear();
@@ -1068,9 +1068,9 @@ public class VentanaPrincipal {
 		mostrar_contratacion(circuito);
 
 	}
-	
+
 	private void mostrar_contratacion(Circuito c) {
-		if(c.isContratado()) {
+		if (c.isContratado()) {
 			btnContratar.setEnabled(false);
 			chckbxContratado.setSelected(true);
 		} else {
@@ -1078,7 +1078,7 @@ public class VentanaPrincipal {
 			chckbxContratado.setSelected(false);
 		}
 	}
-	
+
 	public void mostrar_grupo(int indice) {
 		grupo = lista_grupos.get(indice);
 		txtNombreGrupo.setText(grupo.getNombre());
@@ -1118,7 +1118,7 @@ public class VentanaPrincipal {
 		modelo_destino.clear();
 		lista_lugares = lista_origen;
 		for (int i = 0; i < lista_origen.size(); i++) {
-			modelo_destino.addElement("Lugar " + lista_origen.get(i).getId());
+			modelo_destino.addElement(MessagesGCT.getString("VentanaPrincipal.67") + lista_origen.get(i).getId()); //$NON-NLS-1$
 		}
 
 	}
@@ -1144,13 +1144,13 @@ public class VentanaPrincipal {
 		boolean aniadir = true;
 		if (comprobar_camposCircuito()) {
 			if (!comprobarDecimal(txtfPrecioCircuito.getText())) {
-				JOptionPane.showMessageDialog(null, "Precio introducido incorrectamente.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.68"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 				aniadir = false;
 			}
 
 			if (pnListaptosInteres.getModeloLista().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "La lista puntos de interes no puede estar vacía.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.70"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.WARNING_MESSAGE);
 				aniadir = false;
 			}
@@ -1163,13 +1163,13 @@ public class VentanaPrincipal {
 						generar_lista(pnListaSugerencias.getModeloLista()), lista_lugares,
 						chckbxContratado.isSelected());
 
-				pnListaCircuitos.getModelolista().addElement("Circuito " + circuito.getId());
+				pnListaCircuitos.getModelolista().addElement(MessagesGCT.getString("VentanaPrincipal.72") + circuito.getId()); //$NON-NLS-1$
 				pnListaCircuitos.getLista().add(circuito);
 				limpiar_circuito();
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.73"), "", //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -1177,56 +1177,56 @@ public class VentanaPrincipal {
 
 	private void aniadir_guia() {
 		boolean aniadir = true;
-		//if (comprobar_camposGuia()) {
-			if (!(comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
-					|| comprobarDecimal(txtPuntuacionGuia.getText()))) {
-				JOptionPane.showMessageDialog(null, "El parámetro introducido debe de ser un número.", "",
-						JOptionPane.ERROR_MESSAGE);
-				aniadir = false;
-			}
-			if (pnListaIdioma.getModeloLista().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Lista idiomas vacía.", "", JOptionPane.WARNING_MESSAGE);
-				aniadir = false;
-			}
-
-			if (!comprobar_correo(txtCorreoguia.getText())) {
-				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta", "",
-						JOptionPane.ERROR_MESSAGE);
-				aniadir = false;
-			}
-
-			if (!comprobar_puntuacion(Double.parseDouble(txtPuntuacionGuia.getText()))) {
-				JOptionPane.showMessageDialog(null, "La puntuacion debe pertenecer al rango [0 - 10].", "",
-						JOptionPane.ERROR_MESSAGE);
-				aniadir = false;
-			}
-
-			if (!comprobar_telefono(txtNumeroGuia.getText())) {
-				String mensaje = ("Número de teléfono incorrecto.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
-				aniadir = false;
-			}
-
-			if (!comprobar_disponibilidad()) {
-				JOptionPane.showMessageDialog(null, "Disponibilidad no seleccionada.", "", JOptionPane.WARNING_MESSAGE);
-				aniadir = false;
-			}
-
-			if (aniadir) {
-				guia = new Guia(txtNombreguia.getText(), txtApellidosGuia.getText(), txtCorreoguia.getText(),
-						Integer.parseInt(txtNumeroGuia.getText()), Double.parseDouble(txtPrecioGuia.getText()),
-						Double.parseDouble(txtPuntuacionGuia.getText()), rbtnSi_2.isSelected(),
-						generar_lista(pnListaIdioma.getModeloLista()), (ImageIcon) lblImagenGuia.getIcon());
-
-				pnListaGuias.getModelolista().addElement("Guia " + guia.getId());
-				pnListaGuias.getLista().add(guia);
-				limpiar_guia();
-			}
-
-		//} else {
-			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+		if (comprobar_camposGuia()) {
+		if (!(comprobarEntero(txtNumeroGuia.getText()) || comprobarDecimal(txtPrecioGuia.getText())
+				|| comprobarDecimal(txtPuntuacionGuia.getText()))) {
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.75"), "", //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.ERROR_MESSAGE);
-		//}
+			aniadir = false;
+		}
+		if (pnListaIdioma.getModeloLista().isEmpty()) {
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.77"), "", JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			aniadir = false;
+		}
+
+		if (!comprobar_correo(txtCorreoguia.getText())) {
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.79"), "", //$NON-NLS-1$ //$NON-NLS-2$
+					JOptionPane.ERROR_MESSAGE);
+			aniadir = false;
+		}
+
+		if (!comprobar_puntuacion(Double.parseDouble(txtPuntuacionGuia.getText()))) {
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.81"), "", //$NON-NLS-1$ //$NON-NLS-2$
+					JOptionPane.ERROR_MESSAGE);
+			aniadir = false;
+		}
+
+		if (!comprobar_telefono(txtNumeroGuia.getText())) {
+			String mensaje = (MessagesGCT.getString("VentanaPrincipal.83")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+			aniadir = false;
+		}
+
+		if (!comprobar_disponibilidad()) {
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.85"), "", JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+			aniadir = false;
+		}
+
+		if (aniadir) {
+			guia = new Guia(txtNombreguia.getText(), txtApellidosGuia.getText(), txtCorreoguia.getText(),
+					Integer.parseInt(txtNumeroGuia.getText()), Double.parseDouble(txtPrecioGuia.getText()),
+					Double.parseDouble(txtPuntuacionGuia.getText()), rbtnSi_2.isSelected(),
+					generar_lista(pnListaIdioma.getModeloLista()), (ImageIcon) lblImagenGuia.getIcon());
+
+			pnListaGuias.getModelolista().addElement(MessagesGCT.getString("VentanaPrincipal.87") + guia.getId()); //$NON-NLS-1$
+			pnListaGuias.getLista().add(guia);
+			limpiar_guia();
+		}
+
+		 } else {
+		JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.88"), "", //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 
@@ -1242,16 +1242,16 @@ public class VentanaPrincipal {
 						generar_lista(pnRestricciones.getModeloLista()),
 						generar_lista(pnInteresesGrupo.getModeloLista()));
 
-				pnListaGrupos.getModelolista().addElement("Grupo " + guia.getId());
+				pnListaGrupos.getModelolista().addElement(MessagesGCT.getString("VentanaPrincipal.90") + guia.getId()); //$NON-NLS-1$
 				pnListaGrupos.getLista().add(grupo);
 				limpiar_grupo();
 			} else {
-				JOptionPane.showMessageDialog(null, "Lista intereses grupo se encuentra vacía.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.91"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.WARNING_MESSAGE);
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.93"), "", //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -1266,8 +1266,8 @@ public class VentanaPrincipal {
 				circuito.setPrecio(Double.parseDouble(txtfPrecioCircuito.getText()));
 
 			} else {
-				String mensaje = ("Precio debe de ser un número");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+				String mensaje = (MessagesGCT.getString("VentanaPrincipal.95")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 			circuito.setIncidencias_lista(generar_lista(pnListaIncidencia.getModeloLista()));
 			circuito.setPuntos_interes(generar_lista(pnListaptosInteres.getModeloLista()));
@@ -1277,7 +1277,7 @@ public class VentanaPrincipal {
 			limpiar_circuito();
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Ningún circuito seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.97"), "", JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 	}
@@ -1289,52 +1289,52 @@ public class VentanaPrincipal {
 			if (!comprobarEntero(txtNombreguia.getText())) {
 				guia.setNombre(txtNombreguia.getText());
 			} else {
-				JOptionPane.showMessageDialog(null, "Nombre incorrecto, no se aceptan parámetros numéricos.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.99"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 			}
 			if (!comprobarEntero(txtApellidosGuia.getText())) {
 				guia.setApellidos(txtApellidosGuia.getText());
 			} else {
-				JOptionPane.showMessageDialog(null, "Apellidos incorrectos, no se aceptan parámetros numéricos.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.101"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 			}
 			if (comprobar_correo(txtCorreoguia.getText())) {
 				guia.setCorreo(txtCorreoguia.getText());
 			} else {
-				JOptionPane.showMessageDialog(null, "Correo introducido de forma incorrecta.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.103"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 			}
 			guia.setImagen((ImageIcon) lblImagenGuia.getIcon());
 			if (comprobarEntero(txtNumeroGuia.getText()) && comprobar_telefono(txtNumeroGuia.getText())) {
 				guia.setTelefono(Integer.parseInt(txtNumeroGuia.getText()));
 			} else {
-				String mensaje = ("Número de teléfono incorrecto.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+				String mensaje = (MessagesGCT.getString("VentanaPrincipal.105")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 
 			if (comprobarDecimal(txtPrecioGuia.getText())) {
 				guia.setPrecio_hora(Double.parseDouble(txtPrecioGuia.getText()));
 			} else {
-				String mensaje = ("El precio introducido, no es un precio correcto.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+				String mensaje = (MessagesGCT.getString("VentanaPrincipal.107")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 			if (comprobarDecimal(txtPuntuacionGuia.getText())) {
 				if (comprobar_puntuacion(Double.parseDouble(txtPuntuacionGuia.getText())))
 					guia.setPuntuacion(Double.parseDouble(txtPuntuacionGuia.getText()));
 				else
-					JOptionPane.showMessageDialog(null, "La puntuacion debe pertenecer al rango [0 - 10].", "",
+					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.109"), "", //$NON-NLS-1$ //$NON-NLS-2$
 							JOptionPane.ERROR_MESSAGE);
 
 			} else {
-				String mensaje = ("La puntuación introducida es incorrecta.");
-				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);
+				String mensaje = (MessagesGCT.getString("VentanaPrincipal.111")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			}
 			guia.setDisponibilidad(guia.isDisponibilidad());
 
 			if (!pnListaIdioma.getModeloLista().isEmpty()) {
 				guia.setIdiomas(generar_lista(pnListaIdioma.getModeloLista()));
 			} else {
-				JOptionPane.showMessageDialog(null, "Se debe seleccionar como mínimo un idioma.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.113"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 			}
 
@@ -1342,7 +1342,7 @@ public class VentanaPrincipal {
 
 			limpiar_guia();
 		} else {
-			JOptionPane.showMessageDialog(null, "Ningún guía seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.115"), "", JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 	}
@@ -1374,11 +1374,11 @@ public class VentanaPrincipal {
 				limpiar_grupo();
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.117"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Ningún grupo seleccionado.", "", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.119"), "", JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 	}
@@ -1413,7 +1413,7 @@ public class VentanaPrincipal {
 
 	private boolean comprobar_campoGrupo() {
 		return !(txtNombreGrupo.getText() == null || txtPais.getText() == null || txtAlojamiento.getText() == null
-				|| comboTipGrupo.getSelectedItem() == "" || txtfGuiaGrupo.getText() == null);
+				|| comboTipGrupo.getSelectedItem() == "" || txtfGuiaGrupo.getText() == null); //$NON-NLS-1$
 
 	}
 
@@ -1438,8 +1438,6 @@ public class VentanaPrincipal {
 	}
 
 	public static boolean comprobarDecimal(String cadena) {
-		if (cadena.charAt(cadena.length() - 1) == '€')
-			cadena.replace('€', ' ');
 
 		try {
 			Double.parseDouble(cadena);
@@ -1453,7 +1451,7 @@ public class VentanaPrincipal {
 	private String[] generar_listaGuias(List<Guia> lista) {
 		String[] guias = new String[lista.size()];
 		for (int i = 0; i < lista.size(); i++) {
-			guias[i] = lista.get(i).getNombre() + " " + lista.get(i).getApellidos();
+			guias[i] = lista.get(i).getNombre() + " " + lista.get(i).getApellidos(); //$NON-NLS-1$
 		}
 		return guias;
 	}
@@ -1461,7 +1459,7 @@ public class VentanaPrincipal {
 	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
 		JLabel aux;
 		for (int i = 0; i < panel.getComponentCount(); i++) {
-			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jlabel")) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jlabel")) { //$NON-NLS-1$
 				aux = (JLabel) panel.getComponent(i);
 				aux.setForeground(color_texto);
 			}
@@ -1471,7 +1469,7 @@ public class VentanaPrincipal {
 	private void cambiar_textField(JPanel panel, Color color_texto, Color color_textfield) {
 		JTextField aux;
 		for (int i = 0; i < panel.getComponentCount(); i++) {
-			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jtextfield")) {
+			if (panel.getComponent(i).getClass().getTypeName().equalsIgnoreCase("javax.swing.jtextfield")) { //$NON-NLS-1$
 				aux = (JTextField) panel.getComponent(i);
 				aux.setForeground(color_texto);
 				aux.setBackground(color_textfield);
@@ -1602,6 +1600,10 @@ public class VentanaPrincipal {
 		return frmManchatours;
 	}
 
+	public void setFrame(JFrame frmManchatours) {
+		this.frmManchatours = frmManchatours;
+	}
+
 	public JButton getBtnContratar() {
 		return btnContratar;
 	}
@@ -1642,8 +1644,8 @@ public class VentanaPrincipal {
 	private class BtnAgregar_1ActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			modeloTabla = (MiModeloJTable) tablaIntegrantes.getModel();
-			Object[] nuevaFila = { "", "", "", "", new ImageIcon(
-					getClass().getClassLoader().getResource("presentacion/imagenes/iconos/userApp.png")) };
+			Object[] nuevaFila = { "", "", "", "", new ImageIcon( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					getClass().getClassLoader().getResource("presentacion/imagenes/iconos/userApp.png")) }; //$NON-NLS-1$
 			modeloTabla.aniadeFila(nuevaFila);
 			modeloTabla.fireTableDataChanged();
 
@@ -1657,7 +1659,7 @@ public class VentanaPrincipal {
 			if (n != -1)
 				modeloTabla.eliminaFila(tablaIntegrantes.getSelectedRow());
 			modeloTabla.fireTableDataChanged();
-			txIntegranteSeleccionado.setText("");
+			txIntegranteSeleccionado.setText(""); //$NON-NLS-1$
 			lblFotoSeleccionada.setIcon(null);
 		}
 	}
@@ -1666,10 +1668,11 @@ public class VentanaPrincipal {
 		public void actionPerformed(ActionEvent e) {
 			if (comprobarDecimal(txtfPrecioCircuito.getText())) {
 				VentanaPago ventana_pago = new VentanaPago(btnContratar, chckbxContratado, txtfNombreCircuito.getText(),
-						txtfPrecioCircuito.getText(), null, tema, lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex()));
+						txtfPrecioCircuito.getText(), tema,
+						lista_circuitos.get(pnListaCircuitos.getList().getSelectedIndex()));
 				ventana_pago.getFrmPasarelaDePago().setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(null, "El campo precio circuito esta incompleto.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.131"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.WARNING_MESSAGE);
 
 			}
@@ -1683,7 +1686,7 @@ public class VentanaPrincipal {
 
 				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, tema);
 				ventana_lugar.getFrmLugarVisita().setVisible(true);
-				ventana_lugar.getPnPrincipal().getBtnAceptar().setText("Guardar");
+				ventana_lugar.getPnPrincipal().getBtnAceptar().setText(MessagesGCT.getString("VentanaPrincipal.133")); //$NON-NLS-1$
 			} else {
 
 				ventana_lugar = new VentanaLugar(lista_lugares, modelo_lugaresLista, tema);
@@ -1746,7 +1749,7 @@ public class VentanaPrincipal {
 				VentanaLista vl = new VentanaLista(null, generar_listaGuias(lista_guias), null, txtfGuiaGrupo, tema);
 				vl.getFrame().setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(null, "No hay guías existentes, se debe añadir alguno.", "",
+				JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.134"), "", //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.WARNING_MESSAGE);
 			}
 		}

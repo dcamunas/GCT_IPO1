@@ -83,8 +83,6 @@ public class VentanaLugar {
 	private void initialize() {
 		frmLugarVisita = new JFrame();
 		frmLugarVisita.setResizable(false);
-		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 440, 265);
 
@@ -104,12 +102,12 @@ public class VentanaLugar {
 		panel = new JPanel();
 		pnPrincipal.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
-		lblNombre = new JLabel("Nombre:");
+
+		lblNombre = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblNombre.text"));
 		lblNombre.setBounds(54, 14, 59, 14);
 		panel.add(lblNombre);
 
-		lblHorario = new JLabel("Horario visita:");
+		lblHorario = new JLabel(MessagesGCT.getString("VentanaPrincipal.horario"));
 		lblHorario.setBounds(22, 39, 91, 14);
 		lblHorario.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblHorario);
@@ -117,10 +115,10 @@ public class VentanaLugar {
 		comboHorario = new JComboBox();
 		comboHorario.setBounds(118, 36, 126, 20);
 		comboHorario.setModel(new DefaultComboBoxModel(
-				new String[] { "", "De 10:00 a 14:00", "De 16:00 a 20:00", "De 15:00 a 19:00", "De 9:00 a 13:00" }));
+				new String[] { "", "10:00 - 14:00", "16:00 - 20:00", "15:00 - 19:00", "9:00 - 13:00" }));
 		panel.add(comboHorario);
 
-		lblDuracion = new JLabel("Duración:");
+		lblDuracion = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblDuracion.text"));
 		lblDuracion.setBounds(22, 63, 91, 16);
 		lblDuracion.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/clock.png")));
 		lblDuracion.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -132,7 +130,7 @@ public class VentanaLugar {
 		panel.add(txtfDuracion);
 		txtfDuracion.setColumns(10);
 
-		lblTipologia = new JLabel("Tipología:");
+		lblTipologia = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblTipologia.text"));
 		lblTipologia.setBounds(44, 89, 69, 14);
 		lblTipologia.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblTipologia);
@@ -143,7 +141,7 @@ public class VentanaLugar {
 				new DefaultComboBoxModel(new String[] { "", "Histórico", "Natural", "Deporitvo", "Gastronómico" }));
 		panel.add(comboTipologia);
 
-		lblPrecio = new JLabel("Precio:");
+		lblPrecio = new JLabel(MessagesGCT.getString("VentanaPrincipal.lblPrecio.text"));
 		lblPrecio.setBounds(44, 113, 69, 16);
 		lblPrecio.setIcon(new ImageIcon(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/cash.png")));
 		panel.add(lblPrecio);
@@ -152,7 +150,7 @@ public class VentanaLugar {
 		txtPrecio.setBounds(118, 111, 53, 20);
 		panel.add(txtPrecio);
 		txtPrecio.setColumns(10);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setBounds(118, 11, 126, 20);
 		panel.add(txtNombre);
@@ -161,15 +159,15 @@ public class VentanaLugar {
 		if (modelo_lugares == null) {
 			activar_edicion(false);
 		}
-		
-		if(tema == 0) {
+
+		if (tema == 0) {
 			cambiar_tema(color_dia, Color.BLACK, color_dia);
 		} else {
 			cambiar_tema(color_noche, Color.WHITE, Color.DARK_GRAY);
 		}
 
 	}
-	
+
 	private void cambiar_colorTexto(JPanel panel, Color color_texto) {
 		JLabel aux;
 		for (int i = 0; i < panel.getComponentCount(); i++) {
@@ -179,7 +177,7 @@ public class VentanaLugar {
 			}
 		}
 	}
-	
+
 	private void cambiar_tema(Color color_panel, Color color_texto, Color textfield) {
 		txtfNombreLugar.setBackground(textfield);
 		txtfNombreLugar.setForeground(color_texto);
@@ -187,7 +185,7 @@ public class VentanaLugar {
 		pnPrincipal.getPnAceptar().setBackground(color_panel);
 		panel.setBackground(color_panel);
 		cambiar_colorTexto(panel, color_texto);
-		
+
 	}
 
 	private void activar_edicion(boolean condicion) {
@@ -219,23 +217,32 @@ public class VentanaLugar {
 
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			boolean aniadir = true;
 			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase("guardar") && comprobar_campos()) {
-				if (comprobarDecimal(txtPrecio.getText()) || comprobarDecimal(txtfDuracion.getText())) {
-					Lugar l = new Lugar(lista_lugares.size()+1,txtNombre.getText(), (String)comboHorario.getSelectedItem(),
-							Double.parseDouble(txtfDuracion.getText()), (String)comboTipologia.getSelectedItem(),
-							Double.parseDouble(txtPrecio.getText()), lblImagen);
+				if (!comprobarDecimal(txtPrecio.getText())) {
+					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.107"), "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				if (!comprobarDecimal(txtfDuracion.getText())) {
+					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.duracion.text"), "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				if (aniadir) {
+					Lugar l = new Lugar(lista_lugares.size() + 1, txtNombre.getText(),
+							(String) comboHorario.getSelectedItem(), Double.parseDouble(txtfDuracion.getText()),
+							(String) comboTipologia.getSelectedItem(), Double.parseDouble(txtPrecio.getText()),
+							lblImagen);
 
 					lista_lugares.add(l);
 					modelo_lugares.addElement("Lugar " + l.getId());
 
 					getFrmLugarVisita().dispose();
-
-				} else {
-					JOptionPane.showMessageDialog(null, "El parámetro introducido debe de ser un número.", "",
-							JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Existencia de campos vacíos, revise los datos introducidos.", "",
+
+			} else
+
+			{
+				JOptionPane.showMessageDialog(null,MessagesGCT.getString("VentanaPrincipal.73") , "",
 						JOptionPane.ERROR_MESSAGE);
 			}
 

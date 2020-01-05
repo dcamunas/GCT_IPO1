@@ -4,9 +4,17 @@ import java.util.Vector;
 import javax.swing.table.*;
 
 public class MiModeloJTable extends AbstractTableModel {
-	private String[] nombreColumnas = { "Nombre", "Apellidos", "Edad", "Nº teléfono", "Foto"};
+	private String nombre = MessagesGCT.getString("MiModeloJTable.nombre.text");
+	private String apellidos = MessagesGCT.getString("MiModeloJTable.apellidos.text");
+	private String edad = MessagesGCT.getString("MiModeloJTable.edad.text");
+	private String num_telefono = MessagesGCT.getString("MiModeloJTable.num_telefono.text");
+	private String foto = MessagesGCT.getString("MiModeloJTable.foto.text");
+	
+	private String[] nombreColumnas = { nombre, apellidos, edad, num_telefono, foto};
 	private Vector datos = new Vector();
 
+	public MiModeloJTable() {
+	}
 	public int getColumnCount() {
 		return nombreColumnas.length;
 	}
@@ -39,7 +47,6 @@ public class MiModeloJTable extends AbstractTableModel {
 			fireTableCellUpdated(row, col);
 		}
 	}
-
 	public void eliminaFila(int row) {
 		datos.remove(row);
 	}
