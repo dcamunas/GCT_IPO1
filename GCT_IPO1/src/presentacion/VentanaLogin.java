@@ -103,7 +103,7 @@ public class VentanaLogin {
 
 		lblContrasenia = new JLabel("Contraseña / Password:");
 		lblContrasenia.setEnabled(true);
-		lblContrasenia.setBounds(151, 91, 137, 14);
+		lblContrasenia.setBounds(151, 91, 179, 14);
 		panel.add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
