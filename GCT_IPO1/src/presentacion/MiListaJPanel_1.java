@@ -142,6 +142,9 @@ public class MiListaJPanel_1 extends JPanel {
 			int indice = list.getSelectedIndex();
 			lista.remove(indice);
 			modelo_lista.remove(indice);
+			vp.limpiar_circuito();
+			vp.limpiar_guia();
+			vp.limpiar_grupo();
 		}
 	}
 
