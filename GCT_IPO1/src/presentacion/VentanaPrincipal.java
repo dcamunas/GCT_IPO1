@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
@@ -43,6 +44,9 @@ import javax.swing.DefaultCellEditor;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -363,6 +367,7 @@ public class VentanaPrincipal {
 		btnModo.setContentAreaFilled(false);
 
 		btnAyuda = new JButton(""); //$NON-NLS-1$
+		btnAyuda.addActionListener(new BtnAyudaActionListener());
 		btnAyuda.setIcon(
 				new ImageIcon(VentanaPrincipal.class.getResource("/presentacion/imagenes/iconos/info-32.png"))); //$NON-NLS-1$
 		pnHerramientas.add(btnAyuda);
@@ -781,7 +786,7 @@ public class VentanaPrincipal {
 		pnListaGrupos.add(lblGruposTusiticos, BorderLayout.NORTH);
 
 		pnListaIntegrantes = new JPanel();
-		pnListaIntegrantes.setPreferredSize(new Dimension(550, 10));
+		pnListaIntegrantes.setPreferredSize(new Dimension(500, 10));
 		pnListaIntegrantes.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		pnGrupos.add(pnListaIntegrantes, BorderLayout.EAST);
 		pnListaIntegrantes.setLayout(new BorderLayout(0, 0));
@@ -1076,9 +1081,12 @@ public class VentanaPrincipal {
 		if (c.isContratado()) {
 			btnContratar.setEnabled(false);
 			chckbxContratado.setSelected(true);
+			pnListaCircuitos.getBtnModificar().setEnabled(false);
 		} else {
 			btnContratar.setEnabled(true);
 			chckbxContratado.setSelected(false);
+			pnListaCircuitos.getBtnModificar().setEnabled(true);
+
 		}
 	}
 
@@ -1442,7 +1450,7 @@ public class VentanaPrincipal {
 	}
 
 	private boolean comprobar_camposCircuito() {
-		return (txtfNombreCircuito.getText() != null || !modelo_lugaresLista.isEmpty());
+		return !(txtfNombreCircuito.getText() == null || modelo_lugaresLista.isEmpty());
 	}
 
 	private boolean comprobar_camposGuia() {
@@ -1826,6 +1834,18 @@ public class VentanaPrincipal {
 			pnListaptosInteres.setTema(tema);
 			pnRestricciones.setTema(tema);
 			pnInteresesGrupo.setTema(tema);
+
+		}
+	}
+	private class BtnAyudaActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			Desktop enlace = Desktop.getDesktop();
+			try {
+				enlace.browse(new URI(
+						"https://github.com/dcamunas/GCT_IPO1"));
+			} catch (IOException | URISyntaxException e) {
+				e.getMessage();
+			}
 
 		}
 	}

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -26,6 +27,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class VentanaLogin {
 
@@ -85,6 +89,7 @@ public class VentanaLogin {
 		panel.setLayout(null);
 
 		btnAyuda = new JButton("");
+		btnAyuda.addActionListener(new BtnAyudaActionListener());
 		btnAyuda.setIcon(new ImageIcon(VentanaLogin.class.getResource("/presentacion/imagenes/iconos/info-32.png")));
 		btnAyuda.setBorderPainted(false);
 		btnAyuda.setContentAreaFilled(false);
@@ -233,6 +238,18 @@ public class VentanaLogin {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			lblNewLabel.setVisible(false);
+		}
+	}
+	private class BtnAyudaActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			Desktop enlace = Desktop.getDesktop();
+			try {
+				enlace.browse(new URI(
+						"https://github.com/dcamunas/GCT_IPO1"));
+			} catch (IOException | URISyntaxException e) {
+				e.getMessage();
+			}
+
 		}
 	}
 

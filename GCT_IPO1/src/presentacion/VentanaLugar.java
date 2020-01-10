@@ -66,6 +66,7 @@ public class VentanaLugar {
 	private Color color_noche = new Color(51, 51, 51);
 	public JLabel lblNombre;
 	public JTextField txtNombre;
+	private boolean comprobar = true;
 
 	/**
 	 * Create the application.
@@ -82,7 +83,8 @@ public class VentanaLugar {
 	 */
 	private void initialize() {
 		frmLugarVisita = new JFrame();
-		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
+		frmLugarVisita.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(VentanaLugar.class.getResource("/presentacion/imagenes/iconos/map.png")));
 		frmLugarVisita.setResizable(false);
 		frmLugarVisita.setTitle("Lugar visita");
 		frmLugarVisita.setBounds(100, 100, 440, 265);
@@ -161,6 +163,7 @@ public class VentanaLugar {
 
 		if (modelo_lugares == null) {
 			activar_edicion(false);
+			comprobar = false;
 		}
 
 		if (tema == 0) {
@@ -221,7 +224,8 @@ public class VentanaLugar {
 	private class PnPrincipalBtnAceptarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			boolean aniadir = true;
-			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase(MessagesGCT.getString("VentanaPrincipal.133")) && comprobar_campos()) {
+			if (pnPrincipal.getBtnAceptar().getText().equalsIgnoreCase(MessagesGCT.getString("VentanaPrincipal.133"))
+					&& comprobar_campos() && comprobar) {
 				if (!comprobarDecimal(txtPrecio.getText())) {
 					JOptionPane.showMessageDialog(null, MessagesGCT.getString("VentanaPrincipal.107"), "",
 							JOptionPane.ERROR_MESSAGE);
