@@ -32,7 +32,7 @@ public class DialogoSeleccionIdioma extends JDialog {
 	 */
 	public DialogoSeleccionIdioma() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DialogoSeleccionIdioma.class.getResource("/presentacion/imagenes/iconos/worldwide.png")));
-		setBounds(100, 100, 450, 142);
+		setBounds(100, 100, 492, 163);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -44,25 +44,25 @@ public class DialogoSeleccionIdioma extends JDialog {
 		}
 		{
 			rdbtnEspaniol = new JRadioButton("Español");
-			rdbtnEspaniol.setBounds(129, 20, 73, 23);
+			rdbtnEspaniol.setBounds(129, 20, 86, 23);
 			buttonGroup.add(rdbtnEspaniol);
 			contentPanel.add(rdbtnEspaniol);
 		}
 		{
 			rdbtnIngles = new JRadioButton("Inglés");
-			rdbtnIngles.setBounds(277, 15, 65, 23);
+			rdbtnIngles.setBounds(277, 15, 77, 23);
 			buttonGroup.add(rdbtnIngles);
 			contentPanel.add(rdbtnIngles);
 		}
 		
 		lblEspaniol = new JLabel("");
 		lblEspaniol.setIcon(new ImageIcon(DialogoSeleccionIdioma.class.getResource("/presentacion/imagenes/iconos/spain.png")));
-		lblEspaniol.setBounds(209, 11, 32, 32);
+		lblEspaniol.setBounds(214, 11, 32, 32);
 		contentPanel.add(lblEspaniol);
 		
 		lblIngles = new JLabel("");
 		lblIngles.setIcon(new ImageIcon(DialogoSeleccionIdioma.class.getResource("/presentacion/imagenes/iconos/united-kingdom.png")));
-		lblIngles.setBounds(348, 5, 38, 32);
+		lblIngles.setBounds(354, 6, 38, 32);
 		contentPanel.add(lblIngles);
 		{
 			buttonPane = new JPanel();
