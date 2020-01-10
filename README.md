@@ -22,5 +22,3 @@ En este apartado se puede observar el diseño de las pestañas principales (pane
 
 ### *Pestaña diseño ruta*
 ![dis_ruta](Capturas/Diseño.png)
-
-![dise]()
