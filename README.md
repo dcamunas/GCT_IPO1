@@ -7,3 +7,18 @@ Proyecto perteneciente al laboratorio de Interacción Persona Ordenador I 2019 -
 Realizar el diseño de una interfaz gráfica de usuario en Java (prototipo de aplicación de escritorio) de
 una aplicación para la gestión de circuitos turísticos en localidades de la provincia de Ciudad
 Real.
+
+## Diseño de la interfaz 
+En este apartado se puede observar el diseño de las pestañas principales (paneles del tipo JPanel) de la ventana principal de la aplicación.
+
+### *Pestaña circuitos*
+![circuitos](Capturas/Circuitos.png)
+
+### *Pestaña guías*
+![guias](Capturas/Guias.png)
+
+### *Pestaña grupos*
+![grupos](Capturas/Grupos.png)
+
+### *Pestaña diseño ruta*
+![dis_ruta](Capturas/Diseño.png)
