@@ -18,22 +18,12 @@ public class Usuario {
 	public Usuario(String usuario, String contrasenia) {
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
-		this.nombre = "Ana Isabel Molina";
+		this.nombre = "David";
 		this.correo = "thisuser@gmail.com";
-		this.ultima_conexion = MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion2.text");
+		this.ultima_conexion = MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion.text");
 		this.imagen = new ImageIcon(
-				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/userGirl.png"));;
-		mostrar_usuario();
+				VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));;
 
-	}
-
-	private void mostrar_usuario() {
-		if (usuario.equalsIgnoreCase("david")) {
-			this.nombre = "David Camuñas";
-			this.ultima_conexion = MessagesGCT.getString("VentanaPrincipal.lblUltimaConexion.text");
-			this.imagen = new ImageIcon(
-					VentanaPrincipal.class.getResource("/presentacion/imagenes/perfiles/user.png"));;
-		}
 	}
 
 	public String getContrasenia() {
