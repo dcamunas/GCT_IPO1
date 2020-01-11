@@ -158,7 +158,7 @@ public class VentanaLogin {
 		public void actionPerformed(ActionEvent e) {
 			// Se obtiene la contraseña introducida
 
-			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass) && tfUsuario.getText().equalsIgnoreCase("david")) {
 				lblAviso.setBackground(Color.GREEN);
 				lblAviso.setText("Verificación correcta. Puede entrar.");
 				lblAviso.setVisible(true);
@@ -182,7 +182,7 @@ public class VentanaLogin {
 
 	private String obtener_contrasenia(char[] pass) {
 		String contrasenia = null;
-		;
+		
 		for (int i = 0; i < pass.length; i++)
 			contrasenia += pass[i];
 		return contrasenia;
@@ -191,7 +191,7 @@ public class VentanaLogin {
 	private class BtnEntrarActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			lblAviso.setVisible(true);
-			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass) && tfUsuario.getText().equalsIgnoreCase("david")) {
 				// Se crea una instancia de la ventana principal (JFrame)
 				user = new Usuario(tfUsuario.getText(), obtener_contrasenia(pwdContrasenia.getPassword()));
 
@@ -207,7 +207,7 @@ public class VentanaLogin {
 	private class PwdContraseniaKeyListener extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
 			lblAviso.setVisible(true);
-			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass)) {
+			if (String.valueOf(pwdContrasenia.getPassword()).equals(pass) && tfUsuario.getText().equalsIgnoreCase("david")) {
 				// Se crea una instancia de la ventana principal (JFrame)
 				VentanaPrincipal ventana_principal = new VentanaPrincipal(tfUsuario.getText(), pass);
 				// Se hace visible la VentanaPrincipal
