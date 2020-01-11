@@ -22,3 +22,10 @@ En este apartado se puede observar el diseño de las pestañas principales (pane
 
 ### *Pestaña diseño ruta*
 ![dis_ruta](Capturas/Diseño.png)
+
+## Manual de usuario
+Se deben de tener en cuenta las restricciones de inicio de sesión en la ventana de login o autentificación, lass cuales son: \
+*Usuario*: **"david"** \
+*Contraseña*: **"ipo1"**
+
+
