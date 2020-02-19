@@ -24,10 +24,10 @@ En este apartado se puede observar el diseño de las pestañas principales (pane
 ![dis_ruta](Capturas/Diseño.png)
 
 ## Manual de usuario
-Se deben de tener en cuenta las restricciones de inicio de sesión en la ventana de login o autentificación, lass cuales son:
+Se deben de tener en cuenta las restricciones de inicio de sesión en la ventana de login o autentificación, las cuales son:
 
-*Usuario*: **"david"** \
-*Contraseña*: **"ipo1"**
+*Usuario*: **"user"** \
+*Contraseña*: **"user"**
 
 ### Ejecución
 Para poder iniciar la aplicación, se debe de ejecutar el archivo [***GCT.jar***](GCT.jar).
