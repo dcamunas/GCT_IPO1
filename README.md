@@ -4,13 +4,13 @@
 **Autor:** *David Camuñas*
 
 ## Descripción
-Proyecto perteneciente al laboratorio de Interacción Persona Ordenador I (IPO I) ESI - UCLM.    
-Se trata de una simulación sobre la gestión de rutas turísticas por la provincia de *Ciudad Real*. Implementado en lenguaje **Java** con la utilización del plugin de *Eclipse*: **Window Builder**.
+Proyecto perteneciente al laboratorio de Interacción Persona Ordenador I (IPO I) ESI - UCLM.      
+Implementado en lenguaje **Java** con la utilización del plugin de *Eclipse*: **Window Builder**.
 
 ## Objetivo 
 Realizar el diseño de una interfaz gráfica de usuario en Java (prototipo de aplicación de escritorio) de
 una aplicación para la gestión de circuitos turísticos (GCT) en localidades de la provincia de Ciudad
-Real.
+Real.  
 
 ## Diseño de la interfaz 
 En este apartado se puede observar el diseño de las pestañas principales (paneles del tipo JPanel) de la ventana principal de la aplicación.
