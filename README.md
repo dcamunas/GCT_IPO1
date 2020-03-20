@@ -2,6 +2,7 @@
 
 # Manual de usuario
 **Autor:** *David Camuñas*
+
 Proyecto perteneciente al laboratorio de Interacción Persona Ordenador I (IPO I) ESI - UCLM.    
 Se trata de una simulación sobre la gestión de rutas turísticas por la provincia de *Ciudad Real*. Implementado en lenguaje **Java** con la utilización del plugin de *Eclipse*: **Window Builder**.
 
