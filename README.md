@@ -27,7 +27,7 @@ En este apartado se puede observar el diseño de las pestañas principales (pane
 ### *Pestaña diseño ruta*
 ![dis_ruta](Capturas/Diseño.png)
 
-## Manual de usuario
+## Inicio de sesión 
 Se deben de tener en cuenta las restricciones de inicio de sesión en la ventana de login o autentificación, las cuales son:
 
 *Usuario*: **"david"** \
